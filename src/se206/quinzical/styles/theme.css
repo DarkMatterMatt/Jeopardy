@@ -1,0 +1,15 @@
+.root {
+    -c-gold: #ffb400; /* hsl(42, 100%, 50%) */
+    -c-green: #00ff00; /* hsl(120, 100%, 50%) */
+    -c-grey-00: #121212; /* hsl(0, 0%, 7%) */
+    -c-grey-01: #1e1e1e; /* hsl(0, 0%, 12%) */
+    -c-grey-03: #252525; /* hsl(0, 0%, 15%) */
+    -c-grey-04: #272727; /* hsl(0, 0%, 15%) */
+    -c-grey-08: #2d2d2d; /* hsl(0, 0%, 18%) */
+    -c-off-white: #fcfcf4; /* hsl(60, 57%, 97%) */
+    -c-red: #ff0000; /* hsl(0, 100%, 50%) */
+
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 24;
+    -fx-background-color: -c-grey-00;
+}
