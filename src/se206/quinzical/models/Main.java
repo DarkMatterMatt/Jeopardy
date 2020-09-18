@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import se206.quinzical.models.util.*;
@@ -14,8 +15,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		File[] categories = FileBrowser.filesInDirectory("./categories");
-		QuestionDatabaseModel _model = new QuestionDatabaseModel(categories);
-		PresetQuestionDatabaseModel _presetModel = new PresetQuestionDatabaseModel(_model);
+		QuinzicalModel _model = new QuinzicalModel(categories);
+		PresetQuinzicalModel _presetModel = new PresetQuinzicalModel(_model);
 		
 		System.out.println(makeJson(_model));
 		System.out.println(makeJson(_presetModel));		
@@ -39,7 +40,12 @@ public class Main {
 	}
 	
 	public static String makeJson(Object obj) {
-		Gson gson = new Gson();
+		GsonBuilder g = new GsonBuilder();
+		g.setPrettyPrinting();
+		g.disableHtmlEscaping();
+		Gson gson = g.create();
+//		Gson gson = new Gson();
+		
 		return gson.toJson(obj);
 	}
 	

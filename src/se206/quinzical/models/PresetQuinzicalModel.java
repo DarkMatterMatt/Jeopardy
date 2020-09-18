@@ -6,10 +6,16 @@ import java.util.List;
 
 import se206.quinzical.models.util.RandomNumberGenerator;
 
-public class PresetQuestionDatabaseModel {
+/**
+ * PresetQuinzicalModel 
+ * @author Hajin Kim
+ *
+ */
+public class PresetQuinzicalModel {
 	List<Category> _fiveCategoriesWithFiveQuestions;
 
-	public PresetQuestionDatabaseModel(QuestionDatabaseModel qdb) {
+
+	public PresetQuinzicalModel(QuinzicalModel qdb) {
 		_fiveCategoriesWithFiveQuestions = new ArrayList<Category>();
 		
 		List<Category> categories = selectFiveCategories(qdb);
@@ -19,7 +25,13 @@ public class PresetQuestionDatabaseModel {
 		}
 	}
 	
-	public List<Category> selectFiveCategories(QuestionDatabaseModel qdb) {
+	
+	
+	/*
+	 * Below are utility methods to select 5 categories/questions and return List<Category> / Category
+	 */
+	
+	public List<Category> selectFiveCategories(QuinzicalModel qdb) {
 		List<Integer> fiveNumbers = RandomNumberGenerator.takeFive(qdb._categories.size());
 		List<Category> result = new ArrayList<Category>();
 		

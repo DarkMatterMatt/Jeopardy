@@ -5,14 +5,34 @@ public class Question {
 	String _answer;
 	
 	public Question(String raw) {
-		String[] processed = raw.split(",");
-		int l = processed.length;
-		
-		if(l == 2) {
-			_question = processed[0];
-			_answer = processed[1];
-		}else {
-			throw new IllegalArgumentException("question format should have only one comma separating question part and answer part");
-		}
+		processRaw(raw);
 	}
+	
+	public void processRaw(String raw) {
+		int delimiter = raw.indexOf(",");
+		if(delimiter == -1) {
+			throw new IllegalArgumentException("raw question should have a comma as a delimiter"
+					+ "separating question (on the left of comma) and answer (right of comma)");
+		}
+		
+		String tmpQ = raw.substring(0,delimiter).trim(); //Eg., NZer who led the land march from Te Hapua to Parliament
+		String tmpA = raw.substring(delimiter+1).trim(); //Eg., ( Who is) Dame Whina Cooper.
+		
+	
+		// construct question
+		String[] tmpAParsed= tmpA.split("\\)");
+		if(tmpAParsed.length != 2) {
+			throw new IllegalArgumentException("answer part (next to comma) should contain a pair of "
+					+ "bracket that encloses either 'who are' "
+					+ "'what is/are' 'where is/are'");
+		}
+		_question = tmpAParsed[0].substring(1).trim()+ " " + tmpQ.toLowerCase(); //Eg., Who is NZer who led the land march from Te Hapua to Parliament
+		
+		
+		// construct answer
+		tmpA = tmpAParsed[1].trim();
+		_answer = tmpA.substring(0, 1).toUpperCase() + tmpA.substring(1);
+		
+	}
+	
 }
