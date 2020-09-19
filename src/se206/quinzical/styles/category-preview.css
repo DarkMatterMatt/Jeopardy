@@ -1,0 +1,24 @@
+.category-preview {
+    -fx-background-color: -c-grey-01;
+    -fx-padding: 32;
+}
+
+.category-preview .category-description {
+    -fx-padding: 8 0 8 0;
+}
+
+.category-preview .category-icon {
+    -fx-background-color: -c-grey-03;
+    -fx-background-radius: 50%;
+}
+
+.category-preview .confirm-icon {
+    -fx-background-color: -c-gold;
+    -fx-background-radius: 50%;
+    -fx-cursor: hand;
+}
+
+.category-preview .text-container {
+    -fx-alignment: center-left;
+    -fx-padding: 0 16 0 16;
+}

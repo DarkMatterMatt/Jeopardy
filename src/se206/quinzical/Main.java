@@ -26,7 +26,8 @@ public class Main extends Application {
         // add stylesheets to scene
         Scene scene = new Scene(view.getView());
         String theme = getClass().getResource("styles/theme.css").toExternalForm();
-        scene.getStylesheets().add(theme);
+        String styles = getClass().getResource("styles/quinzical.css").toExternalForm();
+        scene.getStylesheets().addAll(theme, styles);
 
         // remove default stage decoration, set title & add taskbar icon
         primaryStage.initStyle(StageStyle.UNDECORATED);

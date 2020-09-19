@@ -1,0 +1,15 @@
+.text-bold {
+    -fx-font-weight: bold;
+}
+
+.text-gold {
+    -fx-text-fill: -c-gold;
+}
+
+.text-large {
+    -fx-font-size: 32;
+}
+
+.text-white {
+    -fx-text-fill: -c-off-white;
+}
