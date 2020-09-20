@@ -9,14 +9,13 @@ import se206.quinzical.models.util.MyScanner;
 public class QuinzicalModel {
 	List<Category> _categories;
 	PresetQuinzicalModel _presetModel;
-	
+	private Question _currentQuestion = null;
+
 	public QuinzicalModel() {
 		//read files from directory
 		this(FileBrowser.filesInDirectory("./categories"));
-		
 	}
-	
-	
+
 	public QuinzicalModel(File[] categories) {
 		_categories = new ArrayList<Category>();
 		for(File category: categories) {
@@ -29,6 +28,12 @@ public class QuinzicalModel {
 
 		_presetModel = new PresetQuinzicalModel(this);
 	}
-	
-	
+
+	public Question getCurrentQuestion() {
+		return _currentQuestion;
+	}
+
+	public void setCurrentQuestion(Question q) {
+		_currentQuestion = q;
+	}
 }
