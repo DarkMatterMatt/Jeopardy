@@ -1,0 +1,11 @@
+.animated-progress-bar > .track  {
+    -fx-background-color: -c-grey-03;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.animated-progress-bar > .bar {
+    -fx-background-color: -c-gold;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
