@@ -36,6 +36,9 @@ public class AnimatedProgressBarView extends View {
 				startTime = System.nanoTime();
 			}
 		};
+
+		// add styles
+		_progressBar.getStyleClass().add("animated-progress-bar");
 		addStylesheet("animated-progress-bar.css");
 	}
 
