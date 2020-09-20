@@ -15,10 +15,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import se206.quinzical.models.Category;
@@ -27,24 +29,30 @@ import se206.quinzical.views.View;
 
 
 public class CategoriesListView extends View {
-	QuinzicalModel _model;
-	Parent _container;
-	
+	private final Pane _container;
+	private final ListView<Category> _listView;
+	private final HBox _textBox;
 	
 	public CategoriesListView(QuinzicalModel model) {
-		_model = model;
+		// set up the top header box
+		Label topText = new Label("Categories");
+		_textBox = new HBox(topText);
+
+		// set up data
 		ObservableList<Category> data = FXCollections.observableArrayList();
-		data.addAll(_model.getCategories());
-		ListView<Category> listView = new PrettyListView<Category>(data);
-		Text topText = new Text("Categories");		
-		_container = new VBox(topText,listView);
+		data.addAll(model.getCategories());
 		
-		
-		topText.getStyleClass().addAll("text-gold");
+		// set up list view
+		_listView = new ListView<Category>(data);
+		_container = new VBox(_textBox,_listView);
+		_listView.setStyle("-fx-padding: 0px;");
+		_listView.setMinWidth(300);
+		_listView.getSelectionModel().select(0);
+		_listView.getFocusModel().focus(0);
 
 		
-		
-		listView.setCellFactory((ListView<Category> param) -> new ListCell<Category>() {
+		_listView.setCellFactory((ListView<Category> param) -> {
+			ListCell<Category> cell = new ListCell<Category>() {
 				@Override
 				public void updateItem(Category item, boolean empty) {
 					super.updateItem(item, empty);
@@ -52,97 +60,51 @@ public class CategoriesListView extends View {
 						setText(null);
 						setGraphic(null);
 					}else {
-						HBox content = new HBox(new Text(item.getName()));
-						
-						content.setSpacing(10);
-						
-						setGraphic(content);
+						setGraphic(new CategoriesListItemView(item).getView());
 					}
 				}
-				private ImageView getImageView() {
-					ImageView output = new ImageView();
-					
-					output.setImage(new Image(getClass().getResourceAsStream("asset/icon1.png")));
-					output.setFitWidth(100);
-					output.setPreserveRatio(true);
-					
-					return output;
-				}
+			};
+			cell.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+		        if (event.getButton()== MouseButton.PRIMARY && (! cell.isEmpty())) {
+		            Category item = cell.getItem();
+		            System.out.println("Left clicked "+item.getName());
+		        }
+		    });
+			return cell;
+			
 		});
 		
-		addStylesheet("category-listview.css");
+		// style
+		topText.getStyleClass().addAll("text-large", "text-bold", "text-gold");
+		_textBox.getStyleClass().addAll("text-container");
 		
+		addStylesheet("category-listview.css");
 	}
 
 	public Parent getView() {
 		return _container;
 	}
 
-
-	//to pretty-fy listview's scrollbar cos default one's ugly
-	public class PrettyListView<T> extends ListView<T> {
-		 
-	    private ScrollBar vBar = new ScrollBar();
-	    private ScrollBar hBar = new ScrollBar();
-	 
-	    public PrettyListView(ObservableList<T> h) {
-	    	super(h);
-	        skinProperty().addListener(it -> {
-	            // first bind, then add new scrollbars, otherwise the new bars will be found
-	            bindScrollBars();
-	            getChildren().addAll(vBar, hBar);
-	        });
-	 
-	        getStyleClass().add("pretty-list-view");
-	 
-	        vBar.setManaged(false);
-	        vBar.setOrientation(Orientation.VERTICAL);
-	        vBar.getStyleClass().add("pretty-scroll-bar");
-	        vBar.visibleProperty().bind(vBar.visibleAmountProperty().isNotEqualTo(0));
-	 
-	        hBar.setManaged(false);
-	        hBar.setOrientation(Orientation.HORIZONTAL);
-	        hBar.getStyleClass().add("pretty-scroll-bar");
-	        hBar.visibleProperty().bind(hBar.visibleAmountProperty().isNotEqualTo(0));
-	    }
-	 
-	    private void bindScrollBars() {
-	        final Set<Node> nodes = lookupAll("VirtualScrollBar");
-	        for (Node node : nodes) {
-	            if (node instanceof ScrollBar) {
-	                ScrollBar bar = (ScrollBar) node;
-	                if (bar.getOrientation().equals(Orientation.VERTICAL)) {
-	                    bindScrollBars(vBar, bar);
-	                } else if (bar.getOrientation().equals(Orientation.HORIZONTAL)) {
-	                    bindScrollBars(hBar, bar);
-	                }
-	            }
-	        }
-	    }
-	 
-	    private void bindScrollBars(ScrollBar scrollBarA, ScrollBar scrollBarB) {
-	        scrollBarA.valueProperty().bindBidirectional(scrollBarB.valueProperty());
-	        scrollBarA.minProperty().bindBidirectional(scrollBarB.minProperty());
-	        scrollBarA.maxProperty().bindBidirectional(scrollBarB.maxProperty());
-	        scrollBarA.visibleAmountProperty().bindBidirectional(scrollBarB.visibleAmountProperty());
-	        scrollBarA.unitIncrementProperty().bindBidirectional(scrollBarB.unitIncrementProperty());
-	        scrollBarA.blockIncrementProperty().bindBidirectional(scrollBarB.blockIncrementProperty());
-	    }
-	 
-	    @Override
-	    protected void layoutChildren() {
-	        super.layoutChildren();
-	 
-	        Insets insets = getInsets();
-	        double w = getWidth();
-	        double h = getHeight();
-	        final double prefWidth = vBar.prefWidth(-1);
-	        vBar.resizeRelocate(w - prefWidth - insets.getRight(), insets.getTop(), prefWidth, h - insets.getTop() - insets.getBottom());
-	 
-	        final double prefHeight = hBar.prefHeight(-1);
-	        hBar.resizeRelocate(insets.getLeft(), h - prefHeight - insets.getBottom(), w - insets.getLeft() - insets.getRight(), prefHeight);
-	    }
-	}
 	
-
+	public class CategoriesListItemView extends View{
+		HBox _container = new HBox();
+		Category _category;
+		
+		public CategoriesListItemView(Category item) {
+			_category = item;
+			Label label = new Label(item.getName());
+			_container.getChildren().add(label);
+			_container.getStyleClass().add("text-container");
+		}
+		
+		public Category getCategory() {
+			return _category;
+		}
+		
+		@Override
+		public Parent getView() {
+			return _container;
+		}
+		
+	}
 }
