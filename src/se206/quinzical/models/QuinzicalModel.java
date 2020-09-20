@@ -17,6 +17,10 @@ public class QuinzicalModel {
 	}
 	
 	
+	public List<Category> getCategories() {
+		return _categories;
+	}
+	
 	public QuinzicalModel(File[] categories) {
 		_categories = new ArrayList<Category>();
 		for(File category: categories) {
