@@ -1,10 +1,10 @@
 package se206.quinzical.views;
 
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuinzicalModel;
 
 public class QuizView extends View {
-	private final HBox _container = new HBox();
+	private final VBox _container = new VBox();
 
 	public QuizView(QuinzicalModel model) {
 		HeaderView headerView = new HeaderView(model);
@@ -16,7 +16,7 @@ public class QuizView extends View {
 	}
 
 	@Override
-	public HBox getView() {
+	public VBox getView() {
 		return _container;
 	}
 }
