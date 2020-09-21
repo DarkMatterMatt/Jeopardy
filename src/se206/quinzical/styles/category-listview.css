@@ -1,22 +1,47 @@
 .list-cell {
-    -fx-control-inner-background: #252525;
+    -fx-control-inner-background: -c-grey-01;
 }
 
 .list-view, .split-pane {
-    -fx-border-color: #252525;
+    -fx-border-color: -c-grey-01;
 }
 
+/* this is for each cell when it's selected */
 .list-cell:filled:selected {
-    -fx-background-color: #1e1e1e;
+    -fx-background-color: -c-grey-01; 
+    /* it was -c-gold */
     -fx-background-insets: 0 ;
+    -fx-text-fill: black;
 }
+
 
 .list-view:focused {
-    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color; 
+    /* -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;  */
     -fx-background-insets: 0, 1, 2;
 }
 
 .text-container {
     -fx-alignment: center;
     -fx-padding: 16 0 16 0;
+    -fx-background-color: -c-grey-01;
+}
+
+.category-not-selected{
+    -fx-alignment: center;
+    -fx-padding: 16 0 16 0;
+    -fx-background-color: -c-grey-03;
+}
+
+.category-selected {
+    -fx-alignment: center;
+    -fx-background-color: -c-gold;
+    -fx-padding: 16 0 16 0;
+}
+
+.text-white {
+    -fx-text-fill: white;
+}
+
+.text-black{
+    -fx-text-fill: black;
 }

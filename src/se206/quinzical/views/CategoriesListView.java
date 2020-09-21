@@ -1,4 +1,5 @@
 package se206.quinzical.views;
+import java.util.Arrays;
 import java.util.Set;
 
 import javafx.application.Application;
@@ -47,9 +48,10 @@ public class CategoriesListView extends View {
 		_container = new VBox(_textBox,_listView);
 		_listView.setStyle("-fx-padding: 0px;");
 		_listView.setMinWidth(300);
+		
+		// avoid non-selection thin blue box by preemptively selecting one cell
 		_listView.getSelectionModel().select(0);
 		_listView.getFocusModel().focus(0);
-
 		
 		_listView.setCellFactory((ListView<Category> param) -> {
 			ListCell<Category> cell = new ListCell<Category>() {
@@ -60,14 +62,29 @@ public class CategoriesListView extends View {
 						setText(null);
 						setGraphic(null);
 					}else {
-						setGraphic(new CategoriesListItemView(item).getView());
+						HBox displayedItem = new CategoriesListItemView(item).getView();
+						if(item.isSelected()) {
+							displayedItem.getStyleClass().addAll("text-bold","category-selected");
+						}else {
+							displayedItem.getStyleClass().addAll("text-bold","category-not-selected");
+						}
+						setGraphic(displayedItem);
 					}
+
+//                    setPrefWidth(param.getWidth());
+//					setWrapText(true);
 				}
 			};
 			cell.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
 		        if (event.getButton()== MouseButton.PRIMARY && (! cell.isEmpty())) {
-		            Category item = cell.getItem();
+		        	Category item = cell.getItem();
+		            for (Category c: model.getCategories()) {
+		            	c.setUnselected();
+		            }
+		            _listView.refresh();
+		            item.setSelected();
 		            System.out.println("Left clicked "+item.getName());
+		            
 		        }
 		    });
 			return cell;
@@ -86,23 +103,29 @@ public class CategoriesListView extends View {
 	}
 
 	
-	public class CategoriesListItemView extends View{
+	public class CategoriesListItemView{
 		HBox _container = new HBox();
 		Category _category;
 		
 		public CategoriesListItemView(Category item) {
 			_category = item;
 			Label label = new Label(item.getName());
+			label.setWrapText(true);
 			_container.getChildren().add(label);
-			_container.getStyleClass().add("text-container");
+			
+			//styling
+			if(item.isSelected()) {
+				label.setStyle("-fx-text-fill: black;");
+			}else {
+				label.setStyle("-fx-text-fill: white;");
+			}
 		}
 		
 		public Category getCategory() {
 			return _category;
 		}
 		
-		@Override
-		public Parent getView() {
+		public HBox getView() {
 			return _container;
 		}
 		
