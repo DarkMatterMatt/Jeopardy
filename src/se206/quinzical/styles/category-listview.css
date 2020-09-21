@@ -1,0 +1,22 @@
+.list-cell {
+    -fx-control-inner-background: #252525;
+}
+
+.list-view, .split-pane {
+    -fx-border-color: #252525;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #1e1e1e;
+    -fx-background-insets: 0 ;
+}
+
+.list-view:focused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color; 
+    -fx-background-insets: 0, 1, 2;
+}
+
+.text-container {
+    -fx-alignment: center;
+    -fx-padding: 16 0 16 0;
+}

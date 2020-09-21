@@ -7,6 +7,10 @@ public class Category {
 	List<Question> _questions = new ArrayList<Question>();
 	
 	
+	public String getName() {
+		return _name;
+	}
+	
 	public Category(List<String> questions, String name) {
 		_name = name;
 		for (String question: questions) {
