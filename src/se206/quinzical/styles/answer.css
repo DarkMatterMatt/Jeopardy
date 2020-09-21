@@ -1,0 +1,24 @@
+.answer {
+    -fx-alignment: center-left;
+    -fx-background-color: -c-grey-01;
+    -fx-padding: 48;
+}
+
+.answer .category {
+    -fx-padding: 0 0 0 16;
+}
+
+.answer .category-container {
+    -fx-alignment: center-left;
+}
+
+.answer .category-icon {
+    -fx-background-color: -c-grey-03;
+    -fx-background-radius: 50%;
+}
+
+.answer .question {
+    -fx-padding: 24 0 32 0;
+    -fx-pref-width: 480;
+    -fx-wrap-text: true;
+}
