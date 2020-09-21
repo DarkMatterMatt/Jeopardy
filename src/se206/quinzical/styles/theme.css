@@ -13,3 +13,9 @@
     -fx-font-size: 24;
     -fx-background-color: -c-grey-00;
 }
+
+/* tooltips aren't children of the view, so we have to globally apply styles to them */
+.tooltip {
+    -fx-show-delay: 200ms;
+    -fx-font-size: 12;
+}

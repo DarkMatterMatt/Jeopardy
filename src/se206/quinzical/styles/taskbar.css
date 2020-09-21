@@ -1,0 +1,6 @@
+.taskbar {
+    -fx-alignment: top-right;
+    -fx-min-height: 32;
+    -fx-padding: 8 8 0 0;
+    -fx-pref-height: 32;
+}

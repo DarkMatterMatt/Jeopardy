@@ -1,3 +1,7 @@
+.btn {
+    -fx-cursor: hand;
+}
+
 .text-bold {
     -fx-font-weight: bold;
 }
