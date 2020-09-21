@@ -15,6 +15,7 @@ public class QuinzicalView extends SwitcherView {
 		getView().getChildren().addAll(_menuView.getView(), _quizView.getView());
 		addStylesheet("quinzical.css");
 
+		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
 	}
 
