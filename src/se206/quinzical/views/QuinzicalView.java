@@ -13,6 +13,7 @@ public class QuinzicalView extends SwitcherView {
 		_menuView = new MenuView();
 		_quizView = new QuizView(_model);
 		getView().getChildren().addAll(_menuView.getView(), _quizView.getView());
+		addStylesheet("quinzical.css");
 
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
 	}

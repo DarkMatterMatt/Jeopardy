@@ -6,8 +6,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import se206.quinzical.models.QuinzicalModel;
-import se206.quinzical.views.View;
 import se206.quinzical.views.QuinzicalView;
+import se206.quinzical.views.View;
+import se206.quinzical.views.QuizView;
 
 /**
  * Main stage setup
@@ -26,8 +27,7 @@ public class Main extends Application {
         // add stylesheets to scene
         Scene scene = new Scene(view.getView());
         String theme = getClass().getResource("styles/theme.css").toExternalForm();
-        String styles = getClass().getResource("styles/quinzical.css").toExternalForm();
-        scene.getStylesheets().addAll(theme, styles);
+        scene.getStylesheets().addAll(theme);
 
         // remove default stage decoration, set title & add taskbar icon
         primaryStage.initStyle(StageStyle.UNDECORATED);
