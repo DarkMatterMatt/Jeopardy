@@ -1,8 +1,8 @@
 package se206.quinzical.models;
 
 public class Question {
-	String _question;
-	String _answer;
+	private String _question;
+	private String _answer;
 
 	public Question(String raw) {
 		processRaw(raw);
