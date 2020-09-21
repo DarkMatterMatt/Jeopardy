@@ -56,10 +56,10 @@ public class TaskbarView extends View {
 				_reset.setVisible(true);
 				_reset.setManaged(true);
 				break;
+			case MENU:
 			case PRACTICE:
 				_reset.setVisible(false);
 				_reset.setManaged(false);
-			case MENU:
 				break;
 			default:
 				throw new UnsupportedOperationException("Unexpected model state");
