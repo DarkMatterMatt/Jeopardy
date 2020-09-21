@@ -1,0 +1,18 @@
+.input-container {
+    -fx-max-width: 480;
+    -fx-padding: 24;
+}
+
+.input-container .submit-container {
+    -fx-alignment: center;
+    -fx-background-color: -c-gold;
+    -fx-background-radius: 0 4 4 0;
+}
+
+.input-container .text-input {
+    -fx-background-color: -c-grey-04;
+    -fx-background-radius: 4 0 0 4;
+    -fx-highlight-fill: -c-gold;
+    -fx-highlight-text-fill: -c-grey-03;
+    -fx-text-fill: -c-off-white;
+}
