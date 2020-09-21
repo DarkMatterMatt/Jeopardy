@@ -14,9 +14,8 @@ public class Question {
 		_question = question;
 	}
 
-	public Question(String raw) {
-		// TODO: fix this
-		_category = null;
+	public Question(String raw, Category category) {
+		_category = category;
 
 		int delimiter = raw.indexOf(",");
 		if (delimiter == -1) {

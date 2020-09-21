@@ -13,7 +13,7 @@ public class Category {
 		_name = name;
 		for (String question : questions) {
 			try {
-				Question q = new Question(question);
+				Question q = new Question(question, this);
 				_questions.add(q);
 			} catch (IllegalArgumentException e) {
 				//
