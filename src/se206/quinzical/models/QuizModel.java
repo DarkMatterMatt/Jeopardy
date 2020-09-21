@@ -7,13 +7,47 @@ import se206.quinzical.models.util.TextToSpeech;
 public abstract class QuizModel {
 	private final QuinzicalModel _model;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.SELECT_CATEGORY);
+	private Question _currentQuestion = null;
+	private int _currentQuestionValue;
 
 	public QuizModel(QuinzicalModel model) {
 		_model = model;
 	}
 
+	/**
+	 * Submit an answer for the current question
+	 */
+	public abstract void answerQuestion(String answer);
+
+	public void beginQuestion(Question question, int value) {
+		_currentQuestion = question;
+		_currentQuestionValue = value;
+	}
+
+	/**
+	 * Return to category selection
+	 */
+	public void finishQuestion() {
+		if (_state.get() != State.CORRECT_ANSWER && _state.get() != State.INCORRECT_ANSWER) {
+			throw new IllegalStateException("Can only reset when in the CORRECT_ANSWER or INCORRECT_ANSWER state");
+		}
+		_state.set(State.SELECT_CATEGORY);
+	}
+
+	public Question getCurrentQuestion() {
+		return _currentQuestion;
+	}
+
+	public int getCurrentQuestionValue() {
+		return _currentQuestionValue;
+	}
+
 	public State getState() {
 		return _state.get();
+	}
+
+	protected void setState(State state) {
+		_state.set(state);
 	}
 
 	public ObjectProperty<State> getStateProperty() {

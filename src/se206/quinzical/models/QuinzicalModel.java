@@ -17,7 +17,6 @@ public class QuinzicalModel {
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	List<Category> _categories;
 	PresetQuinzicalModel _presetModel;
-	private Question _currentQuestion = null;
 
 	public QuinzicalModel() {
 		//read files from directory
@@ -37,14 +36,6 @@ public class QuinzicalModel {
 		_presetModel = new PresetQuinzicalModel(this);
 		_practiceModel = new PracticeModel(this);
 		_gameModel = new GameModel(this);
-	}
-
-	public Question getCurrentQuestion() {
-		return _currentQuestion;
-	}
-
-	public void setCurrentQuestion(Question q) {
-		_currentQuestion = q;
 	}
 
 	public GameModel getGameModel() {
