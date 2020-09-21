@@ -1,0 +1,31 @@
+.incorrect-view {
+    -fx-background-color: -c-grey-01;
+    -fx-alignment: top-center;
+    -fx-padding: 48;
+}
+
+.incorrect-view .text-main {
+    -fx-text-fill: -c-red;
+    -fx-font-size: 48;
+    -fx-padding: 24;
+}
+
+.incorrect-view .text-flow {
+    -fx-text-alignment: center;
+    -fx-padding: 24;
+}
+
+.incorrect-view .text-flow .label {
+    -fx-text-fill: -c-off-white;
+}
+
+.incorrect-view .interact-to-skip {
+    -fx-padding: 24 24 0 24;
+    -fx-font-size: 12;
+    -fx-text-fill: -c-off-white;
+}
+
+.incorrect-view .progress-bar {
+    -fx-pref-height: 12;
+    -fx-max-width: 480;
+}
