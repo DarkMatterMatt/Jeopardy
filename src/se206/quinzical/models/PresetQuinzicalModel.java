@@ -73,6 +73,6 @@ public class PresetQuinzicalModel extends QuizModel {
 			// get nth question from the questions of the category, and add to the list
 			fiveQuestions.add(c._questions.get(n));
 		}
-		return new Category(fiveQuestions, c._name, true);
+		return new Category(fiveQuestions, c._name);
 	}
 }

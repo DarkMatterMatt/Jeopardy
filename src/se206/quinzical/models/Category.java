@@ -11,21 +11,18 @@ public class Category implements GsonPostProcessable {
 	List<Question> _questions = new ArrayList<>();
 	private int _activeQuestion = 0;
 
-	public Category(List<String> questions, String name) {
+	public Category(String name) {
 		_name = name;
-		for (String question : questions) {
-			try {
-				Question q = new Question(question, this);
-				_questions.add(q);
-			} catch (IllegalArgumentException e) {
-				//
-			}
-		}
+		_questions = new ArrayList<>();
 	}
 
-	public Category(List<Question> questions, String name, boolean placeHolder) {
+	public Category(List<Question> questions, String name) {
 		_questions = questions;
 		_name = name;
+	}
+
+	public void addQuestion(Question question) {
+		_questions.add(question);
 	}
 
 	public Question getActiveQuestion() {

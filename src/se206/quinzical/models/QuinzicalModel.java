@@ -26,10 +26,18 @@ public class QuinzicalModel implements GsonPostProcessable {
 	public QuinzicalModel(File[] categories) {
 		_categories = new ArrayList<Category>();
 		for (File category : categories) {
+			Category newCategory = new Category(category.getName());
+
 			//list of questions
-			List<String> questions = MyScanner.readFileOutputString(category);
+			for (String rawQuestion : MyScanner.readFileOutputString(category)) {
+				try {
+					Question question = new Question(rawQuestion, newCategory);
+					newCategory.addQuestion(question);
+				} catch (IllegalArgumentException e) {
+					//
+				}
+			}
 			//make category out of that
-			Category newCategory = new Category(questions, category.getName());
 			_categories.add(newCategory);
 		}
 
