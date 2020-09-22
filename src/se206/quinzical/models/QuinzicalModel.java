@@ -9,6 +9,7 @@ import se206.quinzical.models.util.TextToSpeech;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class QuinzicalModel implements GsonPostProcessable {
@@ -46,7 +47,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	public List<Category> getCategories() {
-		return _categories;
+		return Collections.unmodifiableList(_categories);
 	}
 
 	public PracticeModel getPracticeModel() {

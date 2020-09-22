@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import se206.quinzical.models.util.RandomNumberGenerator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,8 +14,8 @@ import java.util.List;
  * @author Hajin Kim
  */
 public class PresetQuinzicalModel extends QuizModel {
-	private final IntegerProperty _score = new SimpleIntegerProperty();
 	private final List<Category> _fiveCategoriesWithFiveQuestions;
+	private final IntegerProperty _score = new SimpleIntegerProperty();
 
 	public PresetQuinzicalModel(QuinzicalModel qdb) {
 		super(qdb);
@@ -36,6 +37,10 @@ public class PresetQuinzicalModel extends QuizModel {
 		// boolean correct = getCurrentQuestion().checkAnswer(answer);
 		boolean correct = true;
 		setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
+	}
+
+	public List<Category> getCategories() {
+		return Collections.unmodifiableList(_fiveCategoriesWithFiveQuestions);
 	}
 
 	public int getScore() {

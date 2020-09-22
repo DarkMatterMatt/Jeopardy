@@ -6,7 +6,7 @@ import se206.quinzical.models.util.TextToSpeech;
 
 public abstract class QuizModel {
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.SELECT_CATEGORY);
-	public transient QuinzicalModel _model;
+	private transient QuinzicalModel _model;
 	private Question _currentQuestion = null;
 	private int _currentQuestionValue;
 
