@@ -33,7 +33,7 @@ public class HeaderView extends View {
 		// update subtitle automatically
 		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
-		_model.getGameModel().getScoreProperty().addListener((observable, oldVal, newVal) -> onModelStateChange());
+		_model.getPresetModel().getScoreProperty().addListener((observable, oldVal, newVal) -> onModelStateChange());
 	}
 
 	public Pane getView() {
@@ -43,7 +43,7 @@ public class HeaderView extends View {
 	private void onModelStateChange() {
 		switch (_model.getState()) {
 			case GAME:
-				_subtitleLabel.setText("Winnings: $" + _model.getGameModel().getScore());
+				_subtitleLabel.setText("Winnings: $" + _model.getPresetModel().getScore());
 			case PRACTICE:
 				_subtitleLabel.setText("Practice Mode");
 				break;

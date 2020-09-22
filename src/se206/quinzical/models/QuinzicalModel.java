@@ -3,8 +3,8 @@ package se206.quinzical.models;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import se206.quinzical.models.util.FileBrowser;
-import se206.quinzical.models.util.MyScanner;
 import se206.quinzical.models.util.GsonPostProcessable;
+import se206.quinzical.models.util.MyScanner;
 import se206.quinzical.models.util.TextToSpeech;
 
 import java.io.File;
@@ -12,20 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuinzicalModel implements GsonPostProcessable {
-	private final GameModel _gameModel;
 	private final PracticeModel _practiceModel;
+	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	List<Category> _categories;
-	PresetQuinzicalModel _presetModel;
 
 	public QuinzicalModel() {
 		//read files from directory
 		this(FileBrowser.filesInDirectory("./categories"));
-	}
-
-	public List<Category> getCategories() {
-		return _categories;
 	}
 
 	public QuinzicalModel(File[] categories) {
@@ -40,15 +35,18 @@ public class QuinzicalModel implements GsonPostProcessable {
 
 		_presetModel = new PresetQuinzicalModel(this);
 		_practiceModel = new PracticeModel(this);
-		_gameModel = new GameModel(this);
 	}
 
-	public GameModel getGameModel() {
-		return _gameModel;
+	public List<Category> getCategories() {
+		return _categories;
 	}
 
 	public PracticeModel getPracticeModel() {
 		return _practiceModel;
+	}
+
+	public PresetQuinzicalModel getPresetModel() {
+		return _presetModel;
 	}
 
 	public State getState() {
@@ -65,7 +63,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 
 	@Override
 	public void gsonPostProcess() {
-		_gameModel.setQuinzicalModel(this);
+		_presetModel.setQuinzicalModel(this);
 		_practiceModel.setQuinzicalModel(this);
 	}
 
@@ -73,7 +71,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 		if (_state.get() != State.GAME) {
 			throw new IllegalStateException("Can only reset when in the GAME state");
 		}
-		_gameModel.reset();
+		_presetModel.reset();
 	}
 
 	/**
