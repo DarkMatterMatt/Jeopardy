@@ -3,9 +3,9 @@ package se206.quinzical.models;
 import se206.quinzical.models.util.StringUtils;
 
 public class Question {
-	private final Category _category;
 	private final String _answer;
 	private final String _question;
+	private transient Category _category;
 	private Status _status = Status.UNATTEMPTED;
 
 	public Question(String question, String answer, Category category) {
@@ -62,12 +62,20 @@ public class Question {
 		return _category;
 	}
 
-	public Status getStatus() {
-		return _status;
+	/**
+	 * Sets the parent category that contains this question
+	 * Used by Category deserializer
+	 */
+	public void setCategory(Category category) {
+		_category = category;
 	}
 
 	public String getQuestion() {
 		return _question;
+	}
+
+	public Status getStatus() {
+		return _status;
 	}
 
 	/**

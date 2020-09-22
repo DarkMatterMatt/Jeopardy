@@ -4,13 +4,14 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import se206.quinzical.models.util.FileBrowser;
 import se206.quinzical.models.util.MyScanner;
+import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.TextToSpeech;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuinzicalModel {
+public class QuinzicalModel implements GsonPostProcessable {
 	private final GameModel _gameModel;
 	private final PracticeModel _practiceModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
@@ -60,6 +61,12 @@ public class QuinzicalModel {
 
 	public TextToSpeech getTextToSpeech() {
 		return _textToSpeech;
+	}
+
+	@Override
+	public void gsonPostProcess() {
+		_gameModel.setQuinzicalModel(this);
+		_practiceModel.setQuinzicalModel(this);
 	}
 
 	public void reset() {

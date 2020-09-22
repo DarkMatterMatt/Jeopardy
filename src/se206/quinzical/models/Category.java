@@ -1,9 +1,11 @@
 package se206.quinzical.models;
 
+import se206.quinzical.models.util.GsonPostProcessable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category {
+public class Category implements GsonPostProcessable {
 	boolean _isSelected = false;
 	String _name;
 	List<Question> _questions = new ArrayList<>();
@@ -42,17 +44,22 @@ public class Category {
 	}
 
 	/**
+	 * Returns the number of questions that have been attempted
+	 */
+	public long getNumAttempted() {
+		return _questions.stream().filter(q -> q.getStatus() != Question.Status.UNATTEMPTED).count();
+	}
+
+	/**
 	 * Returns the number of questions that have not been attempted
 	 */
 	public long getNumRemaining() {
 		return _questions.stream().filter(q -> q.getStatus() == Question.Status.UNATTEMPTED).count();
 	}
 
-	/**
-	 * Returns the number of questions that have been attempted
-	 */
-	public long getNumAttempted() {
-		return _questions.stream().filter(q -> q.getStatus() != Question.Status.UNATTEMPTED).count();
+	@Override
+	public void gsonPostProcess() {
+		_questions.forEach(q -> q.setCategory(this));
 	}
 
 	public boolean isSelected() {
