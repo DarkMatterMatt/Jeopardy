@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class PresetQuinzicalModel extends QuizModel {
 	private final IntegerProperty _score = new SimpleIntegerProperty();
-	List<Category> _fiveCategoriesWithFiveQuestions;
+	private final List<Category> _fiveCategoriesWithFiveQuestions;
 
 	public PresetQuinzicalModel(QuinzicalModel qdb) {
 		super(qdb);
@@ -66,13 +66,13 @@ public class PresetQuinzicalModel extends QuizModel {
 	}
 
 	public Category selectFiveQuestions(Category c) {
-		List<Integer> fiveNumbers = RandomNumberGenerator.takeFive(c._questions.size());
+		List<Integer> fiveNumbers = RandomNumberGenerator.takeFive(c.getQuestions().size());
 		List<Question> fiveQuestions = new ArrayList<>();
 
 		for (Integer n : fiveNumbers) {
 			// get nth question from the questions of the category, and add to the list
-			fiveQuestions.add(c._questions.get(n));
+			fiveQuestions.add(c.getQuestions().get(n));
 		}
-		return new Category(fiveQuestions, c._name);
+		return new Category(fiveQuestions, c.getName());
 	}
 }

@@ -3,12 +3,13 @@ package se206.quinzical.models;
 import se206.quinzical.models.util.GsonPostProcessable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Category implements GsonPostProcessable {
+	private final String _name;
+	private final List<Question> _questions;
 	boolean _isSelected = false;
-	String _name;
-	List<Question> _questions = new ArrayList<>();
 	private int _activeQuestion = 0;
 
 	public Category(String name) {
@@ -52,6 +53,10 @@ public class Category implements GsonPostProcessable {
 	 */
 	public long getNumRemaining() {
 		return _questions.stream().filter(q -> q.getStatus() == Question.Status.UNATTEMPTED).count();
+	}
+
+	public List<Question> getQuestions() {
+		return Collections.unmodifiableList(_questions);
 	}
 
 	@Override
