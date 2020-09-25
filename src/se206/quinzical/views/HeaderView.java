@@ -17,7 +17,7 @@ public class HeaderView extends View {
 		_model = model;
 
 		// title
-		Label titleLabel = new Label("Jeopardy!");
+		Label titleLabel = new Label("Quinzical");
 		titleLabel.getStyleClass().add("title");
 
 		// show score / "Practice Mode"
