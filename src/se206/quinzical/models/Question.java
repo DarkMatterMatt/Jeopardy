@@ -7,6 +7,7 @@ public class Question {
 	private final String _question;
 	private transient Category _category;
 	private Status _status = Status.UNATTEMPTED;
+	private int _value = -1;
 
 	public Question(String question, String answer, Category category) {
 		_answer = answer;
@@ -32,7 +33,9 @@ public class Question {
 			throw new IllegalArgumentException("answer part (next to comma) should contain a pair of "
 					+ "bracket that encloses either 'who are' 'what is/are' 'where is/are'");
 		}
-		_question = tmpAParsed[0].substring(1).trim() + " " + tmpQ.toLowerCase(); // e.g. Who is NZer who led the land march from Te Hapua to Parliament
+		
+		// Who is / where is/ etc = tmpAParsed[0].substring(1).trim()
+		_question = tmpQ.substring(0, 1).toUpperCase()+ tmpQ.substring(1).toLowerCase(); // e.g. Who is NZer who led the land march from Te Hapua to Parliament
 
 		// construct answer
 		tmpA = tmpAParsed[1].trim();
@@ -62,6 +65,10 @@ public class Question {
 		return _category;
 	}
 
+	public int getValue() {
+		return _value;
+	}
+	
 	/**
 	 * Sets the parent category that contains this question
 	 * Used by Category deserializer
@@ -78,6 +85,8 @@ public class Question {
 		return _status;
 	}
 
+	
+	
 	/**
 	 * Question status
 	 */
