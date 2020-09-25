@@ -1,7 +1,8 @@
 # Jeopardy save file
 .save
+categories/
 
-# IntelliJ project files 
+# IntelliJ project files
 *.iml
 *.iws
 *.ipr
