@@ -1,6 +1,5 @@
 package se206.quinzical.views;
 
-import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 import se206.quinzical.models.QuinzicalModel;
 
@@ -53,7 +52,6 @@ class PracticeSwitcher extends SwitcherView{
 	}
 
 	private void onModelStateChange() {
-		System.out.println("reached here model state change");
 		switch(_model.getPracticeModel().getState()) {
 			case SELECT_CATEGORY:
 				

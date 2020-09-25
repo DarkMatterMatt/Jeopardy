@@ -1,34 +1,18 @@
 package se206.quinzical.views;
-import java.util.Arrays;
-import java.util.Set;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 import se206.quinzical.models.Category;
 import se206.quinzical.models.QuinzicalModel;
-import se206.quinzical.models.QuizModel;
-import se206.quinzical.views.View;
-
 
 public class CategoriesListView extends View {
 	private final Pane _container;
@@ -75,8 +59,6 @@ public class CategoriesListView extends View {
 						setGraphic(displayedItem);
 					}
 
-//                    setPrefWidth(param.getWidth());
-//					setWrapText(true);
 				}
 			};
 			cell.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
@@ -87,7 +69,6 @@ public class CategoriesListView extends View {
 		            }
 		            _listView.refresh();
 		            item.setSelected();
-		            System.out.println("Left clicked "+item.getName());
 		            
 		            _model.getPracticeModel().selectCategory(item);
 	            	
