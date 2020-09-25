@@ -63,8 +63,8 @@ public class AnswerView extends View {
 		//if (q == null) return;
 
 		String categoryIcon = "../assets/icon-missing.png";
-		String categoryName = "Placeholder Category";
-		String question = "This is the name of the placeholder between the East and the South Island";
+		String categoryName = (q!=null)?q.getCategory().getName():"Select other categories";
+		String question = (q!=null)?q.getQuestion():"There are no more available questions in this category";
 		_iconView.setImage(categoryIcon);
 		_categoryLabel.setText(categoryName);
 		_questionLabel.setText(question);
