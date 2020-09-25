@@ -73,10 +73,13 @@ public class PresetQuinzicalModel extends QuizModel {
 	public Category selectFiveQuestions(Category c) {
 		List<Integer> fiveNumbers = RandomNumberGenerator.takeFive(c.getQuestions().size());
 		List<Question> fiveQuestions = new ArrayList<>();
-
+		int value = 100;
 		for (Integer n : fiveNumbers) {
-			// get nth question from the questions of the category, and add to the list
-			fiveQuestions.add(c.getQuestions().get(n));
+			// get nth question from the questions of the category
+			Question q = c.getQuestions().get(n);
+			// assign value 
+			fiveQuestions.add(q);
+			value = value + 100;
 		}
 		return new Category(fiveQuestions, c.getName());
 	}
