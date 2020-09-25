@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import se206.quinzical.models.Category;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.models.QuizModel;
 import se206.quinzical.views.View;
 
 
@@ -33,8 +34,11 @@ public class CategoriesListView extends View {
 	private final Pane _container;
 	private final ListView<Category> _listView;
 	private final HBox _textBox;
+	private final QuinzicalModel _model;
 	
 	public CategoriesListView(QuinzicalModel model) {
+		_model = model;
+		
 		// set up the top header box
 		Label topText = new Label("Categories");
 		_textBox = new HBox(topText);
@@ -85,6 +89,8 @@ public class CategoriesListView extends View {
 		            item.setSelected();
 		            System.out.println("Left clicked "+item.getName());
 		            
+		            _model.getPracticeModel().selectCategory();
+	            	
 		        }
 		    });
 			return cell;
