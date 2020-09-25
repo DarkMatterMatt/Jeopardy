@@ -2,7 +2,9 @@ package se206.quinzical.models;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.image.ImageView;
 import se206.quinzical.models.util.TextToSpeech;
+import se206.quinzical.views.IconView;
 
 public abstract class QuizModel {
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.SELECT_CATEGORY);
@@ -63,6 +65,14 @@ public abstract class QuizModel {
 	public void reset() {
 		_state.set(State.RESET); // trigger any RESET listeners
 		_state.set(State.SELECT_CATEGORY);
+	}
+	
+	public void skinCategoryImage(IconView icon, String categoryName) {
+		try {
+			icon.setImage("../assets/categoryicons/" + categoryName + ".png");
+		}catch(NullPointerException e) {
+			icon.setImage("../assets/icon-missing.png");
+		}
 	}
 
 	/**

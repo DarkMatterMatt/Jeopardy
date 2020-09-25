@@ -62,10 +62,10 @@ public class AnswerView extends View {
 	private void questionUpdate(Question q) {
 		//if (q == null) return;
 
-		String categoryIcon = "../assets/icon-missing.png";
 		String categoryName = (q!=null)?q.getCategory().getName():"Select other categories";
 		String question = (q!=null)?q.getQuestion():"There are no more available questions in this category";
-		_iconView.setImage(categoryIcon);
+		
+		_model.skinCategoryImage(_iconView, categoryName);
 		_categoryLabel.setText(categoryName);
 		_questionLabel.setText(question);
 	}
