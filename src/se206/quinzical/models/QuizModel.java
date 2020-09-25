@@ -24,6 +24,11 @@ public abstract class QuizModel {
 		_currentQuestionValue = value;
 	}
 
+	public void selectCategory() {
+		setState(QuizModel.State.SELECT_CATEGORY);
+        setState(QuizModel.State.ANSWER_QUESTION);
+	}
+	
 	/**
 	 * Return to category selection
 	 */
