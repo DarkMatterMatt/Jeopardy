@@ -80,4 +80,12 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 		return new Category(fiveQuestions, c.getName());
 	}
+
+	@Override
+	public void selectCategory(Category item) {
+//		Question q = item.getActiveQuestion();
+//		beginQuestion(q, 0);
+//		setState(QuizModel.State.SELECT_CATEGORY);
+//		setState(QuizModel.State.ANSWER_QUESTION);
+	}
 }
