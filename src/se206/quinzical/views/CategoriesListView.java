@@ -14,6 +14,11 @@ import javafx.scene.layout.VBox;
 import se206.quinzical.models.Category;
 import se206.quinzical.models.QuinzicalModel;
 
+/**
+ * This class is based on ListView.Each cell's string value is retrieved
+ * from the list of categories from the QuinzicalModel.
+ * @author hajinkim
+ */
 public class CategoriesListView extends View {
 	private final Pane _container;
 	private final ListView<Category> _listView;
@@ -89,7 +94,11 @@ public class CategoriesListView extends View {
 		return _container;
 	}
 
-	
+	/**
+	 * Objects of this type is a graphic (HBox) that prettifies
+	 * each category String for each cell.
+	 * @author hajinkim
+	 */
 	public class CategoriesListItemView{
 		HBox _container = new HBox();
 		Category _category;
