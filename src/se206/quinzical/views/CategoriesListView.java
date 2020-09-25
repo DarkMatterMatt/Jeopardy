@@ -89,7 +89,7 @@ public class CategoriesListView extends View {
 		            item.setSelected();
 		            System.out.println("Left clicked "+item.getName());
 		            
-		            _model.getPracticeModel().selectCategory();
+		            _model.getPracticeModel().selectCategory(item);
 	            	
 		        }
 		    });
