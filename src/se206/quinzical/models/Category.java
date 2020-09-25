@@ -1,6 +1,7 @@
 package se206.quinzical.models;
 
 import se206.quinzical.models.util.GsonPostProcessable;
+import se206.quinzical.models.util.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,5 +83,10 @@ public class Category implements GsonPostProcessable {
 
 	public void setUnselected() {
 		_isSelected = false;
+	}
+	
+	public Question getRandomQuestion() {
+		List<Integer> list = RandomNumberGenerator.takeFive(_questions.size());		
+		return _questions.get(list.get(0));
 	}
 }
