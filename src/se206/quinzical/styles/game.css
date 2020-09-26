@@ -1,3 +1,4 @@
 .game .category-preview-container {
     -fx-alignment: center;
+    -fx-padding: 48;
 }

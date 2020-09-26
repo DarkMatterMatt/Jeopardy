@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
+import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 
 public class CategoryPreview extends View {
@@ -14,8 +15,11 @@ public class CategoryPreview extends View {
 	private final Label _value = new Label();
 	private final HBox _content = new HBox();
 	private final IconView _icon = new IconView();
+	private final QuizModel _model;
 
 	public CategoryPreview(QuizModel model) {
+		_model = model;
+
 		// category icon
 		_icon.setSize(84, 84)
 				.addClass("category-icon");
@@ -44,41 +48,43 @@ public class CategoryPreview extends View {
 		_container.getStyleClass().add("category-preview");
 		addStylesheet("category-preview.css");
 
-		// add resize listeners... this is pretty hacky
-		_content.widthProperty().addListener((obs, old, val) -> onWidthChange());
-		_content.heightProperty().addListener((obs, old, val) -> onHeightChange());
-		_confirm.getView().widthProperty().addListener((obs, old, val) -> onWidthChange());
-		_confirm.getView().heightProperty().addListener((obs, old, val) -> onHeightChange());
+		// add resize listeners
 		_container.widthProperty().addListener((obs, old, val) -> onWidthChange());
 		_container.heightProperty().addListener((obs, old, val) -> onHeightChange());
 
-		// TODO: add listener so we know when to update content
-		updateContent();
+		// listen for question changes
+		updateContent(_model.getCurrentQuestion());
+		_model.getCurrentQuestionProperty().addListener((obs, oldVal, val) -> updateContent(val));
 	}
 
-	private void updateContent() {
-		// TODO: get these from model
-		int nextValue = 400;
-		String categoryName = "Geography";
-		String categoryIcon = "icon-missing.png";
+	private void updateContent(Question q) {
+		if (q == null) {
+			System.out.println("CategoryPreview#updateContent: Question is null");
+			return;
+		}
+
+		int nextValue = q.getValue();
+		String categoryName = q.getCategory().getName();
 
 		// update values
 		_value.setText("$" + nextValue);
 		_category.setText(categoryName);
-		_icon.setImage("../assets/" + categoryIcon);
+		_model.skinCategoryImage(_icon, categoryName);
+
+		// content changes = size changes
+		onHeightChange();
+		onWidthChange();
 	}
 
 	private void onWidthChange() {
 		double containerWidth = _container.getWidth();
-		double contentWidth = _content.getBoundsInLocal().getWidth();
 		double confirmWidth = _confirm.getView().getBoundsInLocal().getWidth();
-		double iconWidth = _icon.getView().getBoundsInLocal().getWidth();
 
-		// set _content so that _text is centered
-		_content.setLayoutX((containerWidth - contentWidth - iconWidth) / 2);
+		// content has a 48px margin on the left
+		_content.setLayoutX(48);
 
-		// set _confirm to bottom-right (16px margin)
-		_confirm.getView().setLayoutX(containerWidth - confirmWidth - 16);
+		// set _confirm to bottom-right (32px margin)
+		_confirm.getView().setLayoutX(containerWidth - confirmWidth - 32);
 	}
 
 	private void onHeightChange() {
@@ -89,8 +95,8 @@ public class CategoryPreview extends View {
 		// set _content to center
 		_content.setLayoutY((containerHeight - contentHeight) / 2);
 
-		// set _confirm to bottom-right (16px margin)
-		_confirm.getView().setLayoutY(containerHeight - confirmHeight - 16);
+		// set _confirm to bottom-right (32px margin)
+		_confirm.getView().setLayoutY(containerHeight - confirmHeight - 32);
 	}
 
 	@Override

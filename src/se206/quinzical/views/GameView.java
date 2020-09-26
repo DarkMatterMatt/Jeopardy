@@ -50,6 +50,7 @@ public class GameView extends SwitcherView {
 	private void onModelStateChange() {
 		switch (_presetModel.getState()) {
 			case SELECT_CATEGORY:
+			case CATEGORY_PREVIEW:
 				switchToView(_questionSelectContainer);
 				break;
 			case INCORRECT_ANSWER:

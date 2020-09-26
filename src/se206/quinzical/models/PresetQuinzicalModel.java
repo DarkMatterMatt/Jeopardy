@@ -83,7 +83,7 @@ public class PresetQuinzicalModel extends QuizModel {
 		for (Integer n : fiveNumbers) {
 			// get nth question from the questions of the category
 			Question q = c.getQuestions().get(n);
-			// assign value 
+			// assign value
 			fiveQuestions.add(q);
 			value = value + 100;
 		}
@@ -93,9 +93,8 @@ public class PresetQuinzicalModel extends QuizModel {
 
 	@Override
 	public void selectCategory(Category item) {
-//		Question q = item.getActiveQuestion();
-//		beginQuestion(q, 0);
-//		setState(QuizModel.State.SELECT_CATEGORY);
-//		setState(QuizModel.State.ANSWER_QUESTION);
+		Question q = item.getActiveQuestion();
+		beginQuestion(q, q.getValue());
+		setState(State.CATEGORY_PREVIEW);
 	}
 }

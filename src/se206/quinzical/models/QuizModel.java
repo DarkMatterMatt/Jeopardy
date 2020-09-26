@@ -8,9 +8,8 @@ import se206.quinzical.views.IconView;
 import java.util.List;
 
 public abstract class QuizModel {
+	private final ObjectProperty<Question> _currentQuestion = new SimpleObjectProperty<>();
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.SELECT_CATEGORY);
-	private Question _currentQuestion = null;
-	private int _currentQuestionValue;
 	protected transient QuinzicalModel _model;
 
 	public QuizModel(QuinzicalModel model) {
@@ -23,8 +22,7 @@ public abstract class QuizModel {
 	public abstract void answerQuestion(String answer);
 
 	public void beginQuestion(Question question, int value) {
-		_currentQuestion = question;
-		_currentQuestionValue = value;
+		_currentQuestion.set(question);
 	}
 
 	/**
@@ -40,11 +38,11 @@ public abstract class QuizModel {
 	public abstract List<Category> getCategories();
 
 	public Question getCurrentQuestion() {
-		return _currentQuestion;
+		return _currentQuestion.get();
 	}
 
-	public int getCurrentQuestionValue() {
-		return _currentQuestionValue;
+	public ObjectProperty<Question> getCurrentQuestionProperty() {
+		return _currentQuestion;
 	}
 
 	public State getState() {
