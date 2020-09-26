@@ -1,5 +1,5 @@
 .answer {
-    -fx-alignment: center-left;
+    -fx-alignment: center;
     -fx-background-color: -c-grey-01;
     -fx-padding: 48;
 }
@@ -9,7 +9,7 @@
 }
 
 .answer .category-container {
-    -fx-alignment: center-left;
+    -fx-alignment: center;
 }
 
 .answer .category-icon {

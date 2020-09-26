@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
+import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 
@@ -15,9 +16,9 @@ public class CategoryPreview extends View {
 	private final Label _value = new Label();
 	private final HBox _content = new HBox();
 	private final IconView _icon = new IconView();
-	private final QuizModel _model;
+	private final PresetQuinzicalModel _model;
 
-	public CategoryPreview(QuizModel model) {
+	public CategoryPreview(PresetQuinzicalModel model) {
 		_model = model;
 
 		// category icon
@@ -43,6 +44,7 @@ public class CategoryPreview extends View {
 		_confirm.setImage("../assets/submit.png")
 				.setSize(48, 48)
 				.addClass("confirm-icon");
+		_confirm.getView().setOnMouseClicked(e -> confirm());
 
 		_container.getChildren().addAll(_content, _confirm.getView());
 		_container.getStyleClass().add("category-preview");
@@ -97,6 +99,10 @@ public class CategoryPreview extends View {
 
 		// set _confirm to bottom-right (32px margin)
 		_confirm.getView().setLayoutY(containerHeight - confirmHeight - 32);
+	}
+
+	private void confirm() {
+		_model.confirmCategory();
 	}
 
 	@Override

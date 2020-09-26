@@ -52,6 +52,20 @@ public class PresetQuinzicalModel extends QuizModel {
 		return _score;
 	}
 
+	@Override
+	public void selectCategory(Category item) {
+		Question q = item.getActiveQuestion();
+		beginQuestion(q, q.getValue());
+		setState(State.CATEGORY_PREVIEW);
+	}
+
+	/**
+	 * 
+	 */
+	public void confirmCategory() {
+		setState(State.ANSWER_QUESTION);
+	}
+
 	/*
 	 * Below are utility methods to select 5 categories/questions and return List<Category> / Category
 	 */
@@ -89,12 +103,5 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 		*/
 		return new Category(fiveQuestions, c.getName());
-	}
-
-	@Override
-	public void selectCategory(Category item) {
-		Question q = item.getActiveQuestion();
-		beginQuestion(q, q.getValue());
-		setState(State.CATEGORY_PREVIEW);
 	}
 }

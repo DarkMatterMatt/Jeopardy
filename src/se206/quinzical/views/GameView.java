@@ -44,7 +44,7 @@ public class GameView extends SwitcherView {
 
 		// listen for state changes
 		onModelStateChange();
-		_model.getPracticeModel().getStateProperty().addListener((obs, old, val) -> onModelStateChange());
+		_presetModel.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
 	}
 
 	private void onModelStateChange() {
