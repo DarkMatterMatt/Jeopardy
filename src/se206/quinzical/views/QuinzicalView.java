@@ -10,7 +10,7 @@ public class QuinzicalView extends SwitcherView {
 	public QuinzicalView(QuinzicalModel model) {
 		_model = model;
 
-		_menuView = new MenuView();
+		_menuView = new MenuView(_model);
 		_quizView = new QuizView(_model);
 		getView().getChildren().addAll(_menuView.getView(), _quizView.getView());
 		addStylesheet("quinzical.css");

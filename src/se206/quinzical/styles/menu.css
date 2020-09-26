@@ -1,0 +1,17 @@
+.menu {
+    -fx-alignment: center;
+    -fx-background-color: -c-grey-00;
+    -fx-background-image: url("../assets/splash-pattern.png");
+    -fx-background-position: center;
+    -fx-background-repeat: repeat;
+}
+
+.menu .title {
+    -fx-font-size: 64;
+    -fx-padding: 64 32 32 32;
+}
+
+.menu .btn {
+    -fx-font-size: 32;
+    -fx-padding: 4 8 4 8;
+}

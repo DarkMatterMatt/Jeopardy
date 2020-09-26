@@ -84,6 +84,20 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Changes to the 'real' game state
+	 */
+	public void beginGame() {
+		_state.set(State.GAME);
+	}
+
+	/**
+	 * Changes to the 'practice' game state
+	 */
+	public void beginPracticeGame() {
+		_state.set(State.PRACTICE);
+	}
+
+	/**
 	 * Main screen being shown
 	 */
 	public enum State {
