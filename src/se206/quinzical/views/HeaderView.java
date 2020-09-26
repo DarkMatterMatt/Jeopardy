@@ -44,6 +44,7 @@ public class HeaderView extends View {
 		switch (_model.getState()) {
 			case GAME:
 				_subtitleLabel.setText("Winnings: $" + _model.getPresetModel().getScore());
+				break;
 			case PRACTICE:
 				_subtitleLabel.setText("Practice Mode");
 				break;
