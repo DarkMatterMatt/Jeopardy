@@ -21,6 +21,7 @@ public class QuizContentView extends SwitcherView {
 		switch (_model.getState()) {
 			case GAME:
 				switchToView(_gameView.getView());
+				break;
 			case PRACTICE:
 				switchToView(_practiceView.getView());
 				break;
