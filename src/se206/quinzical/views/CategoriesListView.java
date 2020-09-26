@@ -58,9 +58,9 @@ public class CategoriesListView extends View {
 					}else {
 						HBox displayedItem = new CategoriesListItemView(item).getView();
 						if(item.isSelected()) {
-							displayedItem.getStyleClass().addAll("text-bold","category-selected");
+							displayedItem.getStyleClass().addAll("text-bold", "category", "selected");
 						}else {
-							displayedItem.getStyleClass().addAll("text-bold","category-not-selected");
+							displayedItem.getStyleClass().addAll("text-bold", "category", "not-selected");
 						}
 						setGraphic(displayedItem);
 					}
@@ -112,10 +112,10 @@ public class CategoriesListView extends View {
 			_container.getChildren().add(label);
 
 			//styling
-			if(item.isSelected()) {
-				label.setStyle("-fx-text-fill: black;");
-			}else {
-				label.setStyle("-fx-text-fill: white;");
+			if (item.isSelected()) {
+				label.getStyleClass().add("text-black");
+			} else {
+				label.getStyleClass().add("text-white");
 			}
 		}
 

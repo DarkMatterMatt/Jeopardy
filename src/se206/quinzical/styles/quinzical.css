@@ -2,6 +2,10 @@
     -fx-cursor: hand;
 }
 
+.text-black {
+    -fx-text-fill: -c-grey-03;
+}
+
 .text-bold {
     -fx-font-weight: bold;
 }

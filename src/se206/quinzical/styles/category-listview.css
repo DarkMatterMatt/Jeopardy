@@ -10,10 +10,8 @@
 .list-cell:filled:selected {
     -fx-background-color: -c-grey-01;
     /* it was -c-gold */
-    -fx-background-insets: 0 ;
-    -fx-text-fill: black;
+    -fx-background-insets: 0;
 }
-
 
 .list-view:focused {
     /* -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;  */
@@ -26,18 +24,22 @@
     -fx-background-color: -c-grey-01;
 }
 
-.category-not-selected{
+.category {
     -fx-alignment: center;
     -fx-padding: 16 0 16 0;
+    -fx-border-width: 2;
+    -fx-border-color: transparent; /* invisible border */
+}
+
+.category.not-selected {
     -fx-background-color: -c-grey-03;
 }
 
-.category-selected {
-    -fx-alignment: center;
-    -fx-background-color: -c-gold;
-    -fx-padding: 16 0 16 0;
+.category.not-selected:hover {
+    -fx-background-color: -c-grey-08;
+    -fx-border-color: -c-gold;
 }
 
-.text-black{
-    -fx-text-fill: black;
+.category.selected {
+    -fx-background-color: -c-gold;
 }
