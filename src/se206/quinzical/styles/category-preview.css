@@ -1,6 +1,8 @@
 .category-preview {
     -fx-background-color: -c-grey-01;
-    -fx-padding: 32;
+    -fx-padding: 48;
+    -fx-max-height: 230;
+    -fx-max-width: 460;
 }
 
 .category-preview .category-description {

@@ -88,6 +88,7 @@ public class CategoriesListView extends View {
 		topText.getStyleClass().addAll("text-large", "text-bold", "text-gold");
 		_textBox.getStyleClass().addAll("text-container");
 
+		_container.getStyleClass().add("categories-list");
 		addStylesheet("category-listview.css");
 	}
 
