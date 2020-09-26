@@ -1,11 +1,11 @@
 package se206.quinzical.models;
 
+import java.util.List;
+
 public class PracticeModel extends QuizModel {
 	public PracticeModel(QuinzicalModel model) {
 		super(model);
 	}
-	
-
 
 	@Override
 	public void answerQuestion(String answer) {
@@ -13,11 +13,14 @@ public class PracticeModel extends QuizModel {
 			throw new IllegalStateException("Previous state should be ANSWER_QUESTION, found " + getState());
 		}
 		boolean correct = getCurrentQuestion().checkAnswer(answer);
-//		boolean correct = true;
+		// boolean correct = true;
 		setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
 	}
 
-
+	@Override
+	public List<Category> getCategories() {
+		return _model.getCategories();
+	}
 
 	@Override
 	public void selectCategory(Category item) {

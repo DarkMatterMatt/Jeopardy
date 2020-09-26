@@ -2,15 +2,16 @@ package se206.quinzical.models;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.image.ImageView;
 import se206.quinzical.models.util.TextToSpeech;
 import se206.quinzical.views.IconView;
 
+import java.util.List;
+
 public abstract class QuizModel {
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.SELECT_CATEGORY);
-	private transient QuinzicalModel _model;
 	private Question _currentQuestion = null;
 	private int _currentQuestionValue;
+	protected transient QuinzicalModel _model;
 
 	public QuizModel(QuinzicalModel model) {
 		_model = model;
@@ -26,8 +27,6 @@ public abstract class QuizModel {
 		_currentQuestionValue = value;
 	}
 
-	public abstract void selectCategory(Category item);
-	
 	/**
 	 * Return to category selection
 	 */
@@ -37,6 +36,8 @@ public abstract class QuizModel {
 		}
 		_state.set(State.SELECT_CATEGORY);
 	}
+
+	public abstract List<Category> getCategories();
 
 	public Question getCurrentQuestion() {
 		return _currentQuestion;
@@ -66,14 +67,8 @@ public abstract class QuizModel {
 		_state.set(State.RESET); // trigger any RESET listeners
 		_state.set(State.SELECT_CATEGORY);
 	}
-	
-	public void skinCategoryImage(IconView icon, String categoryName) {
-		try {
-			icon.setImage("../assets/categoryicons/" + categoryName + ".png");
-		}catch(NullPointerException e) {
-			icon.setImage("../assets/icon-missing.png");
-		}
-	}
+
+	public abstract void selectCategory(Category item);
 
 	/**
 	 * Sets the parent QuinzicalModel model
@@ -81,6 +76,14 @@ public abstract class QuizModel {
 	 */
 	public void setQuinzicalModel(QuinzicalModel model) {
 		_model = model;
+	}
+
+	public void skinCategoryImage(IconView icon, String categoryName) {
+		try {
+			icon.setImage("../assets/categoryicons/" + categoryName + ".png");
+		} catch (NullPointerException e) {
+			icon.setImage("../assets/icon-missing.png");
+		}
 	}
 
 	/**

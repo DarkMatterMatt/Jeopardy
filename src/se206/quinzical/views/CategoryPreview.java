@@ -1,14 +1,11 @@
 package se206.quinzical.views;
 
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
-import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.models.QuizModel;
 
 public class CategoryPreview extends View {
 	private final Pane _container = new Pane();
@@ -18,7 +15,7 @@ public class CategoryPreview extends View {
 	private final HBox _content = new HBox();
 	private final IconView _icon = new IconView();
 
-	public CategoryPreview(QuinzicalModel model) {
+	public CategoryPreview(QuizModel model) {
 		// category icon
 		_icon.setSize(84, 84)
 				.addClass("category-icon");
