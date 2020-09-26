@@ -10,7 +10,7 @@ import java.util.List;
 public class Category implements GsonPostProcessable {
 	private final String _name;
 	private final List<Question> _questions;
-	boolean _isSelected = false;
+	private boolean _isSelected = false;
 	private int _activeQuestion = 0;
 
 	public Category(String name) {
@@ -84,9 +84,9 @@ public class Category implements GsonPostProcessable {
 	public void setUnselected() {
 		_isSelected = false;
 	}
-	
+
 	public Question getRandomQuestion() {
-		List<Integer> list = RandomNumberGenerator.takeFive(_questions.size());		
+		List<Integer> list = RandomNumberGenerator.takeFive(_questions.size());
 		return _questions.get(list.get(0));
 	}
 }
