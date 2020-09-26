@@ -51,6 +51,7 @@ public class AnswerInputView extends View {
 
     private void submit() {
         _model.answerQuestion(_answerInput.getText());
+        clear();
     }
 
     public HBox getView() {

@@ -35,9 +35,14 @@ public class PresetQuinzicalModel extends QuizModel {
 		if (getState() != State.ANSWER_QUESTION) {
 			throw new IllegalStateException("Previous state should be ANSWER_QUESTION, found " + getState());
 		}
-		// boolean correct = getCurrentQuestion().checkAnswer(answer);
-		boolean correct = true;
-		setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
+		boolean correct = getCurrentQuestion().checkAnswer(answer);
+		if (correct) {
+			setState(State.CORRECT_ANSWER);
+			_score.set(_score.get() + getCurrentQuestion().getValue());
+		}
+		else {
+			setState(State.INCORRECT_ANSWER);
+		}
 	}
 
 	public List<Category> getCategories() {
@@ -60,7 +65,7 @@ public class PresetQuinzicalModel extends QuizModel {
 	}
 
 	/**
-	 * 
+	 * Called from the "category preview" screen, moves to the answer question
 	 */
 	public void confirmCategory() {
 		setState(State.ANSWER_QUESTION);
