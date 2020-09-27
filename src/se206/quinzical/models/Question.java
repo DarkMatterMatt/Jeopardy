@@ -9,6 +9,17 @@ public class Question {
 	private Status _status = Status.UNATTEMPTED;
 	private int _value = -1;
 
+	/**
+	 * Copy constructor, create a copy of a Question
+	 */
+	public Question(Question origQuestion) {
+		_answer = origQuestion._answer;
+		_question = origQuestion._question;
+		_category = origQuestion._category;
+		_status = origQuestion._status;
+		_value = origQuestion._value;
+	}
+
 	public Question(String question, String answer, Category category) {
 		_answer = answer;
 		_category = category;
@@ -33,9 +44,9 @@ public class Question {
 			throw new IllegalArgumentException("answer part (next to comma) should contain a pair of "
 					+ "bracket that encloses either 'who are' 'what is/are' 'where is/are'");
 		}
-		
+
 		// Who is / where is/ etc = tmpAParsed[0].substring(1).trim()
-		_question = tmpQ.substring(0, 1).toUpperCase()+ tmpQ.substring(1).toLowerCase(); // e.g. Who is NZer who led the land march from Te Hapua to Parliament
+		_question = tmpQ.substring(0, 1).toUpperCase() + tmpQ.substring(1).toLowerCase(); // e.g. Who is NZer who led the land march from Te Hapua to Parliament
 
 		// construct answer
 		tmpA = tmpAParsed[1].trim();
@@ -65,10 +76,6 @@ public class Question {
 		return _category;
 	}
 
-	public int getValue() {
-		return _value;
-	}
-	
 	/**
 	 * Sets the parent category that contains this question
 	 * Used by Category deserializer
@@ -85,8 +92,20 @@ public class Question {
 		return _status;
 	}
 
-	
-	
+	/**
+	 * Get the value of the question
+	 */
+	public int getValue() {
+		return _value;
+	}
+
+	/**
+	 * Set the value of the question
+	 */
+	public void setValue(int value) {
+		_value = value;
+	}
+
 	/**
 	 * Question status
 	 */
