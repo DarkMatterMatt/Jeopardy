@@ -14,18 +14,32 @@ import java.util.List;
  * @author Hajin Kim
  */
 public class PresetQuinzicalModel extends QuizModel {
-	private final List<Category> _fiveCategoriesWithFiveQuestions;
+	private static final int CATEGORIES_PER_GAME = 5;
+	private static final int QUESTIONS_PER_CATEGORY = 5;
+
+	private final List<Category> _categories = new ArrayList<>();
 	private final IntegerProperty _score = new SimpleIntegerProperty();
 
-	public PresetQuinzicalModel(QuinzicalModel qdb) {
-		super(qdb);
+	public PresetQuinzicalModel(QuinzicalModel model) {
+		super(model);
 
-		_fiveCategoriesWithFiveQuestions = new ArrayList<>();
+		// pick the five categories that will be used for this game
+		List<Category> fullCategories = RandomNumberGenerator.getNRandom(model.getCategories(), CATEGORIES_PER_GAME);
 
-		List<Category> categories = selectFiveCategories(qdb);
-		for (Category category : categories) {
-			Category newCategory = selectFiveQuestions(category);
-			_fiveCategoriesWithFiveQuestions.add(newCategory);
+		for (Category fullCategory : fullCategories) {
+			// this new category will have a copy of each of the questions, with the value set
+			Category newCategory = new Category(fullCategory.getName());
+			_categories.add(newCategory);
+
+			// pick the five categories that will be used for this category
+			List<Question> questions = RandomNumberGenerator.getNRandom(fullCategory.getQuestions(), QUESTIONS_PER_CATEGORY);
+
+			// go through each question, clone it and set its value, then add it to the category
+			for (int i = 0; i < questions.size(); i++) {
+				Question newQuestion = new Question(questions.get(i));
+				newQuestion.setValue(100 * (i + 1));
+				newCategory.addQuestion(newQuestion);
+			}
 		}
 	}
 
@@ -45,7 +59,7 @@ public class PresetQuinzicalModel extends QuizModel {
 	}
 
 	public List<Category> getCategories() {
-		return Collections.unmodifiableList(_fiveCategoriesWithFiveQuestions);
+		return Collections.unmodifiableList(_categories);
 	}
 
 	public int getScore() {
@@ -68,45 +82,5 @@ public class PresetQuinzicalModel extends QuizModel {
 	 */
 	public void confirmCategory() {
 		setState(State.ANSWER_QUESTION);
-	}
-
-	/*
-	 * Below are utility methods to select 5 categories/questions and return List<Category> / Category
-	 */
-
-	public List<Category> selectFiveCategories(QuinzicalModel qdb) {
-		return RandomNumberGenerator.getNRandom(qdb.getCategories(), 5);
-		/*
-		if (qdb._categories.size() == 0) {
-			return new ArrayList<>();
-		}
-
-		List<Integer> fiveNumbers = RandomNumberGenerator.takeFive(qdb._categories.size());
-		List<Category> result = new ArrayList<>();
-
-		for (Integer n : fiveNumbers) {
-			// get nth category from the categories set, and add to the preset categories
-			result.add(qdb._categories.get(n));
-		}
-		return result;
-		*/
-	}
-
-	public Category selectFiveQuestions(Category c) {
-		List<Question> fiveQuestions = RandomNumberGenerator.getNRandom(c.getQuestions(), 5);
-
-		/*
-		List<Integer> fiveNumbers = RandomNumberGenerator.takeFive(c.getQuestions().size());
-		List<Question> fiveQuestions = new ArrayList<>();
-		int value = 100;
-		for (Integer n : fiveNumbers) {
-			// get nth question from the questions of the category
-			Question q = c.getQuestions().get(n);
-			// assign value
-			fiveQuestions.add(q);
-			value = value + 100;
-		}
-		*/
-		return new Category(fiveQuestions, c.getName());
 	}
 }
