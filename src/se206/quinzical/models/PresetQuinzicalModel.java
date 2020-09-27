@@ -7,7 +7,6 @@ import se206.quinzical.models.util.RandomNumberGenerator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * PresetQuinzicalModel contains categories, questions, score & other game info for the main mode.
@@ -76,6 +75,8 @@ public class PresetQuinzicalModel extends QuizModel {
 	 */
 
 	public List<Category> selectFiveCategories(QuinzicalModel qdb) {
+		return RandomNumberGenerator.getNRandom(qdb.getCategories(), 5);
+		/*
 		if (qdb._categories.size() == 0) {
 			return new ArrayList<>();
 		}
@@ -88,12 +89,11 @@ public class PresetQuinzicalModel extends QuizModel {
 			result.add(qdb._categories.get(n));
 		}
 		return result;
+		*/
 	}
 
 	public Category selectFiveQuestions(Category c) {
-		List<Question> copyOfQuestions = new ArrayList<>(c.getQuestions());
-		Collections.shuffle(copyOfQuestions);
-		List<Question> fiveQuestions = copyOfQuestions.stream().limit(5).collect(Collectors.toList());
+		List<Question> fiveQuestions = RandomNumberGenerator.getNRandom(c.getQuestions(), 5);
 
 		/*
 		List<Integer> fiveNumbers = RandomNumberGenerator.takeFive(c.getQuestions().size());

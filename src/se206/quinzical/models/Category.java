@@ -85,8 +85,15 @@ public class Category implements GsonPostProcessable {
 		_isSelected = false;
 	}
 
+	/**
+	 * Returns a random question in the category, or null if there are no questions
+	 */
 	public Question getRandomQuestion() {
+		if (_questions.size() == 0) return null;
+		return RandomNumberGenerator.getNRandom(_questions, 1).get(0);
+		/*
 		List<Integer> list = RandomNumberGenerator.takeFive(_questions.size());
 		return _questions.get(list.get(0));
+		*/
 	}
 }

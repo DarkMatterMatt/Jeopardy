@@ -17,7 +17,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
-	List<Category> _categories;
+	private final List<Category> _categories;
 
 	public QuinzicalModel() {
 		//read files from directory
