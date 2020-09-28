@@ -1,0 +1,23 @@
+.game-over {
+    -fx-alignment: top-center;
+    -fx-background-color: -c-grey-01;
+    -fx-padding: 48;
+}
+
+.game-over .title {
+    -fx-font-size: 48;
+    -fx-padding: 24;
+}
+
+.game-over .subtitle {
+    -fx-font-size: 24;
+    -fx-padding: 0 12 36 12;
+    -fx-text-alignment: center;
+}
+
+.game-over .reset {
+    -fx-background-color: -c-gold;
+    -fx-background-radius: 4;
+    -fx-font-size: 24;
+    -fx-padding: 8 16 8 16;
+}
