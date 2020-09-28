@@ -17,7 +17,7 @@ public class PresetQuinzicalModel extends QuizModel {
 	private static final int CATEGORIES_PER_GAME = 5;
 	private static final int QUESTIONS_PER_CATEGORY = 5;
 	private final List<Category> _categories = new ArrayList<>();
-	private final QuinzicalModel _model;
+	private transient final QuinzicalModel _model;
 	private final IntegerProperty _score = new SimpleIntegerProperty();
 
 	public PresetQuinzicalModel(QuinzicalModel model) {

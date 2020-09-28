@@ -29,10 +29,10 @@ public abstract class QuizModel {
 	 * Return to category selection
 	 */
 	public void finishQuestion() {
-		if (_state.get() != State.CORRECT_ANSWER && _state.get() != State.INCORRECT_ANSWER) {
+		if (getState() != State.CORRECT_ANSWER && getState() != State.INCORRECT_ANSWER) {
 			throw new IllegalStateException("Can only reset when in the CORRECT_ANSWER or INCORRECT_ANSWER state");
 		}
-		_state.set(State.SELECT_CATEGORY);
+		setState(State.SELECT_CATEGORY);
 	}
 
 	public abstract List<Category> getCategories();
@@ -51,6 +51,7 @@ public abstract class QuizModel {
 
 	protected void setState(State state) {
 		_state.set(state);
+		save();
 	}
 
 	public ObjectProperty<State> getStateProperty() {
@@ -59,6 +60,13 @@ public abstract class QuizModel {
 
 	public TextToSpeech getTextToSpeech() {
 		return _model.getTextToSpeech();
+	}
+
+	/**
+	 * Save current state to disk
+	 */
+	public void save() {
+		_model.save();
 	}
 
 	public abstract void selectCategory(Category item);

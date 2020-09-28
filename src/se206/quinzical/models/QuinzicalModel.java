@@ -1,23 +1,32 @@
 package se206.quinzical.models;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import se206.quinzical.models.util.FileBrowser;
-import se206.quinzical.models.util.GsonPostProcessable;
-import se206.quinzical.models.util.MyScanner;
-import se206.quinzical.models.util.TextToSpeech;
+import org.hildan.fxgson.FxGson;
+import se206.quinzical.models.util.*;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class QuinzicalModel implements GsonPostProcessable {
+	private final List<Category> _categories;
+	private final transient Gson _gson = FxGson.coreBuilder()
+			.registerTypeAdapterFactory(new GsonPostProcessingEnabler())
+			.setPrettyPrinting()
+			.disableHtmlEscaping()
+			.create();
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
-	private final List<Category> _categories;
+	private transient String _saveFileLocation = "./.save";
 
 	public QuinzicalModel() {
 		//read files from directory
@@ -34,7 +43,8 @@ public class QuinzicalModel implements GsonPostProcessable {
 				try {
 					Question question = new Question(rawQuestion, newCategory);
 					newCategory.addQuestion(question);
-				} catch (IllegalArgumentException e) {
+				}
+				catch (IllegalArgumentException e) {
 					//
 				}
 			}
@@ -44,6 +54,20 @@ public class QuinzicalModel implements GsonPostProcessable {
 
 		_presetModel = new PresetQuinzicalModel(this);
 		_practiceModel = new PracticeModel(this);
+	}
+
+	/**
+	 * Changes to the 'real' game state
+	 */
+	public void beginGame() {
+		setState(State.GAME);
+	}
+
+	/**
+	 * Changes to the 'practice' game state
+	 */
+	public void beginPracticeGame() {
+		setState(State.PRACTICE);
 	}
 
 	public List<Category> getCategories() {
@@ -58,8 +82,21 @@ public class QuinzicalModel implements GsonPostProcessable {
 		return _presetModel;
 	}
 
+	public String getSaveFileLocation() {
+		return _saveFileLocation;
+	}
+
+	private void setSaveFileLocation(String saveFileLocation) {
+		_saveFileLocation = saveFileLocation;
+	}
+
 	public State getState() {
 		return _state.get();
+	}
+
+	private void setState(State state) {
+		_state.set(state);
+		save();
 	}
 
 	public ObjectProperty<State> getStateProperty() {
@@ -77,24 +114,27 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	public void reset() {
-		if (_state.get() != State.GAME) {
+		if (getState() != State.GAME) {
 			throw new IllegalStateException("Can only reset when in the GAME state");
 		}
 		_presetModel.reset();
 	}
 
 	/**
-	 * Changes to the 'real' game state
+	 * Save current state to disk
 	 */
-	public void beginGame() {
-		_state.set(State.GAME);
-	}
-
-	/**
-	 * Changes to the 'practice' game state
-	 */
-	public void beginPracticeGame() {
-		_state.set(State.PRACTICE);
+	public void save() {
+		try (Writer writer = new FileWriter(_saveFileLocation)) {
+			_gson.toJson(this, writer);
+		}
+		catch (JsonIOException err) {
+			System.err.println("Failed serializing game state");
+			err.printStackTrace();
+		}
+		catch (IOException err) {
+			System.err.println("Failed opening save file for writing");
+			err.printStackTrace();
+		}
 	}
 
 	/**
