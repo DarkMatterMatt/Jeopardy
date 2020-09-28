@@ -13,22 +13,25 @@ public class PracticeModel extends QuizModel {
 			throw new IllegalStateException("Previous state should be ANSWER_QUESTION, found " + getState());
 		}
 		boolean correct = getCurrentQuestion().checkAnswer(answer);
-		// boolean correct = true;
-		setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
 		
 		// count number of attempts 
 		Question q = _model.getPracticeModel().getCurrentQuestion();
 		// increase number of attempt for that question
-		q.setNumAttempted(q.getNumAttempted()+1);
+		if(!correct) q.setNumAttempted(q.getNumAttempted()+1);
 		
-		System.out.println("attempted "+q.getNumAttempted());
+		// refresh (needed for hint to appear at third time)
+		setState(State.SELECT_CATEGORY);
+		setState(State.ANSWER_QUESTION);
+		
 		// if that question has been answered 3 times, reset that question
 		// and change the active question to different random question
-		if(q.getNumAttempted() >= 3) {
+		if(correct || q.getNumAttempted()>=3) {
 			q.setNumAttempted(0);
-			q.getCategory().setActiveQUestionInPracticeModule(q.getCategory().getRandomQuestion());
+			q.getCategory().setActiveQUestionInPracticeModule(q.getCategory().getRandomQuestion());			
+			setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
 		}
 		
+
 		
 	}
 

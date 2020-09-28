@@ -25,7 +25,7 @@ public class IncorrectView extends View {
 		Label answerPrefixLabel = new Label("The correct answer was ");
 		Label answerSuffixLabel = new Label(".");
 		TextFlow answerText = new TextFlow(answerPrefixLabel, _answerLabel, answerSuffixLabel);
-
+		
 		answerText.getStyleClass().add("text-flow");
 		incorrectLabel.getStyleClass().addAll("text-bold", "text-main");
 		_answerLabel.getStyleClass().add("text-bold");

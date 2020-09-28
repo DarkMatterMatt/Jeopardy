@@ -1,5 +1,6 @@
 package se206.quinzical.views;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,15 +16,33 @@ public class AnswerView extends View {
 	private final IconView _iconView = new IconView();
 	private final QuizModel _model;
 	private final Label _questionLabel = new Label();
-	private final HBox _hintBox=new HBox();
+	private final AnswerInputView _answerInputView;
+	private final HBox _hintBox;
 
 	public AnswerView(QuizModel model) {
 		_model = model;
+		_answerInputView = new AnswerInputView(_model);
+		
+		
+		Label label = new Label("Hint Displayed  ");
+		label.getStyleClass().addAll("text-small", "text-white");
+		IconView hintIcon = new IconView();
+		hintIcon.setImage("../assets/light.png");	
+		hintIcon.getView().setOnMouseClicked(e->{
 
-		AnswerInputView answerInputView = new AnswerInputView(_model);
-		HBox categoryContainer = new HBox(_iconView.getView(), _categoryLabel);
+		});
+		
+		
+		_hintBox = new HBox(label, hintIcon.getView());
+	
+
+		
+
+		HBox categoryContainer = new HBox(_iconView.getView(), _categoryLabel, _hintBox);
+		_hintBox.setPrefWidth(200);
+		_hintBox.setAlignment(Pos.CENTER_RIGHT);
 		categoryContainer.getStyleClass().add("category-container");
-		HBox hintView = new HBox();
+
 
 		_categoryLabel.getStyleClass().addAll("text-bold", "text-gold", "category");
 		_questionLabel.getStyleClass().addAll("text-white", "question");
@@ -35,7 +54,7 @@ public class AnswerView extends View {
 		// add container styles
 		addStylesheet("answer.css");
 		_container.getStyleClass().add("answer");
-		_container.getChildren().addAll(categoryContainer, _questionLabel, answerInputView.getView());
+		_container.getChildren().addAll(categoryContainer, _questionLabel, _answerInputView.getView());
 
 		// reload screen when we are made visible
 		onVisibilityChanged();
@@ -64,18 +83,22 @@ public class AnswerView extends View {
 	private void questionUpdate(Question q) {
 		if (q == null) return;
 		
-		if(q.getNumAttempted()>=2) {
-//			_hintBox.setVisible(true);
-		}else {
-//			_hintBox.setVisible(false);
-		}
-		
-
 		String categoryName = (q!=null)?q.getCategory().getName():"Select other categories";
 		String question = (q!=null)?q.getQuestion():"There are no more available questions in this category";
 		
 		_model.skinCategoryImage(_iconView, categoryName);
 		_categoryLabel.setText(categoryName);
-		_questionLabel.setText(question);
+		
+		
+		if(q.getNumAttempted()==2) {
+			_hintBox.setVisible(true);
+			_questionLabel.setText(question+"\n\n"+"Hint: the answer starts with letter "+q.getAnswer().charAt(0));
+		}else {
+			_hintBox.setVisible(false);
+			_questionLabel.setText(question);
+		}
+
+
+
 	}
 }

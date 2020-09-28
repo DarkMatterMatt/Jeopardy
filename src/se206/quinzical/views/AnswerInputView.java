@@ -49,6 +49,9 @@ public class AnswerInputView extends View {
         _answerInput.clear();
     }
 
+    public TextField getInputField() {
+    	return _answerInput;
+    }
     private void submit() {
         _model.answerQuestion(_answerInput.getText());
         clear();

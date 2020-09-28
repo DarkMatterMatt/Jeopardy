@@ -18,6 +18,10 @@
     -fx-font-size: 32;
 }
 
+.text-small{
+	-fx-font-size: 16;
+}
+
 .text-white {
     -fx-text-fill: -c-off-white;
 }
