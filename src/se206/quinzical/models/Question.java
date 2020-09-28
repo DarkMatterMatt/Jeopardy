@@ -8,6 +8,7 @@ public class Question {
 	private transient Category _category;
 	private Status _status = Status.UNATTEMPTED;
 	private int _value = -1;
+	private int _numAttempted;
 
 	/**
 	 * Copy constructor, create a copy of a Question
@@ -92,6 +93,15 @@ public class Question {
 		return _status;
 	}
 
+	public int getNumAttempted() {
+		return _numAttempted;
+	}
+	
+	public void setNumAttempted(int i) {
+		_numAttempted = i;
+	}
+	
+	
 	/**
 	 * Get the value of the question
 	 */

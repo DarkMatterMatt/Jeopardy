@@ -15,6 +15,7 @@ public class AnswerView extends View {
 	private final IconView _iconView = new IconView();
 	private final QuizModel _model;
 	private final Label _questionLabel = new Label();
+	private final HBox _hintBox=new HBox();
 
 	public AnswerView(QuizModel model) {
 		_model = model;
@@ -22,6 +23,7 @@ public class AnswerView extends View {
 		AnswerInputView answerInputView = new AnswerInputView(_model);
 		HBox categoryContainer = new HBox(_iconView.getView(), _categoryLabel);
 		categoryContainer.getStyleClass().add("category-container");
+		HBox hintView = new HBox();
 
 		_categoryLabel.getStyleClass().addAll("text-bold", "text-gold", "category");
 		_questionLabel.getStyleClass().addAll("text-white", "question");
@@ -60,7 +62,14 @@ public class AnswerView extends View {
 	 * Update display to show question details
 	 */
 	private void questionUpdate(Question q) {
-		//if (q == null) return;
+		if (q == null) return;
+		
+		if(q.getNumAttempted()>=2) {
+//			_hintBox.setVisible(true);
+		}else {
+//			_hintBox.setVisible(false);
+		}
+		
 
 		String categoryName = (q!=null)?q.getCategory().getName():"Select other categories";
 		String question = (q!=null)?q.getQuestion():"There are no more available questions in this category";

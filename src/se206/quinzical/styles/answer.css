@@ -9,7 +9,7 @@
 }
 
 .answer .category-container {
-    -fx-alignment: center;
+    -fx-alignment: center-left;
 }
 
 .answer .category-icon {

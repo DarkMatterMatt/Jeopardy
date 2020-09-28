@@ -12,6 +12,7 @@ public class Category implements GsonPostProcessable {
 	private final List<Question> _questions;
 	private boolean _isSelected = false;
 	private int _activeQuestion = 0;
+	private Question _activeQuestionInPracticeModule;
 
 	public Category(String name) {
 		_name = name;
@@ -96,4 +97,16 @@ public class Category implements GsonPostProcessable {
 		return _questions.get(list.get(0));
 		*/
 	}
+	
+	public Question getActiveQuestionInPracticeModule() {
+		if (_activeQuestionInPracticeModule == null) {
+			_activeQuestionInPracticeModule = getRandomQuestion();
+		}
+		return _activeQuestionInPracticeModule;
+	}
+	public void setActiveQUestionInPracticeModule(Question q) {
+		_activeQuestionInPracticeModule = q;
+	}
+	
+	
 }

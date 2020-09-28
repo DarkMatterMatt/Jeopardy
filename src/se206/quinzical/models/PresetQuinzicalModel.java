@@ -41,8 +41,45 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
+	/**
+	 * Called from the "category preview" screen, moves to the answer question
+	 */
+	public void confirmCategory() {
+		setState(State.ANSWER_QUESTION);
+
+		// the next time the category is selected, the next question will be chosen
+		getCurrentQuestion().getCategory().moveToNextQuestion();
+	}
+
+	@Override
+	public void finishQuestion() {
+		super.finishQuestion();
+
+		if (getNumRemaining() > 0) {
+			// update "current question" to be the next question in the same category
+			selectCategory(getCurrentQuestion().getCategory());
+		}
+		else {
+			setState(State.GAME_OVER);
+		}
+	}
+
 	public List<Category> getCategories() {
 		return Collections.unmodifiableList(_categories);
+	}
+
+	/**
+	 * Returns the number of questions that have been attempted
+	 */
+	public long getNumAttempted() {
+		return _categories.stream().mapToLong(Category::getNumAttempted).sum();
+	}
+
+	/**
+	 * Returns the number of questions that have not been attempted
+	 */
+	public long getNumRemaining() {
+		return _categories.stream().mapToLong(Category::getNumRemaining).sum();
 	}
 
 	public int getScore() {
@@ -95,23 +132,5 @@ public class PresetQuinzicalModel extends QuizModel {
 	public void selectCategory(Category item) {
 		beginQuestion(item.getActiveQuestion());
 		setState(State.CATEGORY_PREVIEW);
-	}
-
-	/**
-	 * Called from the "category preview" screen, moves to the answer question
-	 */
-	public void confirmCategory() {
-		setState(State.ANSWER_QUESTION);
-
-		// the next time the category is selected, the next question will be chosen
-		getCurrentQuestion().getCategory().moveToNextQuestion();
-	}
-
-	@Override
-	public void finishQuestion() {
-		super.finishQuestion();
-
-		// update "current question" to be the next question in the same category
-		selectCategory(getCurrentQuestion().getCategory());
 	}
 }

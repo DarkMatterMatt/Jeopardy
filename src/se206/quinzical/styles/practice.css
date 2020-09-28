@@ -1,0 +1,8 @@
+.practice {
+    -fx-padding: 48;
+}
+
+.practice .practice-view-container {
+    -fx-alignment: center;
+    -fx-padding: 48 0 48 48;
+}

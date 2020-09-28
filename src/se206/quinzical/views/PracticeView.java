@@ -1,6 +1,8 @@
 package se206.quinzical.views;
 
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import se206.quinzical.models.PracticeModel;
 import se206.quinzical.models.QuinzicalModel;
 /**
@@ -22,11 +24,14 @@ public class PracticeView extends View {
 
 		CategoriesListView list = new CategoriesListView(_model.getPracticeModel());
 		SwitcherView content = new PracticeSwitcher(_model.getPracticeModel());
+		//center the answer view
+		VBox listContainer = new VBox(list.getView());
+		HBox.setHgrow(listContainer, Priority.ALWAYS);
+		listContainer.getStyleClass().add("practice-view-container");
 
+		addStylesheet("practice.css");
 		_container.getChildren().addAll(list.getView(), content.getView());
-
 	}
-
 	@Override
 	public HBox getView() {
 		return _container;
@@ -37,7 +42,7 @@ class PracticeSwitcher extends SwitcherView{
 	private final PracticeModel _practiceModel;
 
 	// incorrect, correct, question asking,
-	private final AnswerView _answerQuestion;
+	private final AnswerView answerView;
 	private final CorrectView _correctPane;
 	private final IncorrectView _incorrectPane;
 	private final HBox _nothingChosen;
@@ -46,13 +51,20 @@ class PracticeSwitcher extends SwitcherView{
 		_practiceModel = practiceModel;
 
 		//initialise possible views
-		_answerQuestion = new AnswerView(_practiceModel);
+		answerView = new AnswerView(_practiceModel);
 		_correctPane = new CorrectView(_practiceModel);
 		_incorrectPane = new IncorrectView(_practiceModel);
 		_nothingChosen = new HBox();
 
-		getView().getChildren().addAll(_answerQuestion.getView(), _correctPane.getView(), _incorrectPane.getView(), _nothingChosen);
+//		//center the answer view
+//		_answerQuestion = new VBox(answerView.getView());
+//		HBox.setHgrow(_answerQuestion, Priority.ALWAYS);
+//		_answerQuestion.getStyleClass().add("practice-view-container");
+//		getView().getStyleClass().add("practice");
 
+
+		getView().getChildren().addAll(answerView.getView(), _correctPane.getView(), _incorrectPane.getView(), _nothingChosen);
+		
 		//start with nothing chosen.
 		switchToView(_nothingChosen);
 		_practiceModel.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
@@ -70,7 +82,7 @@ class PracticeSwitcher extends SwitcherView{
 				switchToView(_correctPane.getView());
 				break;
 			case ANSWER_QUESTION:
-				switchToView(_answerQuestion.getView());
+				switchToView(answerView.getView());
 				break;
 			default:
 				throw new UnsupportedOperationException("Unexpected model state");
