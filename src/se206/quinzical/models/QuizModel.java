@@ -21,7 +21,7 @@ public abstract class QuizModel {
 	 */
 	public abstract void answerQuestion(String answer);
 
-	public void beginQuestion(Question question, int value) {
+	public void beginQuestion(Question question) {
 		_currentQuestion.set(question);
 	}
 

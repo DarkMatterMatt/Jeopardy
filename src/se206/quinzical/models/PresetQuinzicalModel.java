@@ -37,6 +37,7 @@ public class PresetQuinzicalModel extends QuizModel {
 			// go through each question, clone it and set its value, then add it to the category
 			for (int i = 0; i < questions.size(); i++) {
 				Question newQuestion = new Question(questions.get(i));
+				newQuestion.setCategory(newCategory);
 				newQuestion.setValue(100 * (i + 1));
 				newCategory.addQuestion(newQuestion);
 			}
@@ -72,8 +73,7 @@ public class PresetQuinzicalModel extends QuizModel {
 
 	@Override
 	public void selectCategory(Category item) {
-		Question q = item.getActiveQuestion();
-		beginQuestion(q, q.getValue());
+		beginQuestion(item.getActiveQuestion());
 		setState(State.CATEGORY_PREVIEW);
 	}
 
@@ -82,5 +82,16 @@ public class PresetQuinzicalModel extends QuizModel {
 	 */
 	public void confirmCategory() {
 		setState(State.ANSWER_QUESTION);
+
+		// the next time the category is selected, the next question will be chosen
+		getCurrentQuestion().getCategory().moveToNextQuestion();
+	}
+
+	@Override
+	public void finishQuestion() {
+		super.finishQuestion();
+
+		// update "current question" to be the next question in the same category
+		selectCategory(getCurrentQuestion().getCategory());
 	}
 }

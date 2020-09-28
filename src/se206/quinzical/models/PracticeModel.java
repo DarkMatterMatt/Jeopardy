@@ -24,8 +24,7 @@ public class PracticeModel extends QuizModel {
 
 	@Override
 	public void selectCategory(Category item) {
-		Question q = item.getRandomQuestion();
-		beginQuestion(q, 0);
+		beginQuestion(item.getRandomQuestion());
 		setState(QuizModel.State.SELECT_CATEGORY);
 		setState(QuizModel.State.ANSWER_QUESTION);
 	}
