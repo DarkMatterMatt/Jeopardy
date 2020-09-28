@@ -13,6 +13,7 @@ public class GameView extends SwitcherView {
 	private final AnswerView _answerQuestion;
 	private final CorrectView _correctPane;
 	private final IncorrectView _incorrectPane;
+	private final GameOverPane _gameOverPane;
 	private final QuinzicalModel _model;
 	private final PresetQuinzicalModel _presetModel;
 	private final HBox _questionSelectContainer = new HBox();
@@ -25,6 +26,7 @@ public class GameView extends SwitcherView {
 		_answerQuestion = new AnswerView(_presetModel);
 		_correctPane = new CorrectView(_presetModel);
 		_incorrectPane = new IncorrectView(_presetModel);
+		_gameOverPane = new GameOverPane(_presetModel);
 
 		CategoriesListView categoriesListPane = new CategoriesListView(_presetModel);
 		CategoryPreview categoryPreviewPane = new CategoryPreview(_presetModel);
@@ -40,7 +42,8 @@ public class GameView extends SwitcherView {
 		// add styles
 		addStylesheet("game.css");
 		getView().getStyleClass().add("game");
-		getView().getChildren().addAll(_questionSelectContainer, _answerQuestion.getView(), _correctPane.getView(), _incorrectPane.getView());
+		getView().getChildren().addAll(_questionSelectContainer, _answerQuestion.getView(),
+				_correctPane.getView(), _incorrectPane.getView(), _gameOverPane.getView());
 
 		// listen for state changes
 		onModelStateChange();
@@ -51,6 +54,7 @@ public class GameView extends SwitcherView {
 		switch (_presetModel.getState()) {
 			case SELECT_CATEGORY:
 			case CATEGORY_PREVIEW:
+			case RESET:
 				switchToView(_questionSelectContainer);
 				break;
 			case INCORRECT_ANSWER:
@@ -63,10 +67,10 @@ public class GameView extends SwitcherView {
 				switchToView(_answerQuestion.getView());
 				break;
 			case GAME_OVER:
-				// tell model that we're finished
+				switchToView(_gameOverPane.getView());
 				break;
 			default:
-				throw new UnsupportedOperationException("Unexpected model state");
+				throw new UnsupportedOperationException("Unexpected model state: " + _presetModel.getState());
 		}
 	}
 }
