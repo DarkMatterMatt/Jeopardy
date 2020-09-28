@@ -59,24 +59,6 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
-	public List<Category> getCategories() {
-		return Collections.unmodifiableList(_categories);
-	}
-
-	public int getScore() {
-		return _score.get();
-	}
-
-	public IntegerProperty getScoreProperty() {
-		return _score;
-	}
-
-	@Override
-	public void selectCategory(Category item) {
-		beginQuestion(item.getActiveQuestion());
-		setState(State.CATEGORY_PREVIEW);
-	}
-
 	/**
 	 * Called from the "category preview" screen, moves to the answer question
 	 */
@@ -93,5 +75,23 @@ public class PresetQuinzicalModel extends QuizModel {
 
 		// update "current question" to be the next question in the same category
 		selectCategory(getCurrentQuestion().getCategory());
+	}
+
+	public List<Category> getCategories() {
+		return Collections.unmodifiableList(_categories);
+	}
+
+	public int getScore() {
+		return _score.get();
+	}
+
+	public IntegerProperty getScoreProperty() {
+		return _score;
+	}
+
+	@Override
+	public void selectCategory(Category item) {
+		beginQuestion(item.getActiveQuestion());
+		setState(State.CATEGORY_PREVIEW);
 	}
 }
