@@ -34,7 +34,7 @@ public class PresetQuinzicalModel extends QuizModel {
 		boolean correct = getCurrentQuestion().checkAnswer(answer);
 		if (correct) {
 			setState(State.CORRECT_ANSWER);
-			_score.set(_score.get() + getCurrentQuestion().getValue());
+			setScore(getScore() + getCurrentQuestion().getValue());
 		}
 		else {
 			setState(State.INCORRECT_ANSWER);
