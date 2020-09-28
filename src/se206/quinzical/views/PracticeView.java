@@ -42,7 +42,7 @@ class PracticeSwitcher extends SwitcherView{
 	private final PracticeModel _practiceModel;
 
 	// incorrect, correct, question asking,
-	private final VBox _answerQuestion;
+	private final AnswerView answerView;
 	private final CorrectView _correctPane;
 	private final IncorrectView _incorrectPane;
 	private final HBox _nothingChosen;
@@ -51,19 +51,19 @@ class PracticeSwitcher extends SwitcherView{
 		_practiceModel = practiceModel;
 
 		//initialise possible views
-		AnswerView answerView = new AnswerView(_practiceModel);
+		answerView = new AnswerView(_practiceModel);
 		_correctPane = new CorrectView(_practiceModel);
 		_incorrectPane = new IncorrectView(_practiceModel);
 		_nothingChosen = new HBox();
 
-		//center the answer view
-		_answerQuestion = new VBox(answerView.getView());
-		HBox.setHgrow(_answerQuestion, Priority.ALWAYS);
-		_answerQuestion.getStyleClass().add("practice-view-container");
-		getView().getStyleClass().add("practice");
+//		//center the answer view
+//		_answerQuestion = new VBox(answerView.getView());
+//		HBox.setHgrow(_answerQuestion, Priority.ALWAYS);
+//		_answerQuestion.getStyleClass().add("practice-view-container");
+//		getView().getStyleClass().add("practice");
 
 
-		getView().getChildren().addAll(_answerQuestion, _correctPane.getView(), _incorrectPane.getView(), _nothingChosen);
+		getView().getChildren().addAll(answerView.getView(), _correctPane.getView(), _incorrectPane.getView(), _nothingChosen);
 		
 		//start with nothing chosen.
 		switchToView(_nothingChosen);
@@ -82,7 +82,7 @@ class PracticeSwitcher extends SwitcherView{
 				switchToView(_correctPane.getView());
 				break;
 			case ANSWER_QUESTION:
-				switchToView(_answerQuestion);
+				switchToView(answerView.getView());
 				break;
 			default:
 				throw new UnsupportedOperationException("Unexpected model state");
