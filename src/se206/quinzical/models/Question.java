@@ -19,6 +19,7 @@ public class Question {
 		_category = origQuestion._category;
 		_status = origQuestion._status;
 		_value = origQuestion._value;
+		_numAttempted = origQuestion._numAttempted;
 	}
 
 	public Question(String question, String answer, Category category) {
@@ -96,12 +97,11 @@ public class Question {
 	public int getNumAttempted() {
 		return _numAttempted;
 	}
-	
+
 	public void setNumAttempted(int i) {
 		_numAttempted = i;
 	}
-	
-	
+
 	/**
 	 * Get the value of the question
 	 */
