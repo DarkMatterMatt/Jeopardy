@@ -61,11 +61,6 @@ public abstract class QuizModel {
 		return _model.getTextToSpeech();
 	}
 
-	public void reset() {
-		_state.set(State.RESET); // trigger any RESET listeners
-		_state.set(State.SELECT_CATEGORY);
-	}
-
 	public abstract void selectCategory(Category item);
 
 	/**

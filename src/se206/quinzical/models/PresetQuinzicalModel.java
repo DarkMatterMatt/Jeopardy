@@ -16,32 +16,14 @@ import java.util.List;
 public class PresetQuinzicalModel extends QuizModel {
 	private static final int CATEGORIES_PER_GAME = 5;
 	private static final int QUESTIONS_PER_CATEGORY = 5;
-
 	private final List<Category> _categories = new ArrayList<>();
+	private final QuinzicalModel _model;
 	private final IntegerProperty _score = new SimpleIntegerProperty();
 
 	public PresetQuinzicalModel(QuinzicalModel model) {
 		super(model);
-
-		// pick the five categories that will be used for this game
-		List<Category> fullCategories = RandomNumberGenerator.getNRandom(model.getCategories(), CATEGORIES_PER_GAME);
-
-		for (Category fullCategory : fullCategories) {
-			// this new category will have a copy of each of the questions, with the value set
-			Category newCategory = new Category(fullCategory.getName());
-			_categories.add(newCategory);
-
-			// pick the five categories that will be used for this category
-			List<Question> questions = RandomNumberGenerator.getNRandom(fullCategory.getQuestions(), QUESTIONS_PER_CATEGORY);
-
-			// go through each question, clone it and set its value, then add it to the category
-			for (int i = 0; i < questions.size(); i++) {
-				Question newQuestion = new Question(questions.get(i));
-				newQuestion.setCategory(newCategory);
-				newQuestion.setValue(100 * (i + 1));
-				newCategory.addQuestion(newQuestion);
-			}
-		}
+		_model = model;
+		loadQuestions();
 	}
 
 	@Override
@@ -67,8 +49,46 @@ public class PresetQuinzicalModel extends QuizModel {
 		return _score.get();
 	}
 
+	private void setScore(int score) {
+		_score.set(score);
+	}
+
 	public IntegerProperty getScoreProperty() {
 		return _score;
+	}
+
+	private void loadQuestions() {
+		_categories.clear();
+
+		// pick the five categories that will be used for this game
+		List<Category> fullCategories = RandomNumberGenerator.getNRandom(_model.getCategories(), CATEGORIES_PER_GAME);
+
+		for (Category fullCategory : fullCategories) {
+			// this new category will have a copy of each of the questions, with the value set
+			Category newCategory = new Category(fullCategory.getName());
+			_categories.add(newCategory);
+
+			// pick the five categories that will be used for this category
+			List<Question> questions = RandomNumberGenerator.getNRandom(fullCategory.getQuestions(), QUESTIONS_PER_CATEGORY);
+
+			// go through each question, clone it and set its value, then add it to the category
+			for (int i = 0; i < questions.size(); i++) {
+				Question newQuestion = new Question(questions.get(i));
+				newQuestion.setCategory(newCategory);
+				newQuestion.setValue(100 * (i + 1));
+				newCategory.addQuestion(newQuestion);
+			}
+		}
+	}
+
+	public void reset() {
+		setScore(0);
+
+		// randomly select another set of categories/questions
+		loadQuestions();
+
+		setState(State.RESET); // trigger any RESET listeners
+		setState(State.SELECT_CATEGORY);
 	}
 
 	@Override
