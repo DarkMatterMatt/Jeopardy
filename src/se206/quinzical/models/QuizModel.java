@@ -83,6 +83,10 @@ public abstract class QuizModel {
 			icon.setImage("../assets/icon-missing.png");
 		}
 	}
+	
+	public boolean getTextVisibility() {
+		return _model.textVisible();
+	}
 
 	/**
 	 * The current screen being shown

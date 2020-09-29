@@ -1,6 +1,8 @@
 package se206.quinzical.models;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import se206.quinzical.models.util.FileBrowser;
 import se206.quinzical.models.util.GsonPostProcessable;
@@ -18,7 +20,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	private final List<Category> _categories;
-	private boolean _textEnabled = true;
+	private BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
 
 	public QuinzicalModel() {
 		//read files from directory
@@ -114,15 +116,15 @@ public class QuinzicalModel implements GsonPostProcessable {
 	/**
 	 * check whether text for clue is disabled or enabled
 	 */
-	public boolean textEnabled() {
-		return _textEnabled;
+	public boolean textVisible() {
+		return _textEnabled.get();
 	}
 	
-	public void enableText() {
-		_textEnabled = true;
-	}
-	
-	public void disableText() {
-		_textEnabled = false;
+	public void toggleTextVisibility() {
+		if(_textEnabled.get()) {
+			_textEnabled.set(false);
+		}else {
+			_textEnabled.set(true);
+		}
 	}
 }
