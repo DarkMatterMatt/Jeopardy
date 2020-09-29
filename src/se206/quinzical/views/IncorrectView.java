@@ -5,6 +5,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
+import se206.quinzical.models.util.KeyEventManager;
 
 /**
  * View for incorrect answer screen, after an incorrect answer has been submitted
@@ -44,6 +45,13 @@ public class IncorrectView extends View {
 
 		// click to exit
 		_container.setOnMouseClicked(e -> exitView());
+
+		// press any key to exit
+		KeyEventManager.getInstance().addPressListener(ev -> {
+			if (_container.isVisible()) {
+				exitView();
+			}
+		}, KeyEventManager.ANY_KEY);
 	}
 
 	/**

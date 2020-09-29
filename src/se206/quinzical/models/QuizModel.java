@@ -2,12 +2,13 @@ package se206.quinzical.models;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.TextToSpeech;
 import se206.quinzical.views.IconView;
 
 import java.util.List;
 
-public abstract class QuizModel {
+public abstract class QuizModel implements GsonPostProcessable {
 	private final ObjectProperty<Question> _currentQuestion = new SimpleObjectProperty<>();
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.SELECT_CATEGORY);
 	protected transient QuinzicalModel _model;
@@ -29,10 +30,10 @@ public abstract class QuizModel {
 	 * Return to category selection
 	 */
 	public void finishQuestion() {
-		if (_state.get() != State.CORRECT_ANSWER && _state.get() != State.INCORRECT_ANSWER) {
+		if (getState() != State.CORRECT_ANSWER && getState() != State.INCORRECT_ANSWER) {
 			throw new IllegalStateException("Can only reset when in the CORRECT_ANSWER or INCORRECT_ANSWER state");
 		}
-		_state.set(State.SELECT_CATEGORY);
+		setState(State.SELECT_CATEGORY);
 	}
 
 	public abstract List<Category> getCategories();
@@ -49,8 +50,22 @@ public abstract class QuizModel {
 		return _state.get();
 	}
 
+	@Override
+	public void gsonPostProcess() {
+		Question currentQuestion = getCurrentQuestion();
+		if (currentQuestion != null) {
+			Category activeCategory = getCategories()
+					.stream()
+					.filter(Category::isSelected)
+					.findFirst()
+					.orElse(null);
+			currentQuestion.setCategory(activeCategory);
+		}
+	}
+
 	protected void setState(State state) {
 		_state.set(state);
+		save();
 	}
 
 	public ObjectProperty<State> getStateProperty() {
@@ -61,9 +76,11 @@ public abstract class QuizModel {
 		return _model.getTextToSpeech();
 	}
 
-	public void reset() {
-		_state.set(State.RESET); // trigger any RESET listeners
-		_state.set(State.SELECT_CATEGORY);
+	/**
+	 * Save current state to disk
+	 */
+	public void save() {
+		_model.save();
 	}
 
 	public abstract void selectCategory(Category item);
