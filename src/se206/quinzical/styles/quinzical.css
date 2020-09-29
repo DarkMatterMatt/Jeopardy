@@ -3,6 +3,7 @@
 }
 
 .text-black {
+    -fx-fill: -c-grey-03;
     -fx-text-fill: -c-grey-03;
 }
 
@@ -11,6 +12,7 @@
 }
 
 .text-gold {
+    -fx-fill: -c-gold;
     -fx-text-fill: -c-gold;
 }
 
@@ -19,5 +21,6 @@
 }
 
 .text-white {
+    -fx-fill: -c-off-white;
     -fx-text-fill: -c-off-white;
 }
