@@ -6,3 +6,7 @@
     -fx-alignment: center;
     -fx-padding: 48 0 48 48;
 }
+
+.game .answer .category-container {
+    -fx-alignment: center;
+}

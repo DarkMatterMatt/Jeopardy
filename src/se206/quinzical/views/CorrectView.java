@@ -3,6 +3,7 @@ package se206.quinzical.views;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuizModel;
+import se206.quinzical.models.util.KeyEventManager;
 
 /**
  * View for correct answer screen, after a correct answer has been submitted
@@ -34,6 +35,13 @@ public class CorrectView extends View {
 
 		// click to exit
 		_container.setOnMouseClicked(e -> exitView());
+
+		// press any key to exit
+		KeyEventManager.getInstance().addPressListener(ev -> {
+			if (_container.isVisible()) {
+				exitView();
+			}
+		}, KeyEventManager.ANY_KEY);
 	}
 
 	/**

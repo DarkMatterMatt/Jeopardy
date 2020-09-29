@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.models.util.KeyEventManager;
 import se206.quinzical.views.QuinzicalView;
 import se206.quinzical.views.View;
 import se206.quinzical.views.QuizView;
@@ -21,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         // create main model and view for Quinzical
-        QuinzicalModel model = new QuinzicalModel();
+        QuinzicalModel model = QuinzicalModel.load();
         View view = new QuinzicalView(model);
 
         // add stylesheets to scene
@@ -38,5 +39,10 @@ public class Main extends Application {
 
         // handle dragging and resizing of window
         DragAndResizeHelper.addResizeListener(primaryStage);
+
+        // KeyEventManager handles key presses, allows anyone to listen to events
+        KeyEventManager keyEventManager = KeyEventManager.getInstance();
+        scene.setOnKeyPressed(keyEventManager::onKeyPress);
+        scene.setOnKeyReleased(keyEventManager::onKeyRelease);
     }
 }
