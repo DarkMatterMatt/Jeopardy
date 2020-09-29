@@ -4,19 +4,21 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.Question;
-import se206.quinzical.models.QuizModel;
 
 public class CategoryPreview extends View {
-	private final Pane _container = new Pane();
-	private final IconView _confirm = new IconView();
 	private final Label _category = new Label();
-	private final Label _value = new Label();
+	private final IconView _confirm = new IconView();
+	private final Pane _container = new Pane();
 	private final HBox _content = new HBox();
 	private final IconView _icon = new IconView();
 	private final PresetQuinzicalModel _model;
+	private final Text _playFor = new Text();
+	private final VBox _text = new VBox();
+	private final Text _value = new Text();
 
 	public CategoryPreview(PresetQuinzicalModel model) {
 		_model = model;
@@ -26,19 +28,18 @@ public class CategoryPreview extends View {
 				.addClass("category-icon");
 
 		// category name & description
-		Label playFor = new Label("Play for ");
-		TextFlow description = new TextFlow(playFor, _value);
-		VBox text = new VBox(_category, description);
+		TextFlow description = new TextFlow(_playFor, _value);
+		_text.getChildren().addAll(_category, description);
 
 		// add text styles
 		description.getStyleClass().addAll("category-description");
-		text.getStyleClass().addAll("text-container");
+		_text.getStyleClass().addAll("text-container");
 		_category.getStyleClass().addAll("text-gold", "text-bold", "text-large");
-		playFor.getStyleClass().addAll("text-white");
+		_playFor.getStyleClass().addAll("text-white");
 		_value.getStyleClass().addAll("text-white", "text-bold");
 
 		// category icon and text are in a HBox
-		_content.getChildren().addAll(_icon.getView(), text);
+		_content.getChildren().addAll(_icon.getView(), _text);
 
 		// confirm icon
 		_confirm.setImage("../assets/submit.png")
@@ -59,40 +60,25 @@ public class CategoryPreview extends View {
 		_model.getCurrentQuestionProperty().addListener((obs, oldVal, val) -> updateContent(val));
 	}
 
-	private void updateContent(Question q) {
-		if (q == null) {
-			System.out.println("CategoryPreview#updateContent: Question is null");
-			return;
-		}
-
-		int nextValue = q.getValue();
-		String categoryName = q.getCategory().getName();
-
-		// update values
-		_value.setText("$" + nextValue);
-		_category.setText(categoryName);
-		_model.skinCategoryImage(_icon, categoryName);
-
-		// content changes = size changes
-		onHeightChange();
-		onWidthChange();
+	private void confirm() {
+		_model.confirmCategory();
 	}
 
-	private void onWidthChange() {
-		double containerWidth = _container.getWidth();
-		double confirmWidth = _confirm.getView().getBoundsInLocal().getWidth();
-
-		// content has a 48px margin on the left
-		_content.setLayoutX(48);
-
-		// set _confirm to bottom-right (32px margin)
-		_confirm.getView().setLayoutX(containerWidth - confirmWidth - 32);
+	@Override
+	public Pane getView() {
+		return _container;
 	}
 
 	private void onHeightChange() {
 		double containerHeight = _container.getHeight();
 		double contentHeight = _content.getBoundsInLocal().getHeight();
 		double confirmHeight = _confirm.getView().getBoundsInLocal().getHeight();
+
+		if (contentHeight > 3 * containerHeight) {
+			// hacky fix: before anything is initialized, the content height is something
+			// ridiculous because the width is tiny and the text wraps to be very very tall
+			return;
+		}
 
 		// set _content to center
 		_content.setLayoutY((containerHeight - contentHeight) / 2);
@@ -101,12 +87,57 @@ public class CategoryPreview extends View {
 		_confirm.getView().setLayoutY(containerHeight - confirmHeight - 32);
 	}
 
-	private void confirm() {
-		_model.confirmCategory();
+	private void onWidthChange() {
+		double containerWidth = _container.getWidth();
+		double confirmWidth = _confirm.getView().getBoundsInLocal().getWidth();
+		double iconWidth = _icon.getView().isManaged() ? _icon.getView().getBoundsInLocal().getWidth() : 0;
+
+		// content has a 48px margin on the left
+		_content.setLayoutX(48);
+
+		// set _confirm to bottom-right (32px margin)
+		_confirm.getView().setLayoutX(containerWidth - confirmWidth - 32);
+
+		// make text box wrap
+		_text.setMaxWidth(containerWidth - iconWidth - 48 * 2);
 	}
 
-	@Override
-	public Pane getView() {
-		return _container;
+	private void updateContent(Question q) {
+		// show / hide category stuff
+		boolean shouldShow = q != null;
+		_category.setVisible(shouldShow);
+		_category.setManaged(shouldShow);
+		_confirm.getView().setVisible(shouldShow);
+		_confirm.getView().setManaged(shouldShow);
+		_icon.getView().setVisible(shouldShow);
+		_icon.getView().setManaged(shouldShow);
+		_value.setVisible(shouldShow);
+		_value.setManaged(shouldShow);
+
+		if (q == null) {
+			// reuse _playFor text box
+			if (_model.getNumAttempted() == 0) {
+				// first start
+				_playFor.setText("Select a question to get started!");
+			}
+			else {
+				// category has no more questions
+				_playFor.setText("You've finished all the questions in this category!");
+			}
+		}
+		else {
+			int nextValue = q.getValue();
+			String categoryName = q.getCategory().getName();
+
+			// update values
+			_playFor.setText("Play for ");
+			_value.setText("$" + nextValue);
+			_category.setText(categoryName);
+			_model.skinCategoryImage(_icon, categoryName);
+		}
+
+		// content changes = size changes
+		onHeightChange();
+		onWidthChange();
 	}
 }
