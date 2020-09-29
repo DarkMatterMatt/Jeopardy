@@ -30,7 +30,7 @@ public class TaskbarView extends View {
 		_reset = createButton("../assets/reset.png");
 		_reset.setOnMouseClicked(e -> model.reset());
 		Tooltip.install(_reset, new Tooltip("Reset game"));
-		
+
 		// home button view
 		ImageView home = createButton("../assets/home.png");
 		home.setOnMouseClicked(e->{
@@ -38,25 +38,24 @@ public class TaskbarView extends View {
 			model.backToMainMenu();
 		});
 		Tooltip.install(home, new Tooltip("Main Menu"));
-		
+
 		// text and notext icons
 		HBox text = new HBox(createButton("../assets/text.png"));
 		HBox noText = new HBox(createButton("../assets/notext.png"));
-		
+
 		SwitcherView s = new SwitcherView() {};
 		s.getView().getChildren().addAll(text,noText);
-		
+
 		// enable text
 		_toggleText = s.getView();
-		_toggleText.setOnMouseClicked(e->{
-			System.out.println("toggled to "+ model.textVisible());
-			s.switchToView(model.textVisible()?text:noText);;
+		_toggleText.setOnMouseClicked(e -> {
 			model.toggleTextVisibility();
+			s.switchToView(model.textVisible() ? text : noText);
 		});
 		Tooltip.install(text, new Tooltip("Text Currently Visible"));
 		Tooltip.install(noText, new Tooltip("Text Currently Invisible"));
 
-		_container.getChildren().addAll(_toggleText, home,_reset, exit);
+		_container.getChildren().addAll(_toggleText, home, _reset, exit);
 		_container.setSpacing(10);
 		_container.getStyleClass().add("taskbar");
         addStylesheet("taskbar.css");

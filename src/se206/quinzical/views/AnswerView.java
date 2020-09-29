@@ -24,20 +24,18 @@ public class AnswerView extends View {
 		_model = model;
 		_answerInputView = new AnswerInputView(_model);
 		
-		
 		Label label = new Label("Hint Displayed  ");
 		label.getStyleClass().addAll("text-small", "text-white");
 		IconView hintIcon = new IconView();
-		hintIcon.setImage("../assets/light.png");	
-		
+		hintIcon.setImage("../assets/light.png");
+
 		_hintBox = new HBox(label, hintIcon.getView());
-		
+
 		HBox categoryContainer = new HBox(_iconView.getView(), _categoryLabel, _hintBox);
 		_hintBox.setPrefWidth(200);
 		_hintBox.setAlignment(Pos.CENTER_RIGHT);
 		HBox.setHgrow(_hintBox, Priority.ALWAYS);
 		categoryContainer.getStyleClass().add("category-container");
-
 
 		_categoryLabel.getStyleClass().addAll("text-bold", "text-gold", "category");
 		_questionLabel.getStyleClass().addAll("text-white", "question");
@@ -54,9 +52,9 @@ public class AnswerView extends View {
 		// reload screen when we are made visible
 		onVisibilityChanged();
 		_container.visibleProperty().addListener((observable, oldVal, newVal) -> onVisibilityChanged());
-		
+
 		// check visibility of text
-		
+		_model.getTextVisibleProperty().addListener((obs, old, val) -> onVisibilityChanged());
 	}
 
 	public VBox getView() {
@@ -86,15 +84,15 @@ public class AnswerView extends View {
 			_answerInputView.getView().setVisible(false);
 			return;
 		}
-		
-		
+
+
 		String categoryName = q.getCategory().getName();
 		String question = _model.getTextVisibility()?q.getQuestion():"====Text is currently set to invisible====\nIf you hate listening test, consider pressing the 'T' button above";
-		
+
 		_model.skinCategoryImage(_iconView, categoryName);
 		_categoryLabel.setText(categoryName);
 		_answerInputView.getView().setVisible(true);
-		
+
 		if(q.getNumAttempted()==2) {
 			_hintBox.setVisible(true);
 			_questionLabel.setText(question+"\n\n"+"Hint: the answer starts with letter "+q.getAnswer().charAt(0));
@@ -102,8 +100,5 @@ public class AnswerView extends View {
 			_hintBox.setVisible(false);
 			_questionLabel.setText(question);
 		}
-
-
-
 	}
 }

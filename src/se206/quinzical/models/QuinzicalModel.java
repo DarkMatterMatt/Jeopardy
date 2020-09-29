@@ -27,8 +27,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
-	private final List<Category> _categories;
-	private BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
+	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
 	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
 
 	public QuinzicalModel() {
@@ -186,7 +185,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 			err.printStackTrace();
 		}
 	}
-	
+
 	public void backToMainMenu() {
 		_state.set(State.MENU);
 	}
@@ -206,12 +205,12 @@ public class QuinzicalModel implements GsonPostProcessable {
 	public boolean textVisible() {
 		return _textEnabled.get();
 	}
-	
+
+	public BooleanProperty getTextVisibleProperty() {
+		return _textEnabled;
+	}
+
 	public void toggleTextVisibility() {
-		if(_textEnabled.get()) {
-			_textEnabled.set(false);
-		}else {
-			_textEnabled.set(true);
-		}
+		_textEnabled.set(!_textEnabled.get());
 	}
 }

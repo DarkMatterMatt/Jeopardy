@@ -1,5 +1,6 @@
 package se206.quinzical.models;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import se206.quinzical.models.util.GsonPostProcessable;
@@ -37,6 +38,10 @@ public abstract class QuizModel implements GsonPostProcessable {
 	}
 
 	public abstract List<Category> getCategories();
+
+	public BooleanProperty getTextVisibleProperty() {
+		return _model.getTextVisibleProperty();
+	}
 
 	public Question getCurrentQuestion() {
 		return _currentQuestion.get();
@@ -100,7 +105,7 @@ public abstract class QuizModel implements GsonPostProcessable {
 			icon.setImage("../assets/icon-missing.png");
 		}
 	}
-	
+
 	public boolean getTextVisibility() {
 		return _model.textVisible();
 	}
