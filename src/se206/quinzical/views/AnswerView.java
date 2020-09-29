@@ -3,6 +3,7 @@ package se206.quinzical.views;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
@@ -28,19 +29,13 @@ public class AnswerView extends View {
 		label.getStyleClass().addAll("text-small", "text-white");
 		IconView hintIcon = new IconView();
 		hintIcon.setImage("../assets/light.png");	
-		hintIcon.getView().setOnMouseClicked(e->{
-
-		});
-		
 		
 		_hintBox = new HBox(label, hintIcon.getView());
-	
-
 		
-
 		HBox categoryContainer = new HBox(_iconView.getView(), _categoryLabel, _hintBox);
 		_hintBox.setPrefWidth(200);
 		_hintBox.setAlignment(Pos.CENTER_RIGHT);
+		HBox.setHgrow(_hintBox, Priority.ALWAYS);
 		categoryContainer.getStyleClass().add("category-container");
 
 
