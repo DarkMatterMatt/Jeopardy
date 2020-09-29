@@ -18,6 +18,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	private final List<Category> _categories;
+	private boolean _textEnabled = true;
 
 	public QuinzicalModel() {
 		//read files from directory
@@ -108,5 +109,20 @@ public class QuinzicalModel implements GsonPostProcessable {
 		MENU,
 		GAME,
 		PRACTICE,
+	}
+
+	/**
+	 * check whether text for clue is disabled or enabled
+	 */
+	public boolean textEnabled() {
+		return _textEnabled;
+	}
+	
+	public void enableText() {
+		_textEnabled = true;
+	}
+	
+	public void disableText() {
+		_textEnabled = false;
 	}
 }

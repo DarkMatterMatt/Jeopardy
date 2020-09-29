@@ -35,9 +35,23 @@ public class TaskbarView extends View {
 			//change state to menu
 			model.backToMainMenu();
 		});
+		Tooltip.install(home, new Tooltip("Main Menu"));
 		
+		// enable text
+		ImageView textToggle = createButton("../assets/text.png");
+		textToggle.setOnMouseClicked(e->{
+			if(model.textEnabled()) {
+				model.disableText();
+				System.out.println("disabled");
+			}else {
+				model.enableText();
+				System.out.println("enabled");
+			}
+		});
+		Tooltip.install(textToggle, new Tooltip("Text Visibility"));
 
-		_container.getChildren().addAll(home,_reset, exit);
+		_container.getChildren().addAll(textToggle, home,_reset, exit);
+		_container.setSpacing(10);
 		_container.getStyleClass().add("taskbar");
         addStylesheet("taskbar.css");
 
