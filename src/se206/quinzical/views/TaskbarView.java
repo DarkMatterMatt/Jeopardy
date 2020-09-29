@@ -28,8 +28,16 @@ public class TaskbarView extends View {
 		_reset = createButton("../assets/reset.png");
 		_reset.setOnMouseClicked(e -> model.reset());
 		Tooltip.install(_reset, new Tooltip("Reset game"));
+		
+		// home button view
+		ImageView home = createButton("../assets/home.png");
+		home.setOnMouseClicked(e->{
+			//change state to menu
+			model.backToMainMenu();
+		});
+		
 
-		_container.getChildren().addAll(_reset, exit);
+		_container.getChildren().addAll(home,_reset, exit);
 		_container.getStyleClass().add("taskbar");
         addStylesheet("taskbar.css");
 

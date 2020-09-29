@@ -96,6 +96,10 @@ public class QuinzicalModel implements GsonPostProcessable {
 	public void beginPracticeGame() {
 		_state.set(State.PRACTICE);
 	}
+	
+	public void backToMainMenu() {
+		_state.set(State.MENU);
+	}
 
 	/**
 	 * Main screen being shown
