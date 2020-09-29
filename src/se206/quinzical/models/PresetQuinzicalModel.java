@@ -44,14 +44,14 @@ public class PresetQuinzicalModel extends QuizModel {
 	 */
 	public void confirmCategory() {
 		setState(State.ANSWER_QUESTION);
-
-		// the next time the category is selected, the next question will be chosen
-		getCurrentQuestion().getCategory().moveToNextQuestion();
 	}
 
 	@Override
 	public void finishQuestion() {
 		super.finishQuestion();
+
+		// the next time the category is selected, the next question will be chosen
+		getCurrentQuestion().getCategory().moveToNextQuestion();
 
 		if (getNumRemaining() > 0) {
 			// update "current question" to be the next question in the same category

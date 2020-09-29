@@ -74,7 +74,7 @@ public class CategoryPreview extends View {
 		double contentHeight = _content.getBoundsInLocal().getHeight();
 		double confirmHeight = _confirm.getView().getBoundsInLocal().getHeight();
 
-		if (contentHeight > 3 * containerHeight) {
+		if (contentHeight > containerHeight) {
 			// hacky fix: before anything is initialized, the content height is something
 			// ridiculous because the width is tiny and the text wraps to be very very tall
 			return;

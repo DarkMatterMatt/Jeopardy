@@ -14,6 +14,7 @@ public class QuizContentView extends SwitcherView {
 		_practiceView = new PracticeView(_model);
 		getView().getChildren().addAll(_gameView.getView(), _practiceView.getView());
 
+		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
 	}
 

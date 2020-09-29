@@ -71,7 +71,6 @@ public class QuinzicalModel implements GsonPostProcessable {
 		try (Reader reader = new FileReader(saveFileLocation)) {
 			QuinzicalModel model = GSON.fromJson(reader, QuinzicalModel.class);
 			model.setSaveFileLocation(saveFileLocation);
-			model.save("out.json");
 			return model;
 		}
 		catch (FileNotFoundException err) {
