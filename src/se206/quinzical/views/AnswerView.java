@@ -54,6 +54,9 @@ public class AnswerView extends View {
 		// reload screen when we are made visible
 		onVisibilityChanged();
 		_container.visibleProperty().addListener((observable, oldVal, newVal) -> onVisibilityChanged());
+		
+		// check visibility of text
+		
 	}
 
 	public VBox getView() {
@@ -76,14 +79,21 @@ public class AnswerView extends View {
 	 * Update display to show question details
 	 */
 	private void questionUpdate(Question q) {
-		if (q == null) return;
+		if (q == null) {
+			_hintBox.setVisible(false);
+			_categoryLabel.setText("Select other categories");
+			_questionLabel.setText("There is no available question in this category");
+			_answerInputView.getView().setVisible(false);
+			return;
+		}
 		
-		String categoryName = (q!=null)?q.getCategory().getName():"Select other categories";
-		String question = (q!=null)?q.getQuestion():"There are no more available questions in this category";
+		
+		String categoryName = q.getCategory().getName();
+		String question = _model.getTextVisibility()?q.getQuestion():"====Text is currently set to invisible====\nIf you hate listening test, consider pressing the 'T' button above";
 		
 		_model.skinCategoryImage(_iconView, categoryName);
 		_categoryLabel.setText(categoryName);
-		
+		_answerInputView.getView().setVisible(true);
 		
 		if(q.getNumAttempted()==2) {
 			_hintBox.setVisible(true);
