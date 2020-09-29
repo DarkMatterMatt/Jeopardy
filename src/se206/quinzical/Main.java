@@ -22,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         // create main model and view for Quinzical
-        QuinzicalModel model = new QuinzicalModel();
+        QuinzicalModel model = QuinzicalModel.load();
         View view = new QuinzicalView(model);
 
         // add stylesheets to scene

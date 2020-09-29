@@ -2,31 +2,30 @@ package se206.quinzical.models;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.hildan.fxgson.FxGson;
 import se206.quinzical.models.util.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class QuinzicalModel implements GsonPostProcessable {
-	private final List<Category> _categories;
-	private final transient Gson _gson = FxGson.coreBuilder()
+	private static final String DEFAULT_SAVE_LOCATION = "./.save";
+	private static final Gson GSON = FxGson.coreBuilder()
 			.registerTypeAdapterFactory(new GsonPostProcessingEnabler())
 			.setPrettyPrinting()
 			.disableHtmlEscaping()
 			.create();
+	private final List<Category> _categories;
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
-	private transient String _saveFileLocation = "./.save";
+	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
 
 	public QuinzicalModel() {
 		//read files from directory
@@ -54,6 +53,45 @@ public class QuinzicalModel implements GsonPostProcessable {
 
 		_presetModel = new PresetQuinzicalModel(this);
 		_practiceModel = new PracticeModel(this);
+	}
+
+	/**
+	 * Load current state from disk
+	 */
+	public static QuinzicalModel load() {
+		return load(DEFAULT_SAVE_LOCATION);
+	}
+
+	/**
+	 * Load current state from disk
+	 *
+	 * @param saveFileLocation location to load state from
+	 */
+	public static QuinzicalModel load(String saveFileLocation) {
+		try (Reader reader = new FileReader(saveFileLocation)) {
+			QuinzicalModel model = GSON.fromJson(reader, QuinzicalModel.class);
+			model.setSaveFileLocation(saveFileLocation);
+			model.save("out.json");
+			return model;
+		}
+		catch (FileNotFoundException err) {
+			// save file does not exist
+		}
+		catch (IOException err) {
+			System.err.println("Failed opening save file for reading");
+			err.printStackTrace();
+		}
+		catch (JsonIOException err) {
+			// invalid save file
+			System.err.println("Failed reading save file");
+		}
+		catch (JsonSyntaxException err) {
+			// invalid save file
+			System.err.println("Invalid save file, ignoring it");
+		}
+		QuinzicalModel model = new QuinzicalModel();
+		model.setSaveFileLocation(saveFileLocation);
+		return model;
 	}
 
 	/**
@@ -124,8 +162,17 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 * Save current state to disk
 	 */
 	public void save() {
-		try (Writer writer = new FileWriter(_saveFileLocation)) {
-			_gson.toJson(this, writer);
+		save(_saveFileLocation);
+	}
+
+	/**
+	 * Save current state to disk
+	 *
+	 * @param saveFileLocation location to load state from
+	 */
+	public void save(String saveFileLocation) {
+		try (Writer writer = new FileWriter(saveFileLocation)) {
+			GSON.toJson(this, writer);
 		}
 		catch (JsonIOException err) {
 			System.err.println("Failed serializing game state");
