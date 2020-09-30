@@ -6,13 +6,14 @@ import se206.quinzical.models.util.RandomNumberGenerator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Category implements GsonPostProcessable {
 	private final String _name;
 	private final List<Question> _questions;
 	private boolean _isSelected = false;
 	private int _activeQuestion = 0;
-	private Question _activeQuestionInPracticeModule;
+	private int _activeQuestionInPracticeModule = -1;
 
 	public Category(String name) {
 		_name = name;
@@ -97,16 +98,15 @@ public class Category implements GsonPostProcessable {
 		return _questions.get(list.get(0));
 		*/
 	}
-	
+
 	public Question getActiveQuestionInPracticeModule() {
-		if (_activeQuestionInPracticeModule == null) {
-			_activeQuestionInPracticeModule = getRandomQuestion();
+		if (_activeQuestionInPracticeModule == -1) {
+			_activeQuestionInPracticeModule = ThreadLocalRandom.current().nextInt(0, _questions.size());
 		}
-		return _activeQuestionInPracticeModule;
+		return _questions.get(_activeQuestionInPracticeModule);
 	}
+
 	public void setActiveQUestionInPracticeModule(Question q) {
-		_activeQuestionInPracticeModule = q;
+		_activeQuestionInPracticeModule = _questions.indexOf(q);
 	}
-	
-	
 }
