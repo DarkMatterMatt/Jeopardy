@@ -6,7 +6,11 @@ import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
- * View for the header. Contains taskbar, title, score
+ * This class is Pane type.
+ * View for the header, and contains TaskBar atom, title, and score
+ * 
+ * This Pane is used by QuizPane
+ * 
  */
 public class HeaderPane extends ViewBase {
 	private final VBox _container = new VBox();

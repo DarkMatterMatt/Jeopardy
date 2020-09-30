@@ -9,6 +9,14 @@ import javafx.scene.text.TextFlow;
 import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.Question;
 
+/**
+ * This class is Pane type.
+ * Shows category preview that shows:
+ * 	- name of the category
+ * 	- active question's value
+ * Used by GameSwitch
+ *
+ */
 public class CategoryPreviewPane extends ViewBase {
 	private final Label _category = new Label();
 	private final Icon _confirm = new Icon();

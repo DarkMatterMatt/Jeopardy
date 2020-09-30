@@ -6,6 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * This class is Atom type. 
+ * Shows an image.
+ * 
+ * Used by TaskBar, CategoryPreview.
+ *
+ */
 public class Icon extends ViewBase {
 	private final ImageView _image = new ImageView();
 	private final HBox _container = new HBox(_image);

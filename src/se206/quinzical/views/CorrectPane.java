@@ -6,7 +6,11 @@ import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
 
 /**
+ * This is a Pane type.
  * View for correct answer screen, after a correct answer has been submitted
+ * 
+ * Used by GameSwitch and PracticeSwitch
+ * 
  */
 public class CorrectPane extends ViewBase {
 	private static final int TIMEOUT_SECS = 2;

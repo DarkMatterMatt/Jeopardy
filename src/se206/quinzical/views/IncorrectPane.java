@@ -8,7 +8,11 @@ import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
 
 /**
+ * This class is Pane type, and contains AnimatedProgressBar atom.
  * View for incorrect answer screen, after an incorrect answer has been submitted
+ * 
+ * Used by GameSwitch and PracticeSwitch.
+ * 
  */
 public class IncorrectPane extends ViewBase {
 	private static final int TIMEOUT_SECS = 4;

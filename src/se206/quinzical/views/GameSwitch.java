@@ -7,7 +7,10 @@ import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
+ * This is Pane type.
  * Main content layout for the 'real' game
+ * 
+ * Used by QuizContentSwitch
  */
 public class GameSwitch extends SwitcherBase {
 	private final AnswerPane _answerQuestion;

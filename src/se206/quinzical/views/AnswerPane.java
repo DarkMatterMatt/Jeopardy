@@ -9,7 +9,12 @@ import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 
 /**
- * View for answer screen, when a question has been selected
+ * This class is a Pane type, and uses AnswerTextField atom.
+ * Represents the answer screen for when a question has been selected.
+ * 
+ * This type is 'Pane' type, which means it depends on Atoms and may depend
+ * on other Panes.
+ * 
  */
 public class AnswerPane extends ViewBase {
 	private final Label _categoryLabel = new Label();

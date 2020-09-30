@@ -6,7 +6,10 @@ import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.QuizModel;
 
 /**
+ * This class is Pane type.
  * View for game over screen, after all questions have been attempted
+ * 
+ * Used by GameSwitch
  */
 public class GameOverPane extends ViewBase {
 	private final VBox _container = new VBox();

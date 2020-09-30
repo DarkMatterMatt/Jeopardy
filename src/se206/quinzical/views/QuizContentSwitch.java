@@ -1,13 +1,18 @@
 package se206.quinzical.views;
 
 import se206.quinzical.models.QuinzicalModel;
-
-public class QuizContentView extends SwitcherBase {
+/**
+ * This class is switch type.
+ * Switches between real game and practice game upon request.
+ * 
+ *
+ */
+public class QuizContentSwitch extends SwitcherBase {
 	private final GameSwitch _gameView;
 	private final QuinzicalModel _model;
 	private final PracticeSwitch _practiceView;
 
-	public QuizContentView(QuinzicalModel model) {
+	public QuizContentSwitch(QuinzicalModel model) {
 		_model = model;
 
 		_gameView = new GameSwitch(_model);

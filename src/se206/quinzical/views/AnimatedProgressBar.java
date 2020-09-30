@@ -5,6 +5,12 @@ import javafx.scene.control.ProgressBar;
 
 import java.util.function.Consumer;
 
+/**
+ * This class is Atom type.
+ * Visually shows user the time left for transition screen
+ * Used by IncorrectPane, CorrectPane
+ * 
+ */
 public class AnimatedProgressBar extends ViewBase {
 	private final double _timeoutSecs;
 	private final Consumer<AnimatedProgressBar> _onFinishedListener;

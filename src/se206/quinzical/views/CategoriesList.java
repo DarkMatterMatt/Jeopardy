@@ -16,8 +16,10 @@ import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.QuizModel;
 
 /**
- * This class is based on ListView.Each cell's string value is retrieved
- * from the list of categories from the QuinzicalModel.
+ * This class is Pane type.
+ * It lists possible categories the user can select in a one-column list.
+ * Each cell's string value is retrieved from the list of categories from the QuinzicalModel.
+ * 
  * @author hajinkim
  */
 public class CategoriesList extends ViewBase {

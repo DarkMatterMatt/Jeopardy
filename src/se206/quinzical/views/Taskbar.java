@@ -10,7 +10,10 @@ import javafx.scene.layout.StackPane;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
+ * This is Atom type.
  * View for taskbar. Contains reset & quit buttons
+ * 
+ * Used by HeaderView.
  */
 public class Taskbar extends ViewBase {
 	private final HBox _container = new HBox();

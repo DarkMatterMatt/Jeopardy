@@ -6,12 +6,10 @@ import javafx.scene.layout.VBox;
 import se206.quinzical.models.PracticeModel;
 import se206.quinzical.models.QuinzicalModel;
 /**
- * PracticeView is the structure of the GUI excluding the
- * HeaderView. The main composition is CategoriesListView on the left
- * and a switchable view on the right (refer to SwitcherView class).
- * It is visible when the user enters the practice mode. Depending on
- * the actions of the user, the contents will switch.
- *
+ * This class is Switch type.
+ * Main structure of the Practice mode, excluding header view.
+ * 
+ * Used by QuizContentSwitch.
  * @author hajinkim
  *
  */
