@@ -6,12 +6,15 @@ import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
- * Main menu which is shown when the game is first loaded.
+ * This class is Pane type, and it does not contain any atoms.
+ * It is the main menu which is shown when the game is first loaded.
+ * 
+ * Used by QuinzicalSwitch
  */
-public class MenuView extends View {
+public class MenuPane extends ViewBase {
 	private final VBox _container = new VBox();
 
-	public MenuView(QuinzicalModel model) {
+	public MenuPane(QuinzicalModel model) {
 		// big main title
 		Label titleLabel = new Label("Quinzical");
 		titleLabel.getStyleClass().addAll("title", "text-bold", "text-gold");

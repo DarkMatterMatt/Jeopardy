@@ -5,7 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.TextToSpeech;
-import se206.quinzical.views.IconView;
+import se206.quinzical.views.Icon;
 
 import java.util.List;
 
@@ -98,7 +98,7 @@ public abstract class QuizModel implements GsonPostProcessable {
 		_model = model;
 	}
 
-	public void skinCategoryImage(IconView icon, String categoryName) {
+	public void skinCategoryImage(Icon icon, String categoryName) {
 		try {
 			icon.setImage("../assets/categoryicons/" + categoryName + ".png");
 		} catch (NullPointerException e) {

@@ -9,18 +9,26 @@ import javafx.scene.text.TextFlow;
 import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.Question;
 
-public class CategoryPreview extends View {
+/**
+ * This class is Pane type.
+ * Shows category preview that shows:
+ * 	- name of the category
+ * 	- active question's value
+ * Used by GameSwitch
+ *
+ */
+public class CategoryPreviewPane extends ViewBase {
 	private final Label _category = new Label();
-	private final IconView _confirm = new IconView();
+	private final Icon _confirm = new Icon();
 	private final Pane _container = new Pane();
 	private final HBox _content = new HBox();
-	private final IconView _icon = new IconView();
+	private final Icon _icon = new Icon();
 	private final PresetQuinzicalModel _model;
 	private final Text _playFor = new Text();
 	private final VBox _text = new VBox();
 	private final Text _value = new Text();
 
-	public CategoryPreview(PresetQuinzicalModel model) {
+	public CategoryPreviewPane(PresetQuinzicalModel model) {
 		_model = model;
 
 		// category icon
@@ -127,7 +135,7 @@ public class CategoryPreview extends View {
 		}
 		else {
 			int nextValue = q.getValue();
-			String categoryName = q.getCategory().getName();
+			String categoryName = (q.getCategory()!=null)?q.getCategory().getName():"";
 
 			// update values
 			_playFor.setText("Play for ");

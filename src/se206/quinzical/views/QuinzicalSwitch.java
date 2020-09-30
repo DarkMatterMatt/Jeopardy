@@ -2,16 +2,26 @@ package se206.quinzical.views;
 
 import se206.quinzical.models.QuinzicalModel;
 
-public class QuinzicalView extends SwitcherView {
-	private final MenuView _menuView;
+/**
+ * This class is Switch type.
+ * Top level view that contains everything about GUI.
+ * Switches between real game/ practice/ menu.
+ * 
+ * Uses MenuPane, QuizPane.
+ * Used by se206.quinzical.Main
+ * @author hajinkim
+ *
+ */
+public class QuinzicalSwitch extends SwitcherBase {
+	private final MenuPane _menuView;
 	private final QuinzicalModel _model;
-	private final QuizView _quizView;
+	private final QuizPane _quizView;
 
-	public QuinzicalView(QuinzicalModel model) {
+	public QuinzicalSwitch(QuinzicalModel model) {
 		_model = model;
 
-		_menuView = new MenuView(_model);
-		_quizView = new QuizView(_model);
+		_menuView = new MenuPane(_model);
+		_quizView = new QuizPane(_model);
 		getView().getChildren().addAll(_menuView.getView(), _quizView.getView());
 		addStylesheet("quinzical.css");
 

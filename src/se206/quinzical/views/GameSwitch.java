@@ -7,29 +7,32 @@ import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
+ * This is Pane type.
  * Main content layout for the 'real' game
+ * 
+ * Used by QuizContentSwitch
  */
-public class GameView extends SwitcherView {
-	private final AnswerView _answerQuestion;
-	private final CorrectView _correctPane;
-	private final IncorrectView _incorrectPane;
+public class GameSwitch extends SwitcherBase {
+	private final AnswerPane _answerQuestion;
+	private final CorrectPane _correctPane;
+	private final IncorrectPane _incorrectPane;
 	private final GameOverPane _gameOverPane;
 	private final QuinzicalModel _model;
 	private final PresetQuinzicalModel _presetModel;
 	private final HBox _questionSelectContainer = new HBox();
 
-	public GameView(QuinzicalModel model) {
+	public GameSwitch(QuinzicalModel model) {
 		_model = model;
 		_presetModel = _model.getPresetModel();
 
 		// create primary views
-		_answerQuestion = new AnswerView(_presetModel);
-		_correctPane = new CorrectView(_presetModel);
-		_incorrectPane = new IncorrectView(_presetModel);
+		_answerQuestion = new AnswerPane(_presetModel);
+		_correctPane = new CorrectPane(_presetModel);
+		_incorrectPane = new IncorrectPane(_presetModel);
 		_gameOverPane = new GameOverPane(_presetModel);
 
-		CategoriesListView categoriesListPane = new CategoriesListView(_presetModel);
-		CategoryPreview categoryPreviewPane = new CategoryPreview(_presetModel);
+		CategoriesList categoriesListPane = new CategoriesList(_presetModel);
+		CategoryPreviewPane categoryPreviewPane = new CategoryPreviewPane(_presetModel);
 
 		// categoryPreviewPane is centered inside its container
 		VBox categoryPreviewContainer = new VBox(categoryPreviewPane.getView());

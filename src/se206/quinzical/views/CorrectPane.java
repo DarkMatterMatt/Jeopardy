@@ -2,42 +2,36 @@ package se206.quinzical.views;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextFlow;
-import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
 
 /**
- * View for incorrect answer screen, after an incorrect answer has been submitted
+ * This is a Pane type.
+ * View for correct answer screen, after a correct answer has been submitted
+ * 
+ * Used by GameSwitch and PracticeSwitch
+ * 
  */
-public class IncorrectView extends View {
-	private static final int TIMEOUT_SECS = 4;
-	private final Label _answerLabel = new Label();
+public class CorrectPane extends ViewBase {
+	private static final int TIMEOUT_SECS = 2;
 	private final VBox _container = new VBox();
 	private final QuizModel _model;
-	private final AnimatedProgressBarView _progressBarView;
+	private final AnimatedProgressBar _progressBarView;
 
-	public IncorrectView(QuizModel model) {
+	public CorrectPane(QuizModel model) {
 		_model = model;
-		_progressBarView = new AnimatedProgressBarView(TIMEOUT_SECS, item -> exitView());
+		_progressBarView = new AnimatedProgressBar(TIMEOUT_SECS, item -> exitView());
 
-		// show incorrect answer
-		Label incorrectLabel = new Label("Incorrect!");
-		Label answerPrefixLabel = new Label("The correct answer was ");
-		Label answerSuffixLabel = new Label(".");
-		TextFlow answerText = new TextFlow(answerPrefixLabel, _answerLabel, answerSuffixLabel);
-		
-		answerText.getStyleClass().add("text-flow");
-		incorrectLabel.getStyleClass().addAll("text-bold", "text-main");
-		_answerLabel.getStyleClass().add("text-bold");
+		Label correctLabel = new Label("Correct!");
+		correctLabel.getStyleClass().addAll("text-bold", "text-main");
 
 		Label interactToSkipLabel = new Label("Click or press any key to skip...");
 		interactToSkipLabel.getStyleClass().add("interact-to-skip");
 
 		// add elements and styles to container
-		_container.getChildren().addAll(incorrectLabel, answerText, interactToSkipLabel, _progressBarView.getView());
-		_container.getStyleClass().add("incorrect-view");
-		addStylesheet("incorrect.css");
+		_container.getChildren().addAll(correctLabel, interactToSkipLabel, _progressBarView.getView());
+		_container.getStyleClass().add("correct-view");
+		addStylesheet("correct.css");
 
 		// handle starting / stopping the animated progress bar
 		onVisibilityChanged();
@@ -76,15 +70,5 @@ public class IncorrectView extends View {
 		}
 		// container was made visible
 		_progressBarView.start();
-		questionUpdate(_model.getCurrentQuestion());
-	}
-
-	/**
-	 * Update to show correct answer
-	 */
-	private void questionUpdate(Question q) {
-		if (q != null) {
-			_answerLabel.setText(q.getAnswer());
-		}
 	}
 }

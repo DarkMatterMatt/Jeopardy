@@ -6,21 +6,28 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
-public class IconView extends View {
+/**
+ * This class is Atom type. 
+ * Shows an image.
+ * 
+ * Used by TaskBar, CategoryPreview.
+ *
+ */
+public class Icon extends ViewBase {
 	private final ImageView _image = new ImageView();
 	private final HBox _container = new HBox(_image);
 
-	public IconView(String pathRelativeToIconView) {
+	public Icon(String pathRelativeToIconView) {
 		this();
 		setImage(pathRelativeToIconView);
 	}
 
-	public IconView(Image img) {
+	public Icon(Image img) {
 		this();
 		setImage(img);
 	}
 
-	public IconView() {
+	public Icon() {
 		_image.setPreserveRatio(true);
 		_image.setSmooth(true);
 		_image.setCache(true);
@@ -29,40 +36,40 @@ public class IconView extends View {
 		_container.setAlignment(Pos.CENTER);
 	}
 
-	public IconView setImage(String pathRelativeToIconView) {
-		_image.setImage(new Image(IconView.class.getResourceAsStream(pathRelativeToIconView)));
+	public Icon setImage(String pathRelativeToIconView) {
+		_image.setImage(new Image(Icon.class.getResourceAsStream(pathRelativeToIconView)));
 		return this;
 	}
 
-	public IconView setImage(Image img) {
+	public Icon setImage(Image img) {
 		_image.setImage(img);
 		return this;
 	}
 
-	public IconView setSize(int width, int height) {
+	public Icon setSize(int width, int height) {
 		setContainerSize(width, height);
 		setImageSize(width, height);
 		return this;
 	}
 
-	public IconView setContainerSize(int width, int height) {
+	public Icon setContainerSize(int width, int height) {
 		_container.setPrefWidth(width);
 		_container.setPrefHeight(height);
 		return this;
 	}
 
-	public IconView setImageSize(int width, int height) {
+	public Icon setImageSize(int width, int height) {
 		_image.setFitWidth(width);
 		_image.setFitHeight(height);
 		return this;
 	}
 
-	public IconView setAlignment(Pos pos) {
+	public Icon setAlignment(Pos pos) {
 		_container.setAlignment(pos);
 		return this;
 	}
 
-	public IconView addClass(String... class_) {
+	public Icon addClass(String... class_) {
 		_container.getStyleClass().addAll(class_);
 		return this;
 	}

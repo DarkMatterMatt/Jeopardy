@@ -14,16 +14,19 @@ import javafx.util.Duration;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
+ * This is Atom type.
  * View for taskbar. Contains reset & quit buttons
+ * 
+ * Used by HeaderView.
  */
-public class TaskbarView extends View {
+public class Taskbar extends ViewBase {
 	private final HBox _container = new HBox();
 	private final QuinzicalModel _model;
 	private final ImageView _reset;
 	private final StackPane _toggleText;
 	private final Timeline _speedSliderHideTimer = new Timeline();
 
-	public TaskbarView(QuinzicalModel model) {
+	public Taskbar(QuinzicalModel model) {
 		_model = model;
 
 		// exit button view
@@ -48,7 +51,7 @@ public class TaskbarView extends View {
 		HBox text = new HBox(createButton("../assets/text.png"));
 		HBox noText = new HBox(createButton("../assets/notext.png"));
 
-		SwitcherView s = new SwitcherView() {};
+		SwitcherBase s = new SwitcherBase() {};
 		s.getView().getChildren().addAll(text, noText);
 
 		// enable text

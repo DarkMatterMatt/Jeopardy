@@ -11,14 +11,16 @@ import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuizModel;
 
 /**
- * View for input field for answer screen
+ * This class is atom type. 
+ * It is an input field that allows users to type their answer.
+ * 
  */
-public class AnswerInputView extends View {
+public class AnswerTextField extends ViewBase {
     private final HBox _container = new HBox();
     private final TextField _answerInput = new TextField();
     private final QuizModel _model;
 
-    public AnswerInputView(QuizModel model) {
+    public AnswerTextField(QuizModel model) {
         _model = model;
 
         // user input
