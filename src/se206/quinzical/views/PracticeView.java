@@ -26,11 +26,11 @@ public class PracticeView extends View {
 		SwitcherView content = new PracticeSwitcher(_model.getPracticeModel());
 		//center the answer view
 		VBox listContainer = new VBox(list.getView());
-		HBox.setHgrow(listContainer, Priority.ALWAYS);
-		listContainer.getStyleClass().add("practice-view-container");
+		HBox.setHgrow(content.getView(), Priority.ALWAYS);
+		listContainer.getStyleClass().add("practice");
 
 		addStylesheet("practice.css");
-		_container.getChildren().addAll(list.getView(), content.getView());
+		_container.getChildren().addAll(listContainer, content.getView());
 	}
 	@Override
 	public HBox getView() {
