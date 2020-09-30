@@ -85,7 +85,7 @@ public class AnswerView extends View {
 			return;
 		}
 
-		String categoryName = q.getCategory().getName();
+		String categoryName = (q.getCategory()!=null)?q.getCategory().getName():"";
 		String question = _model.getTextVisibility()?q.getQuestion():"====Text is currently set to invisible====\nIf you hate listening test, consider pressing the 'T' button above";
 
 		_model.skinCategoryImage(_iconView, categoryName);

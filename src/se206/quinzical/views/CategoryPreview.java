@@ -127,7 +127,7 @@ public class CategoryPreview extends View {
 		}
 		else {
 			int nextValue = q.getValue();
-			String categoryName = q.getCategory().getName();
+			String categoryName = (q.getCategory()!=null)?q.getCategory().getName():"";
 
 			// update values
 			_playFor.setText("Play for ");
