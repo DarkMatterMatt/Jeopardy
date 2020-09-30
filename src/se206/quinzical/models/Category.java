@@ -100,6 +100,7 @@ public class Category implements GsonPostProcessable {
 	}
 
 	public Question getActiveQuestionInPracticeModule() {
+		if(_questions.size()==0) return null;
 		if (_activeQuestionInPracticeModule == -1) {
 			_activeQuestionInPracticeModule = ThreadLocalRandom.current().nextInt(0, _questions.size());
 		}

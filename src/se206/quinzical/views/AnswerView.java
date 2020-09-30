@@ -79,12 +79,11 @@ public class AnswerView extends View {
 	private void questionUpdate(Question q) {
 		if (q == null) {
 			_hintBox.setVisible(false);
-			_categoryLabel.setText("Select other categories");
+			_categoryLabel.setText("Welp");
 			_questionLabel.setText("There is no available question in this category");
 			_answerInputView.getView().setVisible(false);
 			return;
 		}
-
 
 		String categoryName = q.getCategory().getName();
 		String question = _model.getTextVisibility()?q.getQuestion():"====Text is currently set to invisible====\nIf you hate listening test, consider pressing the 'T' button above";
