@@ -4,3 +4,21 @@
     -fx-padding: 8 8 0 0;
     -fx-pref-height: 32;
 }
+
+.taskbar .slider {
+    -fx-show-tick-marks: true;
+    -fx-major-tick-unit: 1;
+    -fx-block-increment: 0.1;
+}
+
+.taskbar .slider .thumb {
+    -fx-background-color: -c-grey-08;
+}
+
+.taskbar .slider .track {
+    -fx-background-color: -c-grey-01;
+}
+
+.taskbar .slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
+    -fx-stroke: -c-grey-01;
+}
