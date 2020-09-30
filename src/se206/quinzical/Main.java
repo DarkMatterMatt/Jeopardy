@@ -8,7 +8,7 @@ import javafx.stage.StageStyle;
 import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.util.KeyEventManager;
 import se206.quinzical.views.QuinzicalView;
-import se206.quinzical.views.View;
+import se206.quinzical.views.ViewBase;
 import se206.quinzical.views.QuizView;
 
 /**
@@ -23,7 +23,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         // create main model and view for Quinzical
         QuinzicalModel model = QuinzicalModel.load();
-        View view = new QuinzicalView(model);
+        ViewBase view = new QuinzicalView(model);
 
         // add stylesheets to scene
         Scene scene = new Scene(view.getView());

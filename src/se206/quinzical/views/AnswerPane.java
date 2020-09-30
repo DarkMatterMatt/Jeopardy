@@ -11,22 +11,22 @@ import se206.quinzical.models.QuizModel;
 /**
  * View for answer screen, when a question has been selected
  */
-public class AnswerView extends View {
+public class AnswerPane extends ViewBase {
 	private final Label _categoryLabel = new Label();
 	private final VBox _container = new VBox();
-	private final IconView _iconView = new IconView();
+	private final Icon _iconView = new Icon();
 	private final QuizModel _model;
 	private final Label _questionLabel = new Label();
-	private final AnswerInputView _answerInputView;
+	private final AnswerTextField _answerInputView;
 	private final HBox _hintBox;
 
-	public AnswerView(QuizModel model) {
+	public AnswerPane(QuizModel model) {
 		_model = model;
-		_answerInputView = new AnswerInputView(_model);
+		_answerInputView = new AnswerTextField(_model);
 		
 		Label label = new Label("Hint Displayed  ");
 		label.getStyleClass().addAll("text-small", "text-white");
-		IconView hintIcon = new IconView();
+		Icon hintIcon = new Icon();
 		hintIcon.setImage("../assets/light.png");
 
 		_hintBox = new HBox(label, hintIcon.getView());

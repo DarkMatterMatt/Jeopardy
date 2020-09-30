@@ -2,7 +2,7 @@ package se206.quinzical.views;
 
 import javafx.scene.Parent;
 
-public abstract class View {
+public abstract class ViewBase {
     public abstract Parent getView();
 
     protected void addStylesheet(String filename) {

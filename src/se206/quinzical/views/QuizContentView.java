@@ -2,16 +2,16 @@ package se206.quinzical.views;
 
 import se206.quinzical.models.QuinzicalModel;
 
-public class QuizContentView extends SwitcherView {
-	private final GameView _gameView;
+public class QuizContentView extends SwitcherBase {
+	private final GameSwitch _gameView;
 	private final QuinzicalModel _model;
-	private final PracticeView _practiceView;
+	private final PracticeSwitch _practiceView;
 
 	public QuizContentView(QuinzicalModel model) {
 		_model = model;
 
-		_gameView = new GameView(_model);
-		_practiceView = new PracticeView(_model);
+		_gameView = new GameSwitch(_model);
+		_practiceView = new PracticeSwitch(_model);
 		getView().getChildren().addAll(_gameView.getView(), _practiceView.getView());
 
 		onModelStateChange();

@@ -12,13 +12,13 @@ import se206.quinzical.models.QuinzicalModel;
 /**
  * View for taskbar. Contains reset & quit buttons
  */
-public class TaskbarView extends View {
+public class Taskbar extends ViewBase {
 	private final HBox _container = new HBox();
 	private final QuinzicalModel _model;
 	private final ImageView _reset;
 	private final StackPane _toggleText;
 
-	public TaskbarView(QuinzicalModel model) {
+	public Taskbar(QuinzicalModel model) {
 		_model = model;
 
 		// exit button view
@@ -43,7 +43,7 @@ public class TaskbarView extends View {
 		HBox text = new HBox(createButton("../assets/text.png"));
 		HBox noText = new HBox(createButton("../assets/notext.png"));
 
-		SwitcherView s = new SwitcherView() {};
+		SwitcherBase s = new SwitcherBase() {};
 		s.getView().getChildren().addAll(text,noText);
 
 		// enable text

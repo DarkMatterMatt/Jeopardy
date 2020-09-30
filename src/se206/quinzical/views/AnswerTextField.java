@@ -13,12 +13,12 @@ import se206.quinzical.models.QuizModel;
 /**
  * View for input field for answer screen
  */
-public class AnswerInputView extends View {
+public class AnswerTextField extends ViewBase {
     private final HBox _container = new HBox();
     private final TextField _answerInput = new TextField();
     private final QuizModel _model;
 
-    public AnswerInputView(QuizModel model) {
+    public AnswerTextField(QuizModel model) {
         _model = model;
 
         // user input

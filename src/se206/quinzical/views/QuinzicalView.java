@@ -2,15 +2,15 @@ package se206.quinzical.views;
 
 import se206.quinzical.models.QuinzicalModel;
 
-public class QuinzicalView extends SwitcherView {
-	private final MenuView _menuView;
+public class QuinzicalView extends SwitcherBase {
+	private final Menu _menuView;
 	private final QuinzicalModel _model;
 	private final QuizView _quizView;
 
 	public QuinzicalView(QuinzicalModel model) {
 		_model = model;
 
-		_menuView = new MenuView(_model);
+		_menuView = new Menu(_model);
 		_quizView = new QuizView(_model);
 		getView().getChildren().addAll(_menuView.getView(), _quizView.getView());
 		addStylesheet("quinzical.css");

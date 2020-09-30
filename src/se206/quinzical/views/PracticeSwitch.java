@@ -15,15 +15,15 @@ import se206.quinzical.models.QuinzicalModel;
  * @author hajinkim
  *
  */
-public class PracticeView extends View {
+public class PracticeSwitch extends ViewBase {
 	private final HBox _container = new HBox();
 	private final QuinzicalModel _model;
 
-	public PracticeView(QuinzicalModel model) {
+	public PracticeSwitch(QuinzicalModel model) {
 		_model = model;
 
-		CategoriesListView list = new CategoriesListView(_model.getPracticeModel());
-		SwitcherView content = new PracticeSwitcher(_model.getPracticeModel());
+		CategoriesList list = new CategoriesList(_model.getPracticeModel());
+		SwitcherBase content = new PracticeSwitcher(_model.getPracticeModel());
 		//center the answer view
 		VBox listContainer = new VBox(list.getView());
 		HBox.setHgrow(content.getView(), Priority.ALWAYS);
@@ -38,22 +38,22 @@ public class PracticeView extends View {
 	}
 }
 
-class PracticeSwitcher extends SwitcherView{
+class PracticeSwitcher extends SwitcherBase{
 	private final PracticeModel _practiceModel;
 
 	// incorrect, correct, question asking,
-	private final AnswerView answerView;
-	private final CorrectView _correctPane;
-	private final IncorrectView _incorrectPane;
+	private final AnswerPane answerView;
+	private final CorrectPane _correctPane;
+	private final IncorrectPane _incorrectPane;
 	private final HBox _nothingChosen;
 
 	public PracticeSwitcher(PracticeModel practiceModel) {
 		_practiceModel = practiceModel;
 
 		//initialise possible views
-		answerView = new AnswerView(_practiceModel);
-		_correctPane = new CorrectView(_practiceModel);
-		_incorrectPane = new IncorrectView(_practiceModel);
+		answerView = new AnswerPane(_practiceModel);
+		_correctPane = new CorrectPane(_practiceModel);
+		_incorrectPane = new IncorrectPane(_practiceModel);
 		_nothingChosen = new HBox();
 
 //		//center the answer view

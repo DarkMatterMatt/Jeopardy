@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 
-public abstract class SwitcherView extends View {
+public abstract class SwitcherBase extends ViewBase {
 	private final StackPane _container = new StackPane();
 
 	@Override

@@ -8,10 +8,10 @@ import se206.quinzical.models.QuinzicalModel;
 /**
  * Main menu which is shown when the game is first loaded.
  */
-public class MenuView extends View {
+public class Menu extends ViewBase {
 	private final VBox _container = new VBox();
 
-	public MenuView(QuinzicalModel model) {
+	public Menu(QuinzicalModel model) {
 		// big main title
 		Label titleLabel = new Label("Quinzical");
 		titleLabel.getStyleClass().addAll("title", "text-bold", "text-gold");

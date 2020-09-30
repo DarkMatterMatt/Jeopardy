@@ -8,15 +8,15 @@ import se206.quinzical.models.util.KeyEventManager;
 /**
  * View for correct answer screen, after a correct answer has been submitted
  */
-public class CorrectView extends View {
+public class CorrectPane extends ViewBase {
 	private static final int TIMEOUT_SECS = 2;
 	private final VBox _container = new VBox();
 	private final QuizModel _model;
-	private final AnimatedProgressBarView _progressBarView;
+	private final AnimatedProgressBar _progressBarView;
 
-	public CorrectView(QuizModel model) {
+	public CorrectPane(QuizModel model) {
 		_model = model;
-		_progressBarView = new AnimatedProgressBarView(TIMEOUT_SECS, item -> exitView());
+		_progressBarView = new AnimatedProgressBar(TIMEOUT_SECS, item -> exitView());
 
 		Label correctLabel = new Label("Correct!");
 		correctLabel.getStyleClass().addAll("text-bold", "text-main");

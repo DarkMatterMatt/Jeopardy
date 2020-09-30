@@ -20,13 +20,13 @@ import se206.quinzical.models.QuizModel;
  * from the list of categories from the QuinzicalModel.
  * @author hajinkim
  */
-public class CategoriesListView extends View {
+public class CategoriesList extends ViewBase {
 	private final Pane _container;
 	private final ListView<Category> _listView;
 	private final HBox _textBox;
 	private final QuizModel _model;
 
-	public CategoriesListView(QuizModel model) {
+	public CategoriesList(QuizModel model) {
 		_model = model;
 
 		// set up the top header box

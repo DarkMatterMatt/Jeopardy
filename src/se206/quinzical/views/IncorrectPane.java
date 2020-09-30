@@ -10,16 +10,16 @@ import se206.quinzical.models.util.KeyEventManager;
 /**
  * View for incorrect answer screen, after an incorrect answer has been submitted
  */
-public class IncorrectView extends View {
+public class IncorrectPane extends ViewBase {
 	private static final int TIMEOUT_SECS = 4;
 	private final Label _answerLabel = new Label();
 	private final VBox _container = new VBox();
 	private final QuizModel _model;
-	private final AnimatedProgressBarView _progressBarView;
+	private final AnimatedProgressBar _progressBarView;
 
-	public IncorrectView(QuizModel model) {
+	public IncorrectPane(QuizModel model) {
 		_model = model;
-		_progressBarView = new AnimatedProgressBarView(TIMEOUT_SECS, item -> exitView());
+		_progressBarView = new AnimatedProgressBar(TIMEOUT_SECS, item -> exitView());
 
 		// show incorrect answer
 		Label incorrectLabel = new Label("Incorrect!");

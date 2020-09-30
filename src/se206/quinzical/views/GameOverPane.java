@@ -8,7 +8,7 @@ import se206.quinzical.models.QuizModel;
 /**
  * View for game over screen, after all questions have been attempted
  */
-public class GameOverPane extends View {
+public class GameOverPane extends ViewBase {
 	private final VBox _container = new VBox();
 	private final PresetQuinzicalModel _model;
 	private final Label _subtitleLabel = new Label();

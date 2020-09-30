@@ -5,13 +5,13 @@ import javafx.scene.control.ProgressBar;
 
 import java.util.function.Consumer;
 
-public class AnimatedProgressBarView extends View {
+public class AnimatedProgressBar extends ViewBase {
 	private final double _timeoutSecs;
-	private final Consumer<AnimatedProgressBarView> _onFinishedListener;
+	private final Consumer<AnimatedProgressBar> _onFinishedListener;
 	private final ProgressBar _progressBar = new ProgressBar(0);
 	private final AnimationTimer _progressBarTimer;
 
-	public AnimatedProgressBarView(double timeoutSecs, Consumer<AnimatedProgressBarView> onFinishedListener) {
+	public AnimatedProgressBar(double timeoutSecs, Consumer<AnimatedProgressBar> onFinishedListener) {
 		_timeoutSecs = timeoutSecs;
 		_onFinishedListener = onFinishedListener;
 		_progressBarTimer = new AnimationTimer() {
