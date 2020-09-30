@@ -10,6 +10,7 @@
 
 .answer .category-container {
     -fx-alignment: center-left;
+    -fx-max-width: 480;
 }
 
 .answer .category-icon {
