@@ -6,8 +6,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import se206.quinzical.models.Question;
-import se206.quinzical.models.QuizModel;
+import se206.quinzical.models.*;
 
 /**
  * This class is a Pane type, and uses AnswerTextField atom.
@@ -68,6 +67,7 @@ public class AnswerPane extends ViewBase {
 		// reload screen when we are made visible
 		onVisibilityChanged();
 		_container.visibleProperty().addListener((observable, oldVal, newVal) -> onVisibilityChanged());
+		_model.getModel().getStateProperty().addListener((obs, old, val) -> onVisibilityChanged());
 
 		// check visibility of text
 		_model.getTextVisibleProperty().addListener((obs, old, val) -> onVisibilityChanged());
@@ -95,6 +95,11 @@ public class AnswerPane extends ViewBase {
 	private void onVisibilityChanged() {
 		if (!_container.isVisible()) {
 			// container is hidden
+			return;
+		}
+		if (_model instanceof PresetQuinzicalModel && _model.getModel().getState() != QuinzicalModel.State.GAME
+				|| _model instanceof PracticeModel && _model.getModel().getState() != QuinzicalModel.State.PRACTICE) {
+			// this game is not active
 			return;
 		}
 		// container was made visible

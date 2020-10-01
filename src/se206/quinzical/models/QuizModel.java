@@ -51,6 +51,10 @@ public abstract class QuizModel implements GsonPostProcessable {
 		return _currentQuestion;
 	}
 
+	public QuinzicalModel getModel() {
+		return _model;
+	}
+
 	public State getState() {
 		return _state.get();
 	}
