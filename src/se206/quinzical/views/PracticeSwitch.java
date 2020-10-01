@@ -45,25 +45,18 @@ class PracticeSwitcher extends SwitcherBase {
 	private final HBox _nothingChosen;
 	private final PracticeModel _practiceModel;
 	// incorrect, correct, question asking
-	private final AnswerPane answerView;
+	private final AnswerPane _answerPane;
 
 	public PracticeSwitcher(PracticeModel practiceModel) {
 		_practiceModel = practiceModel;
 
-		//initialise possible views
-		answerView = new AnswerPane(_practiceModel);
+		// initialise possible views
+		_answerPane = new AnswerPane(_practiceModel);
 		_correctPane = new CorrectPane(_practiceModel);
 		_incorrectPane = new IncorrectPane(_practiceModel);
 		_nothingChosen = new HBox();
 
-//		//center the answer view
-//		_answerQuestion = new VBox(answerView.getView());
-//		HBox.setHgrow(_answerQuestion, Priority.ALWAYS);
-//		_answerQuestion.getStyleClass().add("practice-view-container");
-//		getView().getStyleClass().add("practice");
-
-
-		getView().getChildren().addAll(answerView.getView(), _correctPane.getView(), _incorrectPane.getView(), _nothingChosen);
+		getView().getChildren().addAll(_answerPane.getView(), _correctPane.getView(), _incorrectPane.getView(), _nothingChosen);
 
 		// add state change listener
 		onModelStateChange();
@@ -73,11 +66,9 @@ class PracticeSwitcher extends SwitcherBase {
 	private void onModelStateChange() {
 		switch (_practiceModel.getState()) {
 			case SELECT_CATEGORY:
+				switchToView(_nothingChosen);
 				Question q = _practiceModel.getCurrentQuestion();
-				if (q == null) {
-					switchToView(_nothingChosen);
-				}
-				else {
+				if (q != null) {
 					_practiceModel.selectCategory(q.getCategory());
 				}
 				break;
@@ -88,13 +79,13 @@ class PracticeSwitcher extends SwitcherBase {
 				switchToView(_correctPane.getView());
 				break;
 			case RETRY_INCORRECT_ANSWER:
-				answerView.flashAnswerIncorrect(ev -> {
-					answerView.clearInput();
-					answerView.setHintVisible(_practiceModel.getCurrentQuestion().getNumAttempted() >= 2);
+				_answerPane.flashAnswerIncorrect(ev -> {
+					_answerPane.clearInput();
+					_answerPane.setHintVisible(_practiceModel.getCurrentQuestion().getNumAttempted() >= 2);
 				});
 				break;
 			case ANSWER_QUESTION:
-				switchToView(answerView.getView());
+				switchToView(_answerPane.getView());
 				break;
 			default:
 				throw new UnsupportedOperationException("Unexpected model state");
