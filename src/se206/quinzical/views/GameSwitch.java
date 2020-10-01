@@ -9,7 +9,7 @@ import se206.quinzical.models.QuinzicalModel;
 /**
  * This is Pane type.
  * Main content layout for the 'real' game
- * 
+ *
  * Used by QuizContentSwitch
  */
 public class GameSwitch extends SwitcherBase {
@@ -30,17 +30,7 @@ public class GameSwitch extends SwitcherBase {
 		_correctPane = new CorrectPane(_presetModel);
 		_incorrectPane = new IncorrectPane(_presetModel);
 		_gameOverPane = new GameOverPane(_presetModel);
-
-		CategoriesList categoriesListPane = new CategoriesList(_presetModel);
-		CategoryPreviewPane categoryPreviewPane = new CategoryPreviewPane(_presetModel);
-
-		// categoryPreviewPane is centered inside its container
-		VBox categoryPreviewContainer = new VBox(categoryPreviewPane.getView());
-		HBox.setHgrow(categoryPreviewContainer, Priority.ALWAYS);
-		categoryPreviewContainer.getStyleClass().add("category-preview-container");
-
-		// question selection includes the list of categories & current category preview
-		_questionSelectContainer.getChildren().addAll(categoriesListPane.getView(), categoryPreviewContainer);
+		generateSelectionContainerContents();
 
 		// add styles
 		addStylesheet("game.css");
@@ -53,11 +43,27 @@ public class GameSwitch extends SwitcherBase {
 		_presetModel.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
 	}
 
+	private void generateSelectionContainerContents() {
+		CategoriesList categoriesListPane = new CategoriesList(_presetModel);
+		CategoryPreviewPane categoryPreviewPane = new CategoryPreviewPane(_presetModel);
+
+		// categoryPreviewPane is centered inside its container
+		VBox categoryPreviewContainer = new VBox(categoryPreviewPane.getView());
+		HBox.setHgrow(categoryPreviewContainer, Priority.ALWAYS);
+		categoryPreviewContainer.getStyleClass().add("category-preview-container");
+
+		// question selection includes the list of categories & current category preview
+		_questionSelectContainer.getChildren().addAll(categoriesListPane.getView(), categoryPreviewContainer);
+	}
+
 	private void onModelStateChange() {
 		switch (_presetModel.getState()) {
+			case RESET:
+				_questionSelectContainer.getChildren().clear();
+				generateSelectionContainerContents();
+				break;
 			case SELECT_CATEGORY:
 			case CATEGORY_PREVIEW:
-			case RESET:
 				switchToView(_questionSelectContainer);
 				break;
 			case INCORRECT_ANSWER:
