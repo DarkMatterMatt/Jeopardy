@@ -16,7 +16,7 @@ import se206.quinzical.models.QuinzicalModel;
 /**
  * This is Atom type.
  * View for taskbar. Contains reset & quit buttons
- * 
+ *
  * Used by HeaderView.
  */
 public class Taskbar extends ViewBase {
@@ -56,6 +56,7 @@ public class Taskbar extends ViewBase {
 
 		// enable text
 		_toggleText = s.getView();
+		s.switchToView(model.textVisible() ? text : noText);
 		_toggleText.setOnMouseClicked(e -> {
 			model.toggleTextVisibility();
 			s.switchToView(model.textVisible() ? text : noText);

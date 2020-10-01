@@ -212,5 +212,6 @@ public class QuinzicalModel implements GsonPostProcessable {
 
 	public void toggleTextVisibility() {
 		_textEnabled.set(!_textEnabled.get());
+		save();
 	}
 }
