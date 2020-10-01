@@ -1,9 +1,13 @@
 package se206.quinzical.models;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import se206.quinzical.models.util.StringUtils;
 
 public class Question {
-	private final String _answer;
+	private final List<String> _answer;
 	private final String _question;
 	private transient Category _category;
 	private Status _status = Status.UNATTEMPTED;
@@ -23,7 +27,7 @@ public class Question {
 	}
 
 	public Question(String question, String answer, Category category) {
-		_answer = answer;
+		_answer = Arrays.asList(answer);
 		_category = category;
 		_question = question;
 	}
@@ -31,46 +35,50 @@ public class Question {
 	public Question(String raw, Category category) {
 		_category = category;
 
-		int delimiter = raw.indexOf(",");
-		if (delimiter == -1) {
-			throw new IllegalArgumentException("raw question should have a comma as a delimiter"
-					+ "separating question (on the left of comma) and answer (right of comma)");
+		String[] processed = raw.split("\\|");
+		if(processed.length <= 1) {
+			throw new IllegalArgumentException("format of a question is: <Question>|<Answer1>|<Answer2>...");
 		}
-
-		String tmpQ = raw.substring(0, delimiter).trim(); // e.g. NZer who led the land march from Te Hapua to Parliament
-		String tmpA = raw.substring(delimiter + 1).trim(); // e.g. ( Who is) Dame Whina Cooper.
-
-		// construct question
-		String[] tmpAParsed = tmpA.split("\\)");
-		if (tmpAParsed.length != 2) {
-			throw new IllegalArgumentException("answer part (next to comma) should contain a pair of "
-					+ "bracket that encloses either 'who are' 'what is/are' 'where is/are'");
+		
+		Character firstLetter = processed[0].trim().charAt(0);
+		_question = firstLetter.toString().toUpperCase() + processed[0].trim().toLowerCase().substring(1);
+		String[] answers = Arrays.copyOfRange(processed, 1, processed.length);
+		List<String> answersList = Arrays.asList(answers);
+		List<String> answersProcessed = new ArrayList<String>();
+		for(String ans: answersList) {
+			String tmp = ans.trim();
+			if(tmp != null && tmp != "") {
+				answersProcessed.add(ans);	
+			}
 		}
-
-		// Who is / where is/ etc = tmpAParsed[0].substring(1).trim()
-		_question = tmpQ.substring(0, 1).toUpperCase() + tmpQ.substring(1).toLowerCase(); // e.g. Who is NZer who led the land march from Te Hapua to Parliament
-
-		// construct answer
-		tmpA = tmpAParsed[1].trim();
-		_answer = tmpA.substring(0, 1).toUpperCase() + tmpA.substring(1);
+		if(answersProcessed.size()==0) {
+			throw new IllegalArgumentException("provide at least one answer that is not empty");
+		}
+		_answer = answersProcessed;
 	}
 
 	/**
 	 * @return true if the answer is correct (case insensitive, normalizes input)
 	 */
 	public boolean checkAnswer(String rawInput) {
-		// remove accents/macrons, remove parentheses, trim trailing/leading whitespace
-		String answer = StringUtils.stripTextInParentheses(StringUtils.normalize(_answer)).trim();
-
-		// remove accents/macrons, remove "what is" and "who is" from beginning, trim trailing/leading whitespace
-		String input = StringUtils.normalize(rawInput).replaceAll("^\\s*(what|who)\\s*is", "").trim();
-
-		boolean correct = answer.equalsIgnoreCase(input);
+		boolean correct = false;
+		for(String ans: _answer) {
+			if(ans.equalsIgnoreCase(rawInput.trim())) {
+				correct = true;
+			}
+		}
+		//Don't know how to use it, help!
+//		// remove accents/macrons, remove parentheses, trim trailing/leading whitespace
+//		String answer = StringUtils.stripTextInParentheses(StringUtils.normalize(_answer)).trim();
+//		// remove accents/macrons, remove "what is" and "who is" from beginning, trim trailing/leading whitespace
+//		String input = StringUtils.normalize(rawInput).replaceAll("^\\s*(what|who)\\s*is", "").trim();
+//		
+//		boolean correct = answer.equalsIgnoreCase(input);
 		_status = correct ? Status.CORRECT : Status.INCORRECT;
 		return correct;
 	}
 
-	public String getAnswer() {
+	public List<String> getAnswer() {
 		return _answer;
 	}
 
