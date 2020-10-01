@@ -2,11 +2,19 @@ package se206.quinzical.views;
 
 import javafx.application.Platform;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import se206.quinzical.DragAndResizeHelper;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
@@ -26,12 +34,37 @@ public class Taskbar extends ViewBase {
 
 		// exit button view
 		ImageView exit = createButton("../assets/exit.png");
-		exit.setOnMouseClicked(e -> Platform.exit());
+		exit.setOnMouseClicked(e -> {
+			Alert exitAlert = new Alert(AlertType.NONE);
+			exitAlert.setHeaderText("Sad to see you go!");
+			exitAlert.setContentText("Are you sure you want to exit Quinzical?");
+			
+			// style alert
+			DialogPane dialogue = exitAlert.getDialogPane();
+			ButtonType yes = new ButtonType("Yup",ButtonBar.ButtonData.YES);
+			ButtonType no = new ButtonType("Actually nah",ButtonBar.ButtonData.NO);
+			dialogue.getButtonTypes().addAll(yes, no);
+			dialogue.getStylesheets().add(getClass().getResource("../styles/dialogue.css").toExternalForm());
+			// stage of dialogue
+			Stage diaStage = (Stage) dialogue.getScene().getWindow();
+			diaStage.initStyle(StageStyle.UNDECORATED);
+			DragAndResizeHelper.addResizeListener(diaStage);
+			
+			exitAlert.showAndWait().filter(res -> res==yes).ifPresent(res -> {
+				Platform.exit();
+			});
+
+
+		});
 		Tooltip.install(exit, new Tooltip("Quit"));
 
 		// reset button view
 		_reset = createButton("../assets/reset.png");
-		_reset.setOnMouseClicked(e -> model.reset());
+		_reset.setOnMouseClicked(e -> {
+			
+			model.reset();
+			
+		});
 		Tooltip.install(_reset, new Tooltip("Reset game"));
 
 		// home button view
