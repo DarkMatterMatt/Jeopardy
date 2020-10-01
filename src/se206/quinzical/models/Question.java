@@ -46,14 +46,10 @@ public class Question {
 //		}
 
 		String[] processed = raw.split("\\|");
-//		for(String p: processed) {
-//			System.out.println("hello");
-//			System.out.println(p);
-//		}
 		
 		Character firstLetter = processed[0].trim().charAt(0);
 		_question = firstLetter.toString().toUpperCase() + processed[0].trim().toLowerCase().substring(1);
-		String[] answers = Arrays.copyOfRange(processed, 0, processed.length);
+		String[] answers = Arrays.copyOfRange(processed, 1, processed.length);
 		List<String> answersList = Arrays.asList(answers);
 		List<String> answersProcessed = new ArrayList<String>();
 		for(String ans: answersList) {
@@ -65,7 +61,6 @@ public class Question {
 		if(answersProcessed.size()==0) {
 			throw new IllegalArgumentException("provide at least one answer that is not empty");
 		}
-		
 		_answer = answersProcessed;
 		
 		/*
