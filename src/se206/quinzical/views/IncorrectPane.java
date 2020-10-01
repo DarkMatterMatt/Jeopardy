@@ -1,5 +1,7 @@
 package se206.quinzical.views;
 
+import java.util.List;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
@@ -16,7 +18,7 @@ import se206.quinzical.models.util.KeyEventManager;
  */
 public class IncorrectPane extends ViewBase {
 	private static final int TIMEOUT_SECS = 4;
-	private final Label _answerLabel = new Label();
+	private final TextFlow _answerLabel = new TextFlow();
 	private final VBox _container = new VBox();
 	private final QuizModel _model;
 	private final AnimatedProgressBar _progressBarView;
@@ -28,12 +30,12 @@ public class IncorrectPane extends ViewBase {
 		// show incorrect answer
 		Label incorrectLabel = new Label("Incorrect!");
 		Label answerPrefixLabel = new Label("The correct answer was ");
+		_answerLabel.setStyle("-fx-wrap-text: true");
 		Label answerSuffixLabel = new Label(".");
 		TextFlow answerText = new TextFlow(answerPrefixLabel, _answerLabel, answerSuffixLabel);
 		
 		answerText.getStyleClass().add("text-flow");
 		incorrectLabel.getStyleClass().addAll("text-bold", "text-main");
-		_answerLabel.getStyleClass().add("text-bold");
 
 		Label interactToSkipLabel = new Label("Click or press any key to skip...");
 		interactToSkipLabel.getStyleClass().add("interact-to-skip");
@@ -88,8 +90,16 @@ public class IncorrectPane extends ViewBase {
 	 */
 	private void questionUpdate(Question q) {
 		if (q != null) {
-			
-			_answerLabel.setText(q.getAnswer().get(0));
+			_answerLabel.getChildren().clear();
+			List<String> answerList = q.getAnswer();
+			for(int i = 0; i<answerList.size(); i++) {
+				Label part = new Label(answerList.get(i));
+				part.getStyleClass().add("text-bold");
+				_answerLabel.getChildren().add(part);
+				if(i!=answerList.size()-1) {
+					_answerLabel.getChildren().add(new Label(" or "));
+				}
+			}
 		}
 	}
 }
