@@ -3,6 +3,7 @@ package se206.quinzical.models;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import se206.quinzical.models.util.StringUtils;
 
@@ -26,7 +27,7 @@ public class Question {
 		_numAttempted = origQuestion._numAttempted;
 	}
 
-	public Question(String question, String answer, Category category) {
+	public Question(Category category, String question, String ...answer) {
 		_answer = Arrays.asList(answer);
 		_category = category;
 		_question = question;
@@ -39,16 +40,14 @@ public class Question {
 		if(processed.length <= 1) {
 			throw new IllegalArgumentException("format of a question is: <Question>|<Answer1>|<Answer2>...");
 		}
-		
-		Character firstLetter = processed[0].trim().charAt(0);
-		_question = firstLetter.toString().toUpperCase() + processed[0].trim().toLowerCase().substring(1);
+
+		_question = processed[0].trim();
 		String[] answers = Arrays.copyOfRange(processed, 1, processed.length);
-		List<String> answersList = Arrays.asList(answers);
 		List<String> answersProcessed = new ArrayList<String>();
-		for(String ans: answersList) {
+		for (String ans : answers) {
 			String tmp = ans.trim();
-			if(tmp != null && tmp != "") {
-				answersProcessed.add(ans);	
+			if (!tmp.isEmpty()) {
+				answersProcessed.add(ans);
 			}
 		}
 		if(answersProcessed.size()==0) {
@@ -72,7 +71,7 @@ public class Question {
 //		String answer = StringUtils.stripTextInParentheses(StringUtils.normalize(_answer)).trim();
 //		// remove accents/macrons, remove "what is" and "who is" from beginning, trim trailing/leading whitespace
 //		String input = StringUtils.normalize(rawInput).replaceAll("^\\s*(what|who)\\s*is", "").trim();
-//		
+//
 //		boolean correct = answer.equalsIgnoreCase(input);
 		_status = correct ? Status.CORRECT : Status.INCORRECT;
 		return correct;
