@@ -17,17 +17,17 @@
 }
 
 /** style buttons **/
-.dialog-pane .button{
-   -fx-background-color: -c-grey-00;
-   -fx-text-fill: white;
-   -fx-wrap-text: false;
+.dialog-pane .button {
+    -fx-background-color: -c-grey-00;
+    -fx-text-fill: white;
+    -fx-wrap-text: false;
     -fx-border-color: -c-gold;
-   -fx-cursor:hand;
- }
+    -fx-cursor: hand;
+}
 
-.dialog-pane .button:hover{
-  -fx-background-color: -c-off-white;
-  -fx-text-fill:black;
-  -fx-font-weight:bold;
- }
+.dialog-pane .button:hover {
+    -fx-background-color: -c-off-white;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
 
