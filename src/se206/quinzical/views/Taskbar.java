@@ -40,35 +40,14 @@ public class Taskbar extends ViewBase {
 		// exit button view
 		ImageView exit = createButton("../assets/exit.png");
 		exit.setOnMouseClicked(e -> {
-			Alert exitAlert = new Alert(AlertType.NONE);
-			exitAlert.setHeaderText("Sad to see you go!");
-			exitAlert.setContentText("Are you sure you want to exit Quinzical?");
-			
-			// style alert
-			DialogPane dialogue = exitAlert.getDialogPane();
-			ButtonType yes = new ButtonType("Yup",ButtonBar.ButtonData.YES);
-			ButtonType no = new ButtonType("Actually nah",ButtonBar.ButtonData.NO);
-			dialogue.getButtonTypes().addAll(yes, no);
-			dialogue.getStylesheets().add(getClass().getResource("../styles/dialogue.css").toExternalForm());
-			// stage of dialogue
-			Stage diaStage = (Stage) dialogue.getScene().getWindow();
-			diaStage.initStyle(StageStyle.UNDECORATED);
-			DragAndResizeHelper.addResizeListener(diaStage);
-			
-			exitAlert.showAndWait().filter(res -> res==yes).ifPresent(res -> {
-				Platform.exit();
-			});
-
-
+			AlertFactory.getExitAlert(this);
 		});
 		Tooltip.install(exit, new Tooltip("Quit"));
 
 		// reset button view
 		_reset = createButton("../assets/reset.png");
 		_reset.setOnMouseClicked(e -> {
-			
-			model.reset();
-			
+			AlertFactory.getResetAlert(this, model);
 		});
 		Tooltip.install(_reset, new Tooltip("Reset game"));
 
