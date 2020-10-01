@@ -1,30 +1,32 @@
 package se206.quinzical.views;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 
 /**
  * This class is a Pane type, and uses AnswerTextField atom.
  * Represents the answer screen for when a question has been selected.
- *
+ * <p>
  * This type is 'Pane' type, which means it depends on Atoms and may depend
  * on other Panes.
- *
  */
 public class AnswerPane extends ViewBase {
+	private final AnswerTextField _answerInputView;
 	private final Label _categoryLabel = new Label();
 	private final VBox _container = new VBox();
+	private final HBox _hintBox;
+	private final Label _hintText = new Label();
 	private final Icon _iconView = new Icon();
 	private final QuizModel _model;
 	private final Label _questionLabel = new Label();
-	private final AnswerTextField _answerInputView;
-	private final HBox _hintBox;
-	private final Label _hintText = new Label();
 
 	public AnswerPane(QuizModel model) {
 		_model = model;
@@ -63,6 +65,14 @@ public class AnswerPane extends ViewBase {
 		_model.getTextVisibleProperty().addListener((obs, old, val) -> onVisibilityChanged());
 	}
 
+	public void clearInput() {
+		_answerInputView.clear();
+	}
+
+	public void flashAnswerIncorrect(javafx.event.EventHandler<javafx.event.ActionEvent> onFinished) {
+		_answerInputView.flashAnswerIncorrect(onFinished);
+	}
+
 	public VBox getView() {
 		return _container;
 	}
@@ -83,24 +93,24 @@ public class AnswerPane extends ViewBase {
 	 * Update display to show question details
 	 */
 	private void questionUpdate(Question q) {
+		setHintVisible(false);
+		clearInput();
+
 		if (q == null) {
-			setHintVisible(false);
 			_categoryLabel.setText("Welp");
 			_questionLabel.setText("There is no available question in this category");
 			_answerInputView.getView().setVisible(false);
 			return;
 		}
 
-		String categoryName = (q.getCategory()!=null)?q.getCategory().getName():"";
-		String question = _model.getTextVisibility()?q.getQuestion():"====Text is currently set to invisible====\nIf you hate listening test, consider pressing the 'T' button above";
+		String categoryName = (q.getCategory() != null) ? q.getCategory().getName() : "";
+		String question = _model.getTextVisibility() ? q.getQuestion() : "====Text is currently set to invisible====\nIf you hate listening test, consider pressing the 'T' button above";
 
 		_model.skinCategoryImage(_iconView, categoryName);
 		_categoryLabel.setText(categoryName);
 		_answerInputView.getView().setVisible(true);
 		_questionLabel.setText(question);
 		_hintText.setText("Hint: the answer starts with letter " + q.getAnswer().charAt(0));
-
-		setHintVisible(q.getNumAttempted() == 2);
 	}
 
 	public void setHintVisible(boolean visible) {

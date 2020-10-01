@@ -4,11 +4,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.PracticeModel;
+import se206.quinzical.models.Question;
 import se206.quinzical.models.QuinzicalModel;
 /**
  * This class is Switch type.
  * Main structure of the Practice mode, excluding header view.
- * 
+ *
  * Used by QuizContentSwitch.
  * @author hajinkim
  *
@@ -62,7 +63,7 @@ class PracticeSwitcher extends SwitcherBase{
 
 
 		getView().getChildren().addAll(answerView.getView(), _correctPane.getView(), _incorrectPane.getView(), _nothingChosen);
-		
+
 		//start with nothing chosen.
 		switchToView(_nothingChosen);
 		_practiceModel.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
@@ -78,6 +79,12 @@ class PracticeSwitcher extends SwitcherBase{
 				break;
 			case CORRECT_ANSWER:
 				switchToView(_correctPane.getView());
+				break;
+			case RETRY_INCORRECT_ANSWER:
+				answerView.flashAnswerIncorrect(ev -> {
+					answerView.clearInput();
+					answerView.setHintVisible(_practiceModel.getCurrentQuestion().getNumAttempted() >= 2);
+				});
 				break;
 			case ANSWER_QUESTION:
 				switchToView(answerView.getView());
