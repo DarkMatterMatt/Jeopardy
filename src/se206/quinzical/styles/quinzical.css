@@ -32,3 +32,8 @@
     -fx-fill: -c-off-white;
     -fx-text-fill: -c-off-white;
 }
+
+.text-red {
+    -fx-fill: -c-red;
+    -fx-text-fill: -c-red;
+}

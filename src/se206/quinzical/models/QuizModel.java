@@ -120,6 +120,7 @@ public abstract class QuizModel implements GsonPostProcessable {
 		ANSWER_QUESTION,
 		CORRECT_ANSWER,
 		INCORRECT_ANSWER,
+		RETRY_INCORRECT_ANSWER,
 		GAME_OVER,
 	}
 }

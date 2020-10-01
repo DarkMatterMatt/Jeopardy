@@ -23,3 +23,7 @@
     -fx-pref-width: 480;
     -fx-wrap-text: true;
 }
+
+.answer .hint-text {
+    -fx-padding: 4 0 0 0;
+}

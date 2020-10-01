@@ -121,6 +121,7 @@ public class PresetQuinzicalModel extends QuizModel {
 
 		// randomly select another set of categories/questions
 		loadQuestions();
+		beginQuestion(null);
 
 		setState(State.RESET); // trigger any RESET listeners
 		setState(State.SELECT_CATEGORY);
