@@ -88,7 +88,8 @@ public class IncorrectPane extends ViewBase {
 	 */
 	private void questionUpdate(Question q) {
 		if (q != null) {
-			_answerLabel.setText(q.getAnswer());
+			
+			_answerLabel.setText(q.getAnswer().get(0));
 		}
 	}
 }

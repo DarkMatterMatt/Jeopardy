@@ -114,7 +114,7 @@ public class AnswerPane extends ViewBase {
 		_categoryLabel.setText(categoryName);
 		_answerInputView.getView().setVisible(true);
 		_questionLabel.setText(question);
-		_hintText.setText("Hint: the answer starts with letter " + q.getAnswer().charAt(0));
+		_hintText.setText("Hint: the answer starts with letter " + q.getAnswer().get(0).charAt(0));
 	}
 
 	public void setHintVisible(boolean visible) {
