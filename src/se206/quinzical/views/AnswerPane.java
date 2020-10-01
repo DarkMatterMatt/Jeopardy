@@ -1,13 +1,10 @@
 package se206.quinzical.views;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 
@@ -73,6 +70,10 @@ public class AnswerPane extends ViewBase {
 		_answerInputView.flashAnswerIncorrect(onFinished);
 	}
 
+	public void focusInput() {
+		_answerInputView.focus();
+	}
+
 	public VBox getView() {
 		return _container;
 	}
@@ -95,6 +96,7 @@ public class AnswerPane extends ViewBase {
 	private void questionUpdate(Question q) {
 		setHintVisible(false);
 		clearInput();
+		focusInput();
 
 		if (q == null) {
 			_categoryLabel.setText("Welp");

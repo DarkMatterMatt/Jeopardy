@@ -81,6 +81,7 @@ class PracticeSwitcher extends SwitcherBase {
 			case RETRY_INCORRECT_ANSWER:
 				_answerPane.flashAnswerIncorrect(ev -> {
 					_answerPane.clearInput();
+					_answerPane.focusInput();
 					_answerPane.setHintVisible(_practiceModel.getCurrentQuestion().getNumAttempted() >= 2);
 				});
 				break;

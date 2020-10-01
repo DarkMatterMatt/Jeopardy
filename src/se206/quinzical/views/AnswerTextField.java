@@ -61,7 +61,6 @@ public class AnswerTextField extends ViewBase {
     	return _answerInput;
     }
 
-
     public void flashAnswerIncorrect(javafx.event.EventHandler<javafx.event.ActionEvent> onFinished) {
         _answerInput.getStyleClass().add("text-red");
         _answerInput.getStyleClass().remove("text-white");
@@ -81,8 +80,13 @@ public class AnswerTextField extends ViewBase {
         });
         collisionAnimation.play();
     }
+
     private void submit() {
         _model.answerQuestion(_answerInput.getText());
+    }
+
+    public void focus() {
+        _answerInput.requestFocus();
     }
 
     public HBox getView() {
