@@ -2,6 +2,7 @@ package se206.quinzical.views;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -45,6 +46,16 @@ public class AnswerPane extends ViewBase {
 		_categoryLabel.getStyleClass().addAll("text-bold", "text-gold", "category");
 		_questionLabel.getStyleClass().addAll("text-white", "question");
 
+		Icon repeatIcon = new Icon("../assets/volume-up.png")
+				.setSize(40, 40);
+		repeatIcon.addClass("repeat-question", "btn");
+		repeatIcon.getView().setOnMouseClicked(ev -> _model.getTextToSpeech().speak(_model.getCurrentQuestion().getQuestion()));
+		Tooltip.install(repeatIcon.getView(), new Tooltip("Repeat question"));
+
+		HBox questionContainer = new HBox(repeatIcon.getView(), _questionLabel);
+		questionContainer.setFillHeight(false);
+		questionContainer.getStyleClass().add("question-container");
+
 		_iconView
 				.setSize(56, 56)
 				.addClass("category-icon");
@@ -52,7 +63,7 @@ public class AnswerPane extends ViewBase {
 		// add container styles
 		addStylesheet("answer.css");
 		_container.getStyleClass().add("answer");
-		_container.getChildren().addAll(categoryContainer, _questionLabel, _answerInputView.getView(), _hintText);
+		_container.getChildren().addAll(categoryContainer, questionContainer, _answerInputView.getView(), _hintText);
 
 		// reload screen when we are made visible
 		onVisibilityChanged();

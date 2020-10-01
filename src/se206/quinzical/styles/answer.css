@@ -8,9 +8,13 @@
     -fx-padding: 0 0 0 16;
 }
 
-.answer .category-container {
+.answer .category-container, .answer .question-container {
     -fx-alignment: center-left;
     -fx-max-width: 480;
+}
+
+.answer .repeat-question {
+    -fx-padding: 0 4 8 0;
 }
 
 .answer .category-icon {
@@ -20,7 +24,6 @@
 
 .answer .question {
     -fx-padding: 24 0 32 0;
-    -fx-pref-width: 480;
     -fx-wrap-text: true;
 }
 
