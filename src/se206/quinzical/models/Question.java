@@ -35,17 +35,10 @@ public class Question {
 	public Question(String raw, Category category) {
 		_category = category;
 
-		System.out.println(raw);
-		// check presence of pipe
-//		int delimiter = raw.indexOf("|");
-//		System.out.println(delimiter);
-//		if (delimiter == -1) {
-//			System.out.println("oops");
-//			
-//			throw new IllegalArgumentException("format of a question is: <Question>|<Answer1>|<Answer2>...");
-//		}
-
 		String[] processed = raw.split("\\|");
+		if(processed.length <= 1) {
+			throw new IllegalArgumentException("format of a question is: <Question>|<Answer1>|<Answer2>...");
+		}
 		
 		Character firstLetter = processed[0].trim().charAt(0);
 		_question = firstLetter.toString().toUpperCase() + processed[0].trim().toLowerCase().substring(1);
@@ -62,32 +55,6 @@ public class Question {
 			throw new IllegalArgumentException("provide at least one answer that is not empty");
 		}
 		_answer = answersProcessed;
-		
-		/*
-		 * deprecated
-		 */
-//		int delimiter = raw.indexOf(",");
-//		if (delimiter == -1) {
-//			throw new IllegalArgumentException("raw question should have a comma as a delimiter"
-//					+ "separating question (on the left of comma) and answer (right of comma)");
-//		}
-//
-//		String tmpQ = raw.substring(0, delimiter).trim(); // e.g. NZer who led the land march from Te Hapua to Parliament
-//		String tmpA = raw.substring(delimiter + 1).trim(); // e.g. ( Who is) Dame Whina Cooper.
-//
-//		// construct question
-//		String[] tmpAParsed = tmpA.split("\\)");
-//		if (tmpAParsed.length != 2) {
-//			throw new IllegalArgumentException("answer part (next to comma) should contain a pair of "
-//					+ "bracket that encloses either 'who are' 'what is/are' 'where is/are'");
-//		}
-//
-//		// Who is / where is/ etc = tmpAParsed[0].substring(1).trim()
-//		_question = tmpQ.substring(0, 1).toUpperCase() + tmpQ.substring(1).toLowerCase(); // e.g. Who is NZer who led the land march from Te Hapua to Parliament
-//
-//		// construct answer
-//		tmpA = tmpAParsed[1].trim();
-//		_answer = tmpA.substring(0, 1).toUpperCase() + tmpA.substring(1);
 	}
 
 	/**
