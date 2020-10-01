@@ -105,6 +105,8 @@ public class AnswerPane extends ViewBase {
 			return;
 		}
 
+		_model.getTextToSpeech().speak(q.getQuestion());
+
 		String categoryName = (q.getCategory() != null) ? q.getCategory().getName() : "";
 		String question = _model.getTextVisibility() ? q.getQuestion() : "====Text is currently set to invisible====\nIf you hate listening test, consider pressing the 'T' button above";
 
