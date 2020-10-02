@@ -24,6 +24,7 @@ public class AnswerPane extends ViewBase {
 	private final Icon _iconView = new Icon();
 	private final QuizModel _model;
 	private final Label _questionLabel = new Label();
+	private transient Question _currentQuestion = null;
 	private final Icon _repeatIcon;
 
 	public AnswerPane(QuizModel model) {
@@ -124,10 +125,14 @@ public class AnswerPane extends ViewBase {
 			return;
 		}
 
-		_model.getTextToSpeech().speak(q.getQuestion());
+		if (q != _currentQuestion) {
+			// question changed, speak it
+			_model.getTextToSpeech().speak(q.getQuestion());
+			_currentQuestion = q;
+		}
 
 		String categoryName = (q.getCategory() != null) ? q.getCategory().getName() : "";
-		String question = _model.getTextVisibility() ? q.getQuestion() : "====Text is currently set to invisible====\nIf you hate listening test, consider pressing the 'T' button above";
+		String question = _model.getTextVisibility() ? q.getQuestion() : "Text is currently invisible, press the 'T' in the taskbar to toggle text visibility!";
 
 		_model.skinCategoryImage(_iconView, categoryName);
 		_categoryLabel.setText(categoryName);
