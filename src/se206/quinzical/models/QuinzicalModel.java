@@ -12,6 +12,7 @@ import se206.quinzical.models.util.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,20 +39,27 @@ public class QuinzicalModel implements GsonPostProcessable {
 	public QuinzicalModel(File[] categories) {
 		_categories = new ArrayList<Category>();
 		for (File category : categories) {
-			Category newCategory = new Category(category.getName());
-
-			//list of questions
-			for (String rawQuestion : MyScanner.readFileOutputString(category)) {
-				try {
-					Question question = new Question(rawQuestion, newCategory);
-					newCategory.addQuestion(question);
+			String categoryName = category.getName();
+			String[] types = {"jpg","png"};
+			
+			boolean isImage = Arrays.asList(types).contains(categoryName.substring(categoryName.lastIndexOf('.') + 1));
+			
+			if(!isImage) {
+				Category newCategory = new Category(category.getName());
+		
+				//list of questions
+				for (String rawQuestion : MyScanner.readFileOutputString(category)) {
+					try {
+						Question question = new Question(rawQuestion, newCategory);
+						newCategory.addQuestion(question);
+					}
+					catch (IllegalArgumentException e) {
+						//
+					}
 				}
-				catch (IllegalArgumentException e) {
-					//
-				}
+				//make category out of that
+				_categories.add(newCategory);
 			}
-			//make category out of that
-			_categories.add(newCategory);
 		}
 
 		_presetModel = new PresetQuinzicalModel(this);

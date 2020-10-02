@@ -49,7 +49,7 @@ public class AnswerPane extends ViewBase {
 		_repeatIcon = new Icon("../assets/volume-up.png")
 				.setSize(40, 40);
 		_repeatIcon.addClass("repeat-question", "btn");
-		_repeatIcon.getView().setOnMouseClicked(ev -> _model.getTextToSpeech().speak(_model.getCurrentQuestion().getQuestion()));
+		_repeatIcon.getView().setOnMouseClicked(ev ->_model.getTextToSpeech().speak(_model.getCurrentQuestion().getQuestion()));
 		Tooltip.install(_repeatIcon.getView(), new Tooltip("Repeat question"));
 
 		HBox questionContainer = new HBox(_repeatIcon.getView(), _questionLabel);
