@@ -14,6 +14,7 @@ import java.util.List;
  * @author Hajin Kim
  */
 public class PresetQuinzicalModel extends QuizModel {
+	private static final double INCORRECT_SCORE_MULTIPLIER = 0.5;
 	private static final int CATEGORIES_PER_GAME = 5;
 	private static final int QUESTIONS_PER_CATEGORY = 5;
 	private final List<Category> _categories = new ArrayList<>();
@@ -31,10 +32,12 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 		boolean correct = getCurrentQuestion().checkAnswer(answer);
 		if (correct) {
-			setState(State.CORRECT_ANSWER);
 			setScore(getScore() + getCurrentQuestion().getValue());
+			setState(State.CORRECT_ANSWER);
 		}
 		else {
+			// lose a fraction of score when incorrect, score does not go below zero
+			setScore(Math.max(0, getScore() - (int) Math.round(INCORRECT_SCORE_MULTIPLIER * getCurrentQuestion().getValue())));
 			setState(State.INCORRECT_ANSWER);
 		}
 	}
