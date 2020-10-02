@@ -109,7 +109,9 @@ public abstract class QuizModel implements GsonPostProcessable {
 	}
 
 	public void skinCategoryImage(Icon icon, String categoryName) {
-		
+		if(categoryName == "icon-missing.png") {
+			icon.setImage("../assets/icon-missing.png");
+		}
 		try {
 			Image img = new Image(new FileInputStream("./categories/"+categoryName+".png"));
 			icon.setImage(img);
@@ -119,11 +121,12 @@ public abstract class QuizModel implements GsonPostProcessable {
 			icon.setImage("../assets/icon-missing.png");
 		}
 	}
+	
 
 	public boolean getTextVisibility() {
 		return _model.textVisible();
 	}
-
+	
 	/**
 	 * The current screen being shown
 	 */

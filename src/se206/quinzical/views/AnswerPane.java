@@ -24,6 +24,7 @@ public class AnswerPane extends ViewBase {
 	private final Icon _iconView = new Icon();
 	private final QuizModel _model;
 	private final Label _questionLabel = new Label();
+	private final Icon _repeatIcon;
 
 	public AnswerPane(QuizModel model) {
 		_model = model;
@@ -45,13 +46,13 @@ public class AnswerPane extends ViewBase {
 		_categoryLabel.getStyleClass().addAll("text-bold", "text-gold", "category");
 		_questionLabel.getStyleClass().addAll("text-white", "question");
 
-		Icon repeatIcon = new Icon("../assets/volume-up.png")
+		_repeatIcon = new Icon("../assets/volume-up.png")
 				.setSize(40, 40);
-		repeatIcon.addClass("repeat-question", "btn");
-		repeatIcon.getView().setOnMouseClicked(ev -> _model.getTextToSpeech().speak(_model.getCurrentQuestion().getQuestion()));
-		Tooltip.install(repeatIcon.getView(), new Tooltip("Repeat question"));
+		_repeatIcon.addClass("repeat-question", "btn");
+		_repeatIcon.getView().setOnMouseClicked(ev -> _model.getTextToSpeech().speak(_model.getCurrentQuestion().getQuestion()));
+		Tooltip.install(_repeatIcon.getView(), new Tooltip("Repeat question"));
 
-		HBox questionContainer = new HBox(repeatIcon.getView(), _questionLabel);
+		HBox questionContainer = new HBox(_repeatIcon.getView(), _questionLabel);
 		questionContainer.setFillHeight(false);
 		questionContainer.getStyleClass().add("question-container");
 
@@ -118,6 +119,8 @@ public class AnswerPane extends ViewBase {
 			_categoryLabel.setText("Welp");
 			_questionLabel.setText("There is no available question in this category");
 			_answerInputView.getView().setVisible(false);
+			_repeatIcon.getView().setVisible(false);
+			_model.skinCategoryImage(_iconView, "icon-missing.png");
 			return;
 		}
 
@@ -129,6 +132,7 @@ public class AnswerPane extends ViewBase {
 		_model.skinCategoryImage(_iconView, categoryName);
 		_categoryLabel.setText(categoryName);
 		_answerInputView.getView().setVisible(true);
+		_repeatIcon.getView().setVisible(true);
 		_questionLabel.setText(question);
 		_hintText.setText("Hint: the answer starts with letter " + q.getAnswer().get(0).charAt(0));
 	}
