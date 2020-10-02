@@ -1,5 +1,6 @@
 package se206.quinzical.models;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,22 +58,30 @@ public class Question {
 	}
 
 	/**
+	 * Normalize answer to make 'correct answer' matching more flexible
+	 * <p>
+	 * Remove macrons & accents, convert to lowercase, trim & deduplicate whitespace, remove 'a' or 'the' prefixes,
+	 * remove trailing 's' (poor method of removing plurals), convert 'mount' to 'mt' & 'new zealand' to 'nz'
+	 */
+	public static String normalizeAnswer(String s) {
+		return StringUtils.stripAccents(s)
+				.trim()
+				.toLowerCase()
+				.replaceAll("\\s+", " ")
+				.replaceAll("^(a|the)\\s+", "")
+				.replaceAll("s$", "")
+				.replace("mount", "mt")
+				.replace("new zealand", "nz");
+	}
+
+	/**
 	 * @return true if the answer is correct (case insensitive, normalizes input)
 	 */
 	public boolean checkAnswer(String rawInput) {
-		boolean correct = false;
-		for(String ans: _answer) {
-			if(ans.equalsIgnoreCase(rawInput.trim())) {
-				correct = true;
-			}
-		}
-		//Don't know how to use it, help!
-//		// remove accents/macrons, remove parentheses, trim trailing/leading whitespace
-//		String answer = StringUtils.stripTextInParentheses(StringUtils.normalize(_answer)).trim();
-//		// remove accents/macrons, remove "what is" and "who is" from beginning, trim trailing/leading whitespace
-//		String input = StringUtils.normalize(rawInput).replaceAll("^\\s*(what|who)\\s*is", "").trim();
-//
-//		boolean correct = answer.equalsIgnoreCase(input);
+		// check if input matches any normalized answer
+		String input = normalizeAnswer(rawInput);
+		boolean correct = _answer.stream().anyMatch(a -> input.equals(normalizeAnswer(a)));
+
 		_status = correct ? Status.CORRECT : Status.INCORRECT;
 		return correct;
 	}
