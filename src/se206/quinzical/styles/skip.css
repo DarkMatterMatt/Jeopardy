@@ -1,0 +1,31 @@
+.skip-view {
+    -fx-background-color: -c-grey-01;
+    -fx-alignment: top-center;
+    -fx-padding: 48;
+}
+
+.skip-view .text-main {
+    -fx-text-fill: -c-gold;
+    -fx-font-size: 48;
+    -fx-padding: 24;
+}
+
+.skip-view .text-flow {
+    -fx-text-alignment: center;
+    -fx-padding: 24;
+}
+
+.skip-view .text-flow .label {
+    -fx-text-fill: -c-off-white;
+}
+
+.skip-view .interact-to-skip {
+    -fx-padding: 24 24 0 24;
+    -fx-font-size: 12;
+    -fx-text-fill: -c-off-white;
+}
+
+.skip-view .progress-bar {
+    -fx-pref-height: 12;
+    -fx-max-width: 480;
+}

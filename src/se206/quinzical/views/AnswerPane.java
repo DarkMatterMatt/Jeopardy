@@ -22,14 +22,16 @@ public class AnswerPane extends ViewBase {
 	private final HBox _hintBox;
 	private final Label _hintText = new Label();
 	private final Icon _iconView = new Icon();
+	private final boolean _isPracticeMode;
 	private final QuizModel _model;
 	private final Label _questionLabel = new Label();
-	private transient Question _currentQuestion = null;
 	private final Icon _repeatIcon;
+	private transient Question _currentQuestion = null;
 
 	public AnswerPane(QuizModel model) {
 		_model = model;
 		_answerInputView = new AnswerTextField(_model);
+		_isPracticeMode = _model instanceof PracticeModel;
 
 		Label hintDisplayedLabel = new Label("Hint Displayed  ");
 		hintDisplayedLabel.getStyleClass().addAll("text-small", "text-white");
@@ -50,7 +52,7 @@ public class AnswerPane extends ViewBase {
 		_repeatIcon = new Icon("../assets/volume-up.png")
 				.setSize(40, 40);
 		_repeatIcon.addClass("repeat-question", "btn");
-		_repeatIcon.getView().setOnMouseClicked(ev ->_model.getTextToSpeech().speak(_model.getCurrentQuestion().getQuestion()));
+		_repeatIcon.getView().setOnMouseClicked(ev -> _model.getTextToSpeech().speak(_model.getCurrentQuestion().getQuestion()));
 		Tooltip.install(_repeatIcon.getView(), new Tooltip("Repeat question"));
 
 		HBox questionContainer = new HBox(_repeatIcon.getView(), _questionLabel);
@@ -65,6 +67,14 @@ public class AnswerPane extends ViewBase {
 		addStylesheet("answer.css");
 		_container.getStyleClass().add("answer");
 		_container.getChildren().addAll(categoryContainer, questionContainer, _answerInputView.getView(), _hintText);
+
+		// skip button
+		if (!_isPracticeMode) {
+			Label skipLabel = new Label("Click here to skip this question");
+			skipLabel.getStyleClass().addAll("btn", "text-white", "text-small");
+			skipLabel.setOnMouseClicked(ev -> ((PresetQuinzicalModel) _model).skipQuestion());
+			_container.getChildren().add(skipLabel);
+		}
 
 		// reload screen when we are made visible
 		onVisibilityChanged();
@@ -99,8 +109,8 @@ public class AnswerPane extends ViewBase {
 			// container is hidden
 			return;
 		}
-		if (_model instanceof PresetQuinzicalModel && _model.getModel().getState() != QuinzicalModel.State.GAME
-				|| _model instanceof PracticeModel && _model.getModel().getState() != QuinzicalModel.State.PRACTICE) {
+		if (!_isPracticeMode && _model.getModel().getState() != QuinzicalModel.State.GAME
+				|| _isPracticeMode && _model.getModel().getState() != QuinzicalModel.State.PRACTICE) {
 			// this game is not active
 			return;
 		}

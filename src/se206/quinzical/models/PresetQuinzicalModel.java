@@ -42,6 +42,14 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
+	public void skipQuestion() {
+		if (getState() != State.ANSWER_QUESTION) {
+			throw new IllegalStateException("Previous state should be ANSWER_QUESTION, found " + getState());
+		}
+		getCurrentQuestion().skipQuestion();
+		setState(State.SKIP_ANSWER);
+	}
+
 	/**
 	 * Called from the "category preview" screen, moves to the answer question
 	 */
