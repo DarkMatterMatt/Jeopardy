@@ -1,6 +1,27 @@
-# project
+# Quinzical
 
-Use this repo for both Assignment 3 and also your final Project (as you will be in the same team). 
+JavaFX based quiz application created by Hajin Kim and Matt Moran.
 
-Be sure to update this README file to provide an easy-to-follow set of instructions on how to run your program. 
+## Aim of the game
 
+
+## How to run it (See Requirements)
+// make sure we have a SINGLE SCRIPT FILE 
+
+## Requirements
+// javafx, espeak and all that
+
+## Features
+// 40+ NZ related questions, 7 categories
+// Supports multiple answers
+// supports maori voice
+
+## How to navigate around the game
+// with screenshot?
+
+## Taskbar icons explanation
+// can look at tool tips
+
+## Customize questions
+// reads files from ./categories folder
+// format is <Question>|<Answer>|<Answer2>...
