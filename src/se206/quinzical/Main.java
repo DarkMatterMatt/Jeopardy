@@ -13,6 +13,7 @@ import se206.quinzical.views.QuizPane;
 
 /**
  * Main stage setup
+ * This is the starting point of our application
  */
 public class Main extends Application {
     public static void main(String[] args) {
