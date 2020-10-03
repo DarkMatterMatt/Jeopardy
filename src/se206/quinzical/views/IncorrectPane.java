@@ -30,9 +30,10 @@ public class IncorrectPane extends ViewBase {
 		// show incorrect answer
 		Label incorrectLabel = new Label("Incorrect!");
 		Label answerPrefixLabel = new Label("The correct answer was ");
-		_answerLabel.setStyle("-fx-wrap-text: true");
-		Label answerSuffixLabel = new Label(".");
-		TextFlow answerText = new TextFlow(answerPrefixLabel, _answerLabel, answerSuffixLabel);
+		_answerLabel.setPrefWidth(300);
+//		Label answerSuffixLabel = new Label(".");
+		TextFlow answerText = new TextFlow(answerPrefixLabel, _answerLabel);
+		answerText.setStyle("-fx-alignment: center");
 		
 		answerText.getStyleClass().add("text-flow");
 		incorrectLabel.getStyleClass().addAll("text-bold", "text-main");
@@ -98,6 +99,8 @@ public class IncorrectPane extends ViewBase {
 				_answerLabel.getChildren().add(part);
 				if(i!=answerList.size()-1) {
 					_answerLabel.getChildren().add(new Label(" or "));
+				}else {
+					_answerLabel.getChildren().add(new Label("."));
 				}
 			}
 		}
