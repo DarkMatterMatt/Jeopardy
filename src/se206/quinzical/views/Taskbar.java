@@ -38,21 +38,21 @@ public class Taskbar extends ViewBase {
 		_model = model;
 
 		// exit button view
-		ImageView exit = createButton("../assets/exit.png");
+		ImageView exit = createButton("/se206/quinzical/assets/exit.png");
 		exit.setOnMouseClicked(e -> {
 			AlertFactory.getExitAlert(this);
 		});
 		Tooltip.install(exit, new Tooltip("Quit"));
 
 		// reset button view
-		_reset = createButton("../assets/reset.png");
+		_reset = createButton("/se206/quinzical/assets/reset.png");
 		_reset.setOnMouseClicked(e -> {
 			AlertFactory.getResetAlert(this, model);
 		});
 		Tooltip.install(_reset, new Tooltip("Reset game"));
 
 		// home button view
-		ImageView home = createButton("../assets/home.png");
+		ImageView home = createButton("/se206/quinzical/assets/home.png");
 		home.setOnMouseClicked(e -> {
 			//change state to menu
 			model.backToMainMenu();
@@ -60,8 +60,8 @@ public class Taskbar extends ViewBase {
 		Tooltip.install(home, new Tooltip("Main Menu"));
 
 		// text and notext icons
-		HBox text = new HBox(createButton("../assets/text.png"));
-		HBox noText = new HBox(createButton("../assets/notext.png"));
+		HBox text = new HBox(createButton("/se206/quinzical/assets/text.png"));
+		HBox noText = new HBox(createButton("/se206/quinzical/assets/notext.png"));
 
 		SwitcherBase s = new SwitcherBase() {};
 		s.getView().getChildren().addAll(text, noText);

@@ -35,7 +35,7 @@ public class AnswerPane extends ViewBase {
 
 		Label hintDisplayedLabel = new Label("Hint Displayed  ");
 		hintDisplayedLabel.getStyleClass().addAll("text-small", "text-white");
-		Icon hintIcon = new Icon("../assets/light.png");
+		Icon hintIcon = new Icon("/se206/quinzical/assets/light.png");
 
 		_hintBox = new HBox(hintDisplayedLabel, hintIcon.getView());
 		_hintBox.setAlignment(Pos.CENTER_RIGHT);
@@ -49,7 +49,7 @@ public class AnswerPane extends ViewBase {
 		_categoryLabel.getStyleClass().addAll("text-bold", "text-gold", "category");
 		_questionLabel.getStyleClass().addAll("text-white", "question");
 
-		_repeatIcon = new Icon("../assets/volume-up.png")
+		_repeatIcon = new Icon("/se206/quinzical/assets/volume-up.png")
 				.setSize(40, 40);
 		_repeatIcon.addClass("repeat-question", "btn");
 		_repeatIcon.getView().setOnMouseClicked(ev -> _model.getTextToSpeech().speak(_model.getCurrentQuestion().getQuestion()));

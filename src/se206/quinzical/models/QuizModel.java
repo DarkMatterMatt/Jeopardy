@@ -106,16 +106,16 @@ public abstract class QuizModel implements GsonPostProcessable {
 	}
 
 	public void skinCategoryImage(Icon icon, String categoryName) {
-		if(categoryName == "icon-missing.png") {
-			icon.setImage("../assets/icon-missing.png");
+		if(categoryName.equals("icon-missing.png")) {
+			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		}
 		try {
 			Image img = new Image(new FileInputStream("./categories/"+categoryName+".png"));
 			icon.setImage(img);
 		} catch (NullPointerException e) {
-			icon.setImage("../assets/icon-missing.png");
+			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		} catch (FileNotFoundException e) {
-			icon.setImage("../assets/icon-missing.png");
+			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		}
 	}
 
