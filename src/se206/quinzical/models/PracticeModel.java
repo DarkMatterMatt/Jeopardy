@@ -3,14 +3,25 @@ package se206.quinzical.models;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * PracticeModel is the QuizModel for practice module. (used by PracticeSwitch).
+ * In addition to the role of QuizModel, it sets the question to be displayed 
+ * when a category is selected (see selectCategory(Category item)).
+ */
 public class PracticeModel extends QuizModel {
 	private final List<Category> _categories;
 
+	/*
+	 * constructor that takes all the available categories from the Quinzical model.
+	 */
 	public PracticeModel(QuinzicalModel model) {
 		super(model);
 		_categories = _model.getCategories();
 	}
 
+	/*
+	 * check if the given answer by the user is correct.
+	 */
 	@Override
 	public void answerQuestion(String answer) {
 		if (getState() != State.ANSWER_QUESTION && getState() != State.RETRY_INCORRECT_ANSWER) {
@@ -36,11 +47,17 @@ public class PracticeModel extends QuizModel {
 		setState(State.ANSWER_QUESTION);
 	}
 
+	/*
+	 * get all the categories stored in this model.
+	 */
 	@Override
 	public List<Category> getCategories() {
 		return Collections.unmodifiableList(_categories);
 	}
 
+	/*
+	 * when category is selected, give the active question of that category.
+	 */
 	@Override
 	public void selectCategory(Category item) {
 		beginQuestion(item.getActiveQuestionInPracticeModule());

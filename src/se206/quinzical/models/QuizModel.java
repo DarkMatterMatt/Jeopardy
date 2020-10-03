@@ -12,11 +12,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+/**
+ * Base class defining the behaviour of QuizModel.
+ * Any class extending this class can track of the current question and trigger stuff in QuinzicalModel (protected field).
+ */
 public abstract class QuizModel implements GsonPostProcessable {
 	private final ObjectProperty<Question> _currentQuestion = new SimpleObjectProperty<>();
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.SELECT_CATEGORY);
 	protected transient QuinzicalModel _model;
 
+	/*
+	 * Constructor that stores reference to the QuinzicalModel that stores QuizModel.
+	 */
 	public QuizModel(QuinzicalModel model) {
 		_model = model;
 	}
@@ -40,28 +47,49 @@ public abstract class QuizModel implements GsonPostProcessable {
 		setState(State.SELECT_CATEGORY);
 	}
 
+	/*
+	 * return list of categories of this QuizModel 
+	 */
 	public abstract List<Category> getCategories();
 
+	/*
+	 * return whether the clue text is visible
+	 */
 	public BooleanProperty getTextVisibleProperty() {
 		return _model.getTextVisibleProperty();
 	}
 
+	/*
+	 * return the current question of this model
+	 */
 	public Question getCurrentQuestion() {
 		return _currentQuestion.get();
 	}
 
+	/*
+	 * return the current question of this QuizModel - as ObjectProperty
+	 */
 	public ObjectProperty<Question> getCurrentQuestionProperty() {
 		return _currentQuestion;
 	}
 
+	/*
+	 * return QuinzicalModel that encapsulates this QuizModel
+	 */
 	public QuinzicalModel getModel() {
 		return _model;
 	}
 
+	/*
+	 * return state of this model (defined as enum in this class)
+	 */
 	public State getState() {
 		return _state.get();
 	}
 
+	/*
+	 * some fancy gson stuff
+	 */
 	@Override
 	public void gsonPostProcess() {
 		Question currentQuestion = getCurrentQuestion();
@@ -75,15 +103,24 @@ public abstract class QuizModel implements GsonPostProcessable {
 		}
 	}
 
+	/*
+	 * return the state of the page (State is defined as enum in this class)
+	 */
 	protected void setState(State state) {
 		_state.set(state);
 		save();
 	}
 
+	/*
+	 * return the state property of the Quiz screen (State is defined in this class as enum)
+	 */
 	public ObjectProperty<State> getStateProperty() {
 		return _state;
 	}
 
+	/*
+	 * return the object for TextToSpeech
+	 */
 	public TextToSpeech getTextToSpeech() {
 		return _model.getTextToSpeech();
 	}
@@ -105,6 +142,9 @@ public abstract class QuizModel implements GsonPostProcessable {
 		_model = model;
 	}
 
+	/*
+	 * skin the category image to whatever category name is supplied
+	 */
 	public void skinCategoryImage(Icon icon, String categoryName) {
 		if(categoryName.equals("icon-missing.png")) {
 			icon.setImage("/se206/quinzical/assets/icon-missing.png");
@@ -119,6 +159,9 @@ public abstract class QuizModel implements GsonPostProcessable {
 		}
 	}
 
+	/*
+	 * return the visibility of the text for clue.
+	 */
 	public boolean getTextVisibility() {
 		return _model.textVisible();
 	}

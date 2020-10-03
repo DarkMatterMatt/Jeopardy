@@ -25,6 +25,9 @@ public class PresetQuinzicalModel extends QuizModel {
 		loadQuestions();
 	}
 
+	/*
+	 * check if the given answer is correct.
+	 */
 	@Override
 	public void answerQuestion(String answer) {
 		if (getState() != State.ANSWER_QUESTION) {
@@ -42,6 +45,9 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
+	/*
+	 * indicate to the model that question is skipped
+	 */
 	public void skipQuestion() {
 		if (getState() != State.ANSWER_QUESTION) {
 			throw new IllegalStateException("Previous state should be ANSWER_QUESTION, found " + getState());
@@ -57,6 +63,10 @@ public class PresetQuinzicalModel extends QuizModel {
 		setState(State.ANSWER_QUESTION);
 	}
 
+	/*
+	 * indicate that the current question is finished being answered,
+	 * and the current question is moved to the next question.
+	 */
 	@Override
 	public void finishQuestion() {
 		super.finishQuestion();
@@ -73,6 +83,9 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
+	/*
+	 * return the categories of the real game module
+	 */
 	public List<Category> getCategories() {
 		return Collections.unmodifiableList(_categories);
 	}
@@ -91,18 +104,30 @@ public class PresetQuinzicalModel extends QuizModel {
 		return _categories.stream().mapToLong(Category::getNumRemaining).sum();
 	}
 
+	/*
+	 * get score
+	 */
 	public int getScore() {
 		return _score.get();
 	}
 
+	/*
+	 * set score
+	 */
 	private void setScore(int score) {
 		_score.set(score);
 	}
 
+	/*
+	 * return score
+	 */
 	public IntegerProperty getScoreProperty() {
 		return _score;
 	}
 
+	/*
+	 * select 5 categories, each containing random 5 questions.
+	 */
 	private void loadQuestions() {
 		_categories.clear();
 
@@ -127,6 +152,9 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
+	/*
+	 * this is triggered when user resets the game.
+	 */
 	public void reset() {
 		setScore(0);
 
@@ -138,6 +166,9 @@ public class PresetQuinzicalModel extends QuizModel {
 		setState(State.SELECT_CATEGORY);
 	}
 
+	/*
+	 * get active question for the real module, given the category selection
+	 */
 	@Override
 	public void selectCategory(Category item) {
 		beginQuestion(item.getActiveQuestion());

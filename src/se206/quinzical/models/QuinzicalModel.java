@@ -16,6 +16,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Quinzical Model represents the model for the whole game.
+ * Is responsible for keeping track of all the state (including state of the screens, questions, categories, all the other sub-models)
+ *
+ */
 public class QuinzicalModel implements GsonPostProcessable {
 	private static final String DEFAULT_SAVE_LOCATION = "./.save";
 	private static final String DEFAULT_CATEGORIES_LOCATION = "./categories/";
@@ -130,53 +135,89 @@ public class QuinzicalModel implements GsonPostProcessable {
 		setState(State.PRACTICE);
 	}
 
+	/*
+	 * return the categories (ALL available categories)
+	 */
 	public List<Category> getCategories() {
 		return Collections.unmodifiableList(_categories);
 	}
 
+	/*
+	 * return the practice model
+	 */
 	public PracticeModel getPracticeModel() {
 		return _practiceModel;
 	}
 
+	/*
+	 * return the preset model (for main module)
+	 */
 	public PresetQuinzicalModel getPresetModel() {
 		return _presetModel;
 	}
 
+	/*
+	 * return save file location
+	 */
 	public String getSaveFileLocation() {
 		return _saveFileLocation;
 	}
 
+	/*
+	 * set savefile location
+	 */
 	private void setSaveFileLocation(String saveFileLocation) {
 		_saveFileLocation = saveFileLocation;
 	}
 
+	/*
+	 * set category location
+	 */
 	private void setCategoriesLocation(String categoriesLocation) {
 		_categoriesLocation = categoriesLocation;
 	}
 
+	/*
+	 * return the state of the application, where this State definition is found as enum inn this class.
+	 */
 	public State getState() {
 		return _state.get();
 	}
 
+	/*
+	 * set state to the given state (this State definition is found as enum defined in this class)
+	 */
 	private void setState(State state) {
 		_state.set(state);
 		save();
 	}
 
+	/*
+	 * return state property
+	 */
 	public ObjectProperty<State> getStateProperty() {
 		return _state;
 	}
 
+	/*
+	 * return the TextToSpeech object
+	 */
 	public TextToSpeech getTextToSpeech() {
 		return _textToSpeech;
 	}
 
+	/*
+	 * some fancy gson stuff
+	 */
 	@Override
 	public void gsonPostProcess() {
 		_presetModel.setQuinzicalModel(this);
 		_practiceModel.setQuinzicalModel(this);
 	}
 
+	/*
+	 * called when reset is triggered by the user.
+	 */
 	public void reset() {
 		if (getState() != State.GAME) {
 			throw new IllegalStateException("Can only reset when in the GAME state");
@@ -211,6 +252,9 @@ public class QuinzicalModel implements GsonPostProcessable {
 		}
 	}
 
+	/*
+	 * set the screen state to MENU, and this state is enum defined in this class
+	 */
 	public void backToMainMenu() {
 		_state.set(State.MENU);
 	}
@@ -231,10 +275,18 @@ public class QuinzicalModel implements GsonPostProcessable {
 		return _textEnabled.get();
 	}
 
+	/*
+	 * return whether text for clue is visible
+	 */
 	public BooleanProperty getTextVisibleProperty() {
 		return _textEnabled;
 	}
 
+	/**
+	 * set text visibility to what is not the current visibility
+	 * This text visibility refers to the visibility of the question string.
+	 * An alternative text is displayed (press T again to revert the visibility)
+	 */
 	public void toggleTextVisibility() {
 		_textEnabled.set(!_textEnabled.get());
 		save();

@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 import se206.quinzical.models.util.StringUtils;
 
+/**
+ * Represents a question; has answer (list of), a question.
+ *
+ */
 public class Question {
 	private final List<String> _answer;
 	private final String _question;
@@ -27,13 +31,19 @@ public class Question {
 		_value = origQuestion._value;
 		_numAttempted = origQuestion._numAttempted;
 	}
-
+	
+	/*
+	 * Constructor created with the directly given strings
+	 */
 	public Question(Category category, String question, String ...answer) {
 		_answer = Arrays.asList(answer);
 		_category = category;
 		_question = question;
 	}
 
+	/*
+	 * Create a question given a raw formatted string of question, to a given category.
+	 */
 	public Question(String raw, Category category) {
 		_category = category;
 
@@ -86,14 +96,23 @@ public class Question {
 		return correct;
 	}
 
+	/*
+	 * indicate to itself that this question has been skipped
+	 */
 	public void skipQuestion() {
 		_status = Status.SKIPPED;
 	}
 
+	/*
+	 * return the answer(s) in a list
+	 */
 	public List<String> getAnswer() {
 		return _answer;
 	}
 
+	/*
+	 * return the category
+	 */
 	public Category getCategory() {
 		return _category;
 	}
@@ -106,18 +125,30 @@ public class Question {
 		_category = category;
 	}
 
+	/*
+	 * return the question string
+	 */
 	public String getQuestion() {
 		return _question;
 	}
 
+	/*
+	 * return the status of this question (refer to the enum State below)
+	 */
 	public Status getStatus() {
 		return _status;
 	}
 
+	/*
+	 * return the number of times this question was attempted
+	 */
 	public int getNumAttempted() {
 		return _numAttempted;
 	}
 
+	/*
+	 * set the number of attempted to a given number
+	 */
 	public void setNumAttempted(int i) {
 		_numAttempted = i;
 	}
