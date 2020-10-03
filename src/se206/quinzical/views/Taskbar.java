@@ -23,7 +23,7 @@ import se206.quinzical.models.QuinzicalModel;
 
 /**
  * This is Atom type.
- * View for taskbar. Contains reset & quit buttons
+ * View for taskbar. Contains reset & quit button, and other various functions
  *
  * Used by HeaderView.
  */
@@ -89,6 +89,9 @@ public class Taskbar extends ViewBase {
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
 	}
 
+	/*
+	 * create an icon button given an image file name.
+	 */
 	private ImageView createButton(String filename) {
 		ImageView v = new ImageView(new Image(getClass().getResourceAsStream(filename)));
 		v.setFitHeight(32);
@@ -100,6 +103,9 @@ public class Taskbar extends ViewBase {
 		return v;
 	}
 
+	/*
+	 * slider that user can manouver 
+	 */
 	private Slider createSpeedSlider() {
 		Slider slider = new Slider(-1, 1, 0);
 		Tooltip tooltip = new Tooltip();

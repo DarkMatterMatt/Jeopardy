@@ -14,6 +14,8 @@ import se206.quinzical.models.*;
  * <p>
  * This type is 'Pane' type, which means it depends on Atoms and may depend
  * on other Panes.
+ * <p>
+ * This component contains the category icon, category name, question text clue, answer input field, skip button and submit button.
  */
 public class AnswerPane extends ViewBase {
 	private final AnswerTextField _answerInputView;

@@ -20,6 +20,9 @@ public abstract class SwitcherBase extends ViewBase {
 		return _container;
 	}
 
+	/*
+	 * switch to the provided view
+	 */
 	protected void switchToView(Parent show) {
 		for (Node n : _container.getChildren()) {
 			n.setVisible(n == show);

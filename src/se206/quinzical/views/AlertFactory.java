@@ -11,8 +11,15 @@ import javafx.stage.StageStyle;
 import se206.quinzical.DragAndResizeHelper;
 import se206.quinzical.models.QuinzicalModel;
 
+/**
+ * AlertFactory puts alert screen on a separate window.
+ * Serves as a warning for user action when exiting or reseting
+ */
 public class AlertFactory {
 
+	/*
+	 * activate the exit alert
+	 */
 	public static void getExitAlert(Taskbar origin) {
 		Alert exitAlert = new Alert(AlertType.NONE);
 		exitAlert.setHeaderText("Sad to see you go!");
@@ -36,6 +43,9 @@ public class AlertFactory {
 		});
 	}
 
+	/*
+	 * activate the reset alert
+	 */
 	public static void getResetAlert(Taskbar origin, QuinzicalModel model) {
 		Alert resetAlert = new Alert(AlertType.NONE);
 		resetAlert.setHeaderText("Be careful! You are about to lose your money");
