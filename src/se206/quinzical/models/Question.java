@@ -86,6 +86,10 @@ public class Question {
 		return correct;
 	}
 
+	public void skipQuestion() {
+		_status = Status.SKIPPED;
+	}
+
 	public List<String> getAnswer() {
 		return _answer;
 	}
@@ -137,6 +141,7 @@ public class Question {
 	 */
 	public enum Status {
 		UNATTEMPTED,
+		SKIPPED,
 		CORRECT,
 		INCORRECT,
 	}

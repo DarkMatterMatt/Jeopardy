@@ -24,8 +24,8 @@ public class AlertFactory {
 		ButtonType no = new ButtonType("Actually nah",ButtonBar.ButtonData.NO);
 		dialogue.getButtonTypes().addAll(yes, no);
 		dialogue.getStylesheets().addAll(
-				origin.getClass().getResource("../styles/theme.css").toExternalForm(),
-				origin.getClass().getResource("../styles/dialogue.css").toExternalForm()
+				origin.getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
+				origin.getClass().getResource("/se206/quinzical/styles/dialogue.css").toExternalForm()
 		);
 		// stage of dialogue
 		Stage diaStage = (Stage) dialogue.getScene().getWindow();
@@ -47,8 +47,8 @@ public class AlertFactory {
 		ButtonType no = new ButtonType("Actually nah",ButtonBar.ButtonData.NO);
 		dialogue.getButtonTypes().addAll(yes, no);
 		dialogue.getStylesheets().addAll(
-				origin.getClass().getResource("../styles/theme.css").toExternalForm(),
-				origin.getClass().getResource("../styles/dialogue.css").toExternalForm()
+				origin.getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
+				origin.getClass().getResource("/se206/quinzical/styles/dialogue.css").toExternalForm()
 		);
 		// stage of dialogue
 		Stage diaStage = (Stage) dialogue.getScene().getWindow();

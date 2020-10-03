@@ -8,12 +8,9 @@ import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.TextToSpeech;
 import se206.quinzical.views.Icon;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 public abstract class QuizModel implements GsonPostProcessable {
 	private final ObjectProperty<Question> _currentQuestion = new SimpleObjectProperty<>();
@@ -37,8 +34,8 @@ public abstract class QuizModel implements GsonPostProcessable {
 	 * Return to category selection
 	 */
 	public void finishQuestion() {
-		if (getState() != State.CORRECT_ANSWER && getState() != State.INCORRECT_ANSWER) {
-			throw new IllegalStateException("Can only reset when in the CORRECT_ANSWER or INCORRECT_ANSWER state");
+		if (getState() != State.CORRECT_ANSWER && getState() != State.INCORRECT_ANSWER && getState() != State.SKIP_ANSWER) {
+			throw new IllegalStateException("Can only reset when in the CORRECT_ANSWER, INCORRECT_ANSWER or SKIP_ANSWER state");
 		}
 		setState(State.SELECT_CATEGORY);
 	}
@@ -109,24 +106,23 @@ public abstract class QuizModel implements GsonPostProcessable {
 	}
 
 	public void skinCategoryImage(Icon icon, String categoryName) {
-		if(categoryName == "icon-missing.png") {
-			icon.setImage("../assets/icon-missing.png");
+		if(categoryName.equals("icon-missing.png")) {
+			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		}
 		try {
 			Image img = new Image(new FileInputStream("./categories/"+categoryName+".png"));
 			icon.setImage(img);
 		} catch (NullPointerException e) {
-			icon.setImage("../assets/icon-missing.png");
+			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		} catch (FileNotFoundException e) {
-			icon.setImage("../assets/icon-missing.png");
+			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		}
 	}
-	
 
 	public boolean getTextVisibility() {
 		return _model.textVisible();
 	}
-	
+
 	/**
 	 * The current screen being shown
 	 */
@@ -137,6 +133,7 @@ public abstract class QuizModel implements GsonPostProcessable {
 		ANSWER_QUESTION,
 		CORRECT_ANSWER,
 		INCORRECT_ANSWER,
+		SKIP_ANSWER,
 		RETRY_INCORRECT_ANSWER,
 		GAME_OVER,
 	}

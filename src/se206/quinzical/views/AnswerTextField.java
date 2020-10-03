@@ -35,7 +35,7 @@ public class AnswerTextField extends ViewBase {
         HBox.setHgrow(_answerInput, Priority.ALWAYS);
 
         // submit button
-        ImageView submitImageView = new ImageView(new Image(getClass().getResourceAsStream("../assets/submit.png")));
+        ImageView submitImageView = new ImageView(new Image(getClass().getResourceAsStream("/se206/quinzical/assets/submit.png")));
         submitImageView.setFitWidth(32);
         submitImageView.setPreserveRatio(true);
         submitImageView.setSmooth(true);

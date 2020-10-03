@@ -18,52 +18,64 @@ import java.util.List;
 
 public class QuinzicalModel implements GsonPostProcessable {
 	private static final String DEFAULT_SAVE_LOCATION = "./.save";
+	private static final String DEFAULT_CATEGORIES_LOCATION = "./categories/";
 	private static final Gson GSON = FxGson.coreBuilder()
 			.registerTypeAdapterFactory(new GsonPostProcessingEnabler())
 			.setPrettyPrinting()
 			.disableHtmlEscaping()
 			.create();
-	private final List<Category> _categories;
+	private final List<Category> _categories = new ArrayList<>();;
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
 	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
+	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
 
 	public QuinzicalModel() {
-		//read files from directory
-		this(FileBrowser.filesInDirectory("./categories"));
+		this(null);
 	}
 
-	public QuinzicalModel(File[] categories) {
-		_categories = new ArrayList<Category>();
-		for (File category : categories) {
-			String categoryName = category.getName();
-			String[] types = {"jpg","png"};
-			
-			boolean isImage = Arrays.asList(types).contains(categoryName.substring(categoryName.lastIndexOf('.') + 1));
-			
-			if(!isImage) {
-				Category newCategory = new Category(category.getName());
-		
-				//list of questions
-				for (String rawQuestion : MyScanner.readFileOutputString(category)) {
-					try {
-						Question question = new Question(rawQuestion, newCategory);
-						newCategory.addQuestion(question);
-					}
-					catch (IllegalArgumentException e) {
-						//
-					}
-				}
-				//make category out of that
-				_categories.add(newCategory);
-			}
+	public QuinzicalModel(String categoriesLocation) {
+		if (categoriesLocation != null) {
+			setCategoriesLocation(categoriesLocation);
 		}
+		loadCategories();
 
 		_presetModel = new PresetQuinzicalModel(this);
 		_practiceModel = new PracticeModel(this);
+	}
+
+	private void loadCategories() {
+		loadCategories(_categoriesLocation);
+	}
+
+	private void loadCategories(String categoriesLocation) {
+		_categories.clear();
+
+		for (File categoryFile : FileBrowser.filesInDirectory(categoriesLocation)) {
+			String categoryName = categoryFile.getName();
+			String[] iconTypes = { "jpg", "png" };
+
+			boolean isImage = Arrays.stream(iconTypes).anyMatch(categoryName::endsWith);
+
+			if (!isImage) {
+				Category newCategory = new Category(categoryFile.getName());
+
+				// list of questions
+				for (String rawQuestion : MyScanner.readFileOutputString(categoryFile)) {
+					try {
+						newCategory.addQuestion(new Question(rawQuestion, newCategory));
+					}
+					catch (IllegalArgumentException e) {
+						System.err.println("Invalid question data: " + rawQuestion);
+					}
+				}
+				// make category out of that
+				_categories.add(newCategory);
+			}
+		}
 	}
 
 	/**
@@ -138,6 +150,10 @@ public class QuinzicalModel implements GsonPostProcessable {
 		_saveFileLocation = saveFileLocation;
 	}
 
+	private void setCategoriesLocation(String categoriesLocation) {
+		_categoriesLocation = categoriesLocation;
+	}
+
 	public State getState() {
 		return _state.get();
 	}
@@ -165,6 +181,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 		if (getState() != State.GAME) {
 			throw new IllegalStateException("Can only reset when in the GAME state");
 		}
+		loadCategories();
 		_presetModel.reset();
 	}
 

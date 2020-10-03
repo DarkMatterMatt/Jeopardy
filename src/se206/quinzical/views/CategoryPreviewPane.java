@@ -50,7 +50,7 @@ public class CategoryPreviewPane extends ViewBase {
 		_content.getChildren().addAll(_icon.getView(), _text);
 
 		// confirm icon
-		_confirm.setImage("../assets/submit.png")
+		_confirm.setImage("/se206/quinzical/assets/submit.png")
 				.setSize(48, 48)
 				.addClass("confirm-icon");
 		_confirm.getView().setOnMouseClicked(e -> confirm());

@@ -9,14 +9,15 @@ import se206.quinzical.models.QuinzicalModel;
 /**
  * This is Pane type.
  * Main content layout for the 'real' game
- *
+ * <p>
  * Used by QuizContentSwitch
  */
 public class GameSwitch extends SwitcherBase {
 	private final AnswerPane _answerQuestion;
 	private final CorrectPane _correctPane;
-	private final IncorrectPane _incorrectPane;
 	private final GameOverPane _gameOverPane;
+	private final IncorrectPane _incorrectPane;
+	private final SkipPane _skipPane;
 	private final QuinzicalModel _model;
 	private final PresetQuinzicalModel _presetModel;
 	private final HBox _questionSelectContainer = new HBox();
@@ -29,6 +30,7 @@ public class GameSwitch extends SwitcherBase {
 		_answerQuestion = new AnswerPane(_presetModel);
 		_correctPane = new CorrectPane(_presetModel);
 		_incorrectPane = new IncorrectPane(_presetModel);
+		_skipPane = new SkipPane(_presetModel);
 		_gameOverPane = new GameOverPane(_presetModel);
 		generateSelectionContainerContents();
 
@@ -36,7 +38,7 @@ public class GameSwitch extends SwitcherBase {
 		addStylesheet("game.css");
 		getView().getStyleClass().add("game");
 		getView().getChildren().addAll(_questionSelectContainer, _answerQuestion.getView(),
-				_correctPane.getView(), _incorrectPane.getView(), _gameOverPane.getView());
+				_correctPane.getView(), _incorrectPane.getView(), _skipPane.getView(), _gameOverPane.getView());
 
 		// listen for state changes
 		onModelStateChange();
@@ -71,6 +73,9 @@ public class GameSwitch extends SwitcherBase {
 				break;
 			case CORRECT_ANSWER:
 				switchToView(_correctPane.getView());
+				break;
+			case SKIP_ANSWER:
+				switchToView(_skipPane.getView());
 				break;
 			case ANSWER_QUESTION:
 				switchToView(_answerQuestion.getView());

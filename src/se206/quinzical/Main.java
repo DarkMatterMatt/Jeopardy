@@ -33,7 +33,7 @@ public class Main extends Application {
         // remove default stage decoration, set title & add taskbar icon
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Quinzical");
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("assets/quinzical.png")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/se206/quinzical/assets/quinzical.png")));
         primaryStage.setScene(scene);
         primaryStage.show();
 

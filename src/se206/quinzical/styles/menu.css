@@ -1,7 +1,7 @@
 .menu {
     -fx-alignment: center;
     -fx-background-color: -c-grey-00;
-    -fx-background-image: url("../assets/splash-pattern.png");
+    -fx-background-image: url("/se206/quinzical/assets/splash-pattern.png");
     -fx-background-position: center;
     -fx-background-repeat: repeat;
 }
