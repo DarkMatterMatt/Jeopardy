@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * The only method in this class returns the list of strings read from a file
+ */
 public class MyScanner {
 	public static List<String> readFileOutputString(File f){
 		List<String> result = new ArrayList<String>();

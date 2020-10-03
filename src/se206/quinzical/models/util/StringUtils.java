@@ -3,6 +3,10 @@ package se206.quinzical.models.util;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
+/**
+ * Helper class that deals with String cleaning (usually for text clue)
+ *
+ */
 public class StringUtils {
 	/**
 	 * Pattern used in {@link #stripAccents(String)}.

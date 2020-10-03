@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * helper class that returns random numbers
+ *
+ */
 public class RandomNumberGenerator {
 	/**
 	 * Randomly select elements from a list
@@ -19,6 +23,9 @@ public class RandomNumberGenerator {
 		return copyOfList.stream().limit(num).collect(Collectors.toList());
 	}
 
+	/*
+	 * return five random numbers (from 0) from the given limit.
+	 */
 	public static List<Integer> takeFive(int range){
 		Random rand = new Random();
 
@@ -37,6 +44,9 @@ public class RandomNumberGenerator {
 
 	}
 
+	/*
+	 * if there is a duplicate in the list of integers, we want to remove the duplicate by using this function
+	 */
 	public static List<Integer> giveMeDifferentRandomNumber(List<Integer> list, Integer issue, Integer range){
 		Random rand = new Random();
 

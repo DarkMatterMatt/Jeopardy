@@ -2,6 +2,10 @@ package se206.quinzical.models.util;
 
 import java.io.*;
 
+/**
+ * Class that deals with text to speech stuff using espeak and festival
+ *
+ */
 public class TextToSpeech {
 	private double _speedMultiplier = 1;
 
