@@ -38,13 +38,13 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	public QuinzicalModel(String categoriesLocation) {
-		_presetModel = new PresetQuinzicalModel(this);
-		_practiceModel = new PracticeModel(this);
-
 		if (categoriesLocation != null) {
 			setCategoriesLocation(categoriesLocation);
 		}
 		loadCategories();
+
+		_presetModel = new PresetQuinzicalModel(this);
+		_practiceModel = new PracticeModel(this);
 	}
 
 	private void loadCategories() {
