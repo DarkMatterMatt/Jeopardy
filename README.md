@@ -46,7 +46,7 @@ for you. Just run `java -jar jfxrunner.jar quinzical.jar` (you might have to wai
 
 ## Features
 
-- Our Quinzical application features _80+ NZ related questions, 7 categories_. That's huge!
+- Our Quinzical application features _80+ NZ related questions, 9 categories_. That's huge!
 - Advanced text-to-speech support for reading questions (`festival` must be in PATH). 
 - Secret-sauce custom NZ voice with accurate pronunciation of Māori words
 - Unlike our previous application, _Jeopardy_, our brand-new application comes with __Practice module__! Here you can get comfortable with our application interface, try out some questions before attempting the __Main module__.
@@ -85,8 +85,24 @@ Rules:
 - You can press keys or mouse during the display of correct/incorrect answer indication screen to skip that page.
 
 ## Usage
-// with screenshot?
-// TODO: annotated screenshots
+
+Basic game layout
+![](screenshots/real-annotated.png)
+
+Answering questions
+![](screenshots/answer-annotated.png)
+
+Hide text to practice listening to the pronunciation of Māori words
+![](screenshots/invisible-text-annotated.png)
+
+Toolbar features
+![](screenshots/toolbar.gif)
+
+Tooltips if you forget what each button does!
+![](screenshots/tooltip-annotated.png)
+
+No stress practice mode
+![](screenshots/practice.png)
 
 ## Customize Questions and Categories
 The game reads categories from a `./categories` folder (relative to the current working directory).
