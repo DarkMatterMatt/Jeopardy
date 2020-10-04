@@ -7,7 +7,7 @@ import java.io.File;
  */
 public class FileBrowser {
 	/**
-	 * returns the files in the specified directory.
+	 * Returns the files in the specified directory.
 	 */
 	public static File[] filesInDirectory(String dir) {
 		File directory = new File(dir);

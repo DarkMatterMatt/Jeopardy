@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * helper class that returns random numbers
+ * Helper class that returns random numbers
  */
 public class RandomNumberGenerator {
 	/**
