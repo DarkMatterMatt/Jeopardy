@@ -197,7 +197,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private void loadCategories(String categoriesLocation) {
 		_categories.clear();
 
-		for (File categoryFile : FileBrowser.filesInDirectory(categoriesLocation)) {
+		for (File categoryFile : FileHelper.filesInDirectory(categoriesLocation)) {
 			String categoryName = categoryFile.getName();
 			String[] iconTypes = {"jpg", "png"};
 
@@ -207,7 +207,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 				Category newCategory = new Category(categoryFile.getName());
 
 				// list of questions
-				for (String rawQuestion : MyScanner.readFileOutputString(categoryFile)) {
+				for (String rawQuestion : FileHelper.readFileOutputString(categoryFile)) {
 					try {
 						newCategory.addQuestion(new Question(rawQuestion, newCategory));
 					}
