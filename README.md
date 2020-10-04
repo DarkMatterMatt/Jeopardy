@@ -25,7 +25,6 @@ Make sure you meet the __Runtime Requirements__.
 You must have the following folders/files in one folder:
 - `quinzical.jar` runnable jar file containing compiled JavaFX quiz application
 - `categories` folder containing questions and icon resources
-- `javafx-sdk-11.0.2` folder that contains JavaFX libraries
 - `quinzical.sh` containing script that runs the application. 
 
 **Option 1: Run with the script file**
