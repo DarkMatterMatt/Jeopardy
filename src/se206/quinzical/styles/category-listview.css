@@ -43,3 +43,30 @@
 .category.selected {
     -fx-background-color: -c-gold;
 }
+
+.categories-list .scroll-bar {
+    -fx-background-color: -c-grey-03;
+}
+
+.categories-list .scroll-bar > .thumb {
+    -fx-background-color: -c-gold;
+}
+
+.categories-list .scroll-bar > .increment-button,
+.categories-list .scroll-bar > .decrement-button {
+    -fx-padding: 5 3 5 3;
+}
+
+.categories-list .scroll-bar > .increment-button:hover,
+.categories-list .scroll-bar > .decrement-button:hover,
+.categories-list .scroll-bar > .increment-button:pressed,
+.categories-list .scroll-bar > .decrement-button:pressed {
+    -fx-background-color: transparent;
+}
+
+.categories-list .scroll-bar > .increment-button:hover > .increment-arrow,
+.categories-list .scroll-bar > .decrement-button:hover > .decrement-arrow,
+.categories-list .scroll-bar > .increment-button:pressed > .increment-arrow,
+.categories-list .scroll-bar > .decrement-button:pressed > .decrement-arrow {
+    -fx-background-color: -c-off-white;
+}
