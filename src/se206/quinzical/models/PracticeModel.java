@@ -5,22 +5,22 @@ import java.util.List;
 
 /**
  * PracticeModel is the QuizModel for practice module. (used by PracticeSwitch).
- * In addition to the role of QuizModel, it sets the question to be displayed 
+ * In addition to the role of QuizModel, it sets the question to be displayed
  * when a category is selected (see selectCategory(Category item)).
  */
 public class PracticeModel extends QuizModel {
 	private final List<Category> _categories;
 
-	/*
-	 * constructor that takes all the available categories from the Quinzical model.
+	/**
+	 * Constructor that takes all the available categories from the Quinzical model.
 	 */
 	public PracticeModel(QuinzicalModel model) {
 		super(model);
 		_categories = _model.getCategories();
 	}
 
-	/*
-	 * check if the given answer by the user is correct.
+	/**
+	 * Check if the given answer by the user is correct & make appropriate state changes.
 	 */
 	@Override
 	public void answerQuestion(String answer) {
@@ -32,11 +32,11 @@ public class PracticeModel extends QuizModel {
 		// count number of attempts
 		Question q = getCurrentQuestion();
 		// increase number of attempt for that question
-		if(!correct) q.setNumAttempted(q.getNumAttempted()+1);
+		if (!correct) q.setNumAttempted(q.getNumAttempted() + 1);
 
 		// if that question has been answered 3 times, reset that question
 		// and change the active question to different random question
-		if(correct || q.getNumAttempted()>=3) {
+		if (correct || q.getNumAttempted() >= 3) {
 			q.setNumAttempted(0);
 			q.getCategory().setActiveQUestionInPracticeModule(q.getCategory().getRandomQuestion());
 			setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
@@ -47,16 +47,16 @@ public class PracticeModel extends QuizModel {
 		setState(State.ANSWER_QUESTION);
 	}
 
-	/*
-	 * get all the categories stored in this model.
+	/**
+	 * Return all categories stored in this model.
 	 */
 	@Override
 	public List<Category> getCategories() {
 		return Collections.unmodifiableList(_categories);
 	}
 
-	/*
-	 * when category is selected, give the active question of that category.
+	/**
+	 * When category is selected, give the active question of that category.
 	 */
 	@Override
 	public void selectCategory(Category item) {

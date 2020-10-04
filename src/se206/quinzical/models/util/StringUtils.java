@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 /**
  * Helper class that deals with String cleaning (usually for text clue)
- *
  */
 public class StringUtils {
 	/**
@@ -14,16 +13,6 @@ public class StringUtils {
 	private static final Pattern STRIP_ACCENTS_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+"); //$NON-NLS-1$
 
 	private StringUtils() {
-	}
-
-	public static int countOccurrences(String haystack, char needle) {
-		int count = 0;
-		for (int i = 0; i < haystack.length(); i++) {
-			if (haystack.charAt(i) == needle) {
-				count++;
-			}
-		}
-		return count;
 	}
 
 	/**
@@ -60,14 +49,5 @@ public class StringUtils {
 			}
 		}
 		return STRIP_ACCENTS_PATTERN.matcher(decomposed).replaceAll("");
-	}
-
-	public static String stripTextInParentheses(String text) {
-		String newText = text.replaceAll("\\([^()]*\\)", "");
-		while (newText.length() != text.length()) {
-			text = newText;
-			newText = text.replace("\\([^()]*\\)", "");
-		}
-		return newText;
 	}
 }

@@ -21,7 +21,7 @@ public abstract class QuizModel implements GsonPostProcessable {
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.SELECT_CATEGORY);
 	protected transient QuinzicalModel _model;
 
-	/*
+	/**
 	 * Constructor that stores reference to the QuinzicalModel that stores QuizModel.
 	 */
 	public QuizModel(QuinzicalModel model) {
@@ -33,6 +33,9 @@ public abstract class QuizModel implements GsonPostProcessable {
 	 */
 	public abstract void answerQuestion(String answer);
 
+	/**
+	 * Select a new question
+	 */
 	public void beginQuestion(Question question) {
 		_currentQuestion.set(question);
 	}
@@ -47,48 +50,77 @@ public abstract class QuizModel implements GsonPostProcessable {
 		setState(State.SELECT_CATEGORY);
 	}
 
-	/*
-	 * return list of categories of this QuizModel 
+	/**
+	 * Return list of categories of this QuizModel
 	 */
 	public abstract List<Category> getCategories();
 
-	/*
-	 * return whether the clue text is visible
-	 */
-	public BooleanProperty getTextVisibleProperty() {
-		return _model.getTextVisibleProperty();
-	}
-
-	/*
-	 * return the current question of this model
+	/**
+	 * Return the current question of this model
 	 */
 	public Question getCurrentQuestion() {
 		return _currentQuestion.get();
 	}
 
-	/*
-	 * return the current question of this QuizModel - as ObjectProperty
+	/**
+	 * Return the current question property (e.g. so change listeners can be added)
 	 */
 	public ObjectProperty<Question> getCurrentQuestionProperty() {
 		return _currentQuestion;
 	}
 
-	/*
-	 * return QuinzicalModel that encapsulates this QuizModel
+	/**
+	 * Return QuinzicalModel that encapsulates this QuizModel
 	 */
 	public QuinzicalModel getModel() {
 		return _model;
 	}
 
-	/*
-	 * return state of this model (defined as enum in this class)
+	/**
+	 * Return state of this model (defined as enum in this class)
 	 */
 	public State getState() {
 		return _state.get();
 	}
 
-	/*
-	 * some fancy gson stuff
+	/**
+	 * Return the state of the page (State is defined as enum in this class)
+	 */
+	protected void setState(State state) {
+		_state.set(state);
+		save();
+	}
+
+	/**
+	 * Return the state property of the Quiz screen (State is defined in this class as enum)
+	 */
+	public ObjectProperty<State> getStateProperty() {
+		return _state;
+	}
+
+	/**
+	 * Return the TextToSpeech manager
+	 */
+	public TextToSpeech getTextToSpeech() {
+		return _model.getTextToSpeech();
+	}
+
+	/**
+	 * Return the visibility of the text for clue.
+	 */
+	public boolean getTextVisibility() {
+		return _model.textVisible();
+	}
+
+	/**
+	 * Return whether the clue text is visible
+	 */
+	public BooleanProperty getTextVisibleProperty() {
+		return _model.getTextVisibleProperty();
+	}
+
+	/**
+	 * After deserializing, we need to give currentQuestion a reference to its parent category (removed during serialization)
 	 */
 	@Override
 	public void gsonPostProcess() {
@@ -101,28 +133,6 @@ public abstract class QuizModel implements GsonPostProcessable {
 					.orElse(null);
 			currentQuestion.setCategory(activeCategory);
 		}
-	}
-
-	/*
-	 * return the state of the page (State is defined as enum in this class)
-	 */
-	protected void setState(State state) {
-		_state.set(state);
-		save();
-	}
-
-	/*
-	 * return the state property of the Quiz screen (State is defined in this class as enum)
-	 */
-	public ObjectProperty<State> getStateProperty() {
-		return _state;
-	}
-
-	/*
-	 * return the object for TextToSpeech
-	 */
-	public TextToSpeech getTextToSpeech() {
-		return _model.getTextToSpeech();
 	}
 
 	/**
@@ -142,28 +152,23 @@ public abstract class QuizModel implements GsonPostProcessable {
 		_model = model;
 	}
 
-	/*
-	 * skin the category image to whatever category name is supplied
+	/**
+	 * Skin the category image to whatever category name is supplied
 	 */
 	public void skinCategoryImage(Icon icon, String categoryName) {
-		if(categoryName.equals("icon-missing.png")) {
+		if (categoryName.equals("icon-missing.png")) {
 			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		}
 		try {
-			Image img = new Image(new FileInputStream("./categories/"+categoryName+".png"));
+			Image img = new Image(new FileInputStream("./categories/" + categoryName + ".png"));
 			icon.setImage(img);
-		} catch (NullPointerException e) {
-			icon.setImage("/se206/quinzical/assets/icon-missing.png");
-		} catch (FileNotFoundException e) {
+		}
+		catch (NullPointerException e) {
 			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		}
-	}
-
-	/*
-	 * return the visibility of the text for clue.
-	 */
-	public boolean getTextVisibility() {
-		return _model.textVisible();
+		catch (FileNotFoundException e) {
+			icon.setImage("/se206/quinzical/assets/icon-missing.png");
+		}
 	}
 
 	/**

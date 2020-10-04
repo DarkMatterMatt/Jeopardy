@@ -14,8 +14,8 @@ import java.util.List;
  * @author Hajin Kim
  */
 public class PresetQuinzicalModel extends QuizModel {
-	private static final double INCORRECT_SCORE_MULTIPLIER = 0.5;
 	private static final int CATEGORIES_PER_GAME = 5;
+	private static final double INCORRECT_SCORE_MULTIPLIER = 0.5;
 	private static final int QUESTIONS_PER_CATEGORY = 5;
 	private final List<Category> _categories = new ArrayList<>();
 	private final IntegerProperty _score = new SimpleIntegerProperty();
@@ -25,8 +25,8 @@ public class PresetQuinzicalModel extends QuizModel {
 		loadQuestions();
 	}
 
-	/*
-	 * check if the given answer is correct.
+	/**
+	 * Check if the given answer is correct & change to appropriate state.
 	 */
 	@Override
 	public void answerQuestion(String answer) {
@@ -45,17 +45,6 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
-	/*
-	 * indicate to the model that question is skipped
-	 */
-	public void skipQuestion() {
-		if (getState() != State.ANSWER_QUESTION) {
-			throw new IllegalStateException("Previous state should be ANSWER_QUESTION, found " + getState());
-		}
-		getCurrentQuestion().skipQuestion();
-		setState(State.SKIP_ANSWER);
-	}
-
 	/**
 	 * Called from the "category preview" screen, moves to the answer question
 	 */
@@ -63,8 +52,8 @@ public class PresetQuinzicalModel extends QuizModel {
 		setState(State.ANSWER_QUESTION);
 	}
 
-	/*
-	 * indicate that the current question is finished being answered,
+	/**
+	 * Indicate that the current question is finished being answered,
 	 * and the current question is moved to the next question.
 	 */
 	@Override
@@ -83,8 +72,8 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
-	/*
-	 * return the categories of the real game module
+	/**
+	 * Return categories of the real game module
 	 */
 	public List<Category> getCategories() {
 		return Collections.unmodifiableList(_categories);
@@ -104,29 +93,29 @@ public class PresetQuinzicalModel extends QuizModel {
 		return _categories.stream().mapToLong(Category::getNumRemaining).sum();
 	}
 
-	/*
-	 * get score
+	/**
+	 * Get current score
 	 */
 	public int getScore() {
 		return _score.get();
 	}
 
-	/*
-	 * set score
+	/**
+	 * Update current score
 	 */
 	private void setScore(int score) {
 		_score.set(score);
 	}
 
-	/*
-	 * return score
+	/**
+	 * Return score property (e.g. to bind a change listener)
 	 */
 	public IntegerProperty getScoreProperty() {
 		return _score;
 	}
 
-	/*
-	 * select 5 categories, each containing random 5 questions.
+	/**
+	 * Select 5 categories, each containing random 5 questions.
 	 */
 	private void loadQuestions() {
 		_categories.clear();
@@ -152,8 +141,8 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
-	/*
-	 * this is triggered when user resets the game.
+	/**
+	 * This is triggered when user resets the game.
 	 */
 	public void reset() {
 		setScore(0);
@@ -166,12 +155,23 @@ public class PresetQuinzicalModel extends QuizModel {
 		setState(State.SELECT_CATEGORY);
 	}
 
-	/*
-	 * get active question for the real module, given the category selection
+	/**
+	 * Get active question for the real module, given the category selection
 	 */
 	@Override
 	public void selectCategory(Category item) {
 		beginQuestion(item.getActiveQuestion());
 		setState(State.CATEGORY_PREVIEW);
+	}
+
+	/**
+	 * Indicate to the model that question is skipped
+	 */
+	public void skipQuestion() {
+		if (getState() != State.ANSWER_QUESTION) {
+			throw new IllegalStateException("Previous state should be ANSWER_QUESTION, found " + getState());
+		}
+		getCurrentQuestion().skipQuestion();
+		setState(State.SKIP_ANSWER);
 	}
 }

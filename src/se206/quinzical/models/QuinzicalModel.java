@@ -1,9 +1,9 @@
 package se206.quinzical.models;
 
-import javafx.beans.property.BooleanProperty;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -19,24 +19,23 @@ import java.util.List;
 /**
  * Quinzical Model represents the model for the whole game.
  * Is responsible for keeping track of all the state (including state of the screens, questions, categories, all the other sub-models)
- *
  */
 public class QuinzicalModel implements GsonPostProcessable {
-	private static final String DEFAULT_SAVE_LOCATION = "./.save";
 	private static final String DEFAULT_CATEGORIES_LOCATION = "./categories/";
+	private static final String DEFAULT_SAVE_LOCATION = "./.save";
 	private static final Gson GSON = FxGson.coreBuilder()
 			.registerTypeAdapterFactory(new GsonPostProcessingEnabler())
 			.setPrettyPrinting()
 			.disableHtmlEscaping()
 			.create();
-	private final List<Category> _categories = new ArrayList<>();;
+	private final List<Category> _categories = new ArrayList<>();
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
-	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
-	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
+	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
+	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
 
 	public QuinzicalModel() {
 		this(null);
@@ -50,37 +49,6 @@ public class QuinzicalModel implements GsonPostProcessable {
 
 		_presetModel = new PresetQuinzicalModel(this);
 		_practiceModel = new PracticeModel(this);
-	}
-
-	private void loadCategories() {
-		loadCategories(_categoriesLocation);
-	}
-
-	private void loadCategories(String categoriesLocation) {
-		_categories.clear();
-
-		for (File categoryFile : FileBrowser.filesInDirectory(categoriesLocation)) {
-			String categoryName = categoryFile.getName();
-			String[] iconTypes = { "jpg", "png" };
-
-			boolean isImage = Arrays.stream(iconTypes).anyMatch(categoryName::endsWith);
-
-			if (!isImage) {
-				Category newCategory = new Category(categoryFile.getName());
-
-				// list of questions
-				for (String rawQuestion : MyScanner.readFileOutputString(categoryFile)) {
-					try {
-						newCategory.addQuestion(new Question(rawQuestion, newCategory));
-					}
-					catch (IllegalArgumentException e) {
-						System.err.println("Invalid question data: " + rawQuestion);
-					}
-				}
-				// make category out of that
-				_categories.add(newCategory);
-			}
-		}
 	}
 
 	/**
@@ -122,6 +90,13 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Set the screen state to MENU, and this state is enum defined in this class
+	 */
+	public void backToMainMenu() {
+		_state.set(State.MENU);
+	}
+
+	/**
 	 * Changes to the 'real' game state
 	 */
 	public void beginGame() {
@@ -135,79 +110,79 @@ public class QuinzicalModel implements GsonPostProcessable {
 		setState(State.PRACTICE);
 	}
 
-	/*
-	 * return the categories (ALL available categories)
+	/**
+	 * Return the categories (ALL available categories)
 	 */
 	public List<Category> getCategories() {
 		return Collections.unmodifiableList(_categories);
 	}
 
-	/*
-	 * return the practice model
+	/**
+	 * Return the practice model
 	 */
 	public PracticeModel getPracticeModel() {
 		return _practiceModel;
 	}
 
-	/*
-	 * return the preset model (for main module)
+	/**
+	 * Return the preset model (for main module)
 	 */
 	public PresetQuinzicalModel getPresetModel() {
 		return _presetModel;
 	}
 
-	/*
-	 * return save file location
+	/**
+	 * Return current save file location
 	 */
 	public String getSaveFileLocation() {
 		return _saveFileLocation;
 	}
 
-	/*
-	 * set savefile location
+	/**
+	 * Set save file location
 	 */
 	private void setSaveFileLocation(String saveFileLocation) {
 		_saveFileLocation = saveFileLocation;
 	}
 
-	/*
-	 * set category location
-	 */
-	private void setCategoriesLocation(String categoriesLocation) {
-		_categoriesLocation = categoriesLocation;
-	}
-
-	/*
-	 * return the state of the application, where this State definition is found as enum inn this class.
+	/**
+	 * Return the state of the application, where this State definition is found as enum inn this class.
 	 */
 	public State getState() {
 		return _state.get();
 	}
 
-	/*
-	 * set state to the given state (this State definition is found as enum defined in this class)
+	/**
+	 * Set state to the given state (this State definition is found as enum defined in this class)
 	 */
 	private void setState(State state) {
 		_state.set(state);
 		save();
 	}
 
-	/*
-	 * return state property
+	/**
+	 * Return state property (e.g. so change listeners can be bound)
 	 */
 	public ObjectProperty<State> getStateProperty() {
 		return _state;
 	}
 
-	/*
-	 * return the TextToSpeech object
+	/**
+	 * Return the TextToSpeech manager
 	 */
 	public TextToSpeech getTextToSpeech() {
 		return _textToSpeech;
 	}
 
-	/*
-	 * some fancy gson stuff
+	/**
+	 * Return whether text for clue is visible
+	 */
+	public BooleanProperty getTextVisibleProperty() {
+		return _textEnabled;
+	}
+
+	/**
+	 * After deserializing, we need to give each QuizModel a reference to its parent model (removed during serialization)
 	 */
 	@Override
 	public void gsonPostProcess() {
@@ -215,8 +190,39 @@ public class QuinzicalModel implements GsonPostProcessable {
 		_practiceModel.setQuinzicalModel(this);
 	}
 
-	/*
-	 * called when reset is triggered by the user.
+	private void loadCategories() {
+		loadCategories(_categoriesLocation);
+	}
+
+	private void loadCategories(String categoriesLocation) {
+		_categories.clear();
+
+		for (File categoryFile : FileBrowser.filesInDirectory(categoriesLocation)) {
+			String categoryName = categoryFile.getName();
+			String[] iconTypes = {"jpg", "png"};
+
+			boolean isImage = Arrays.stream(iconTypes).anyMatch(categoryName::endsWith);
+
+			if (!isImage) {
+				Category newCategory = new Category(categoryFile.getName());
+
+				// list of questions
+				for (String rawQuestion : MyScanner.readFileOutputString(categoryFile)) {
+					try {
+						newCategory.addQuestion(new Question(rawQuestion, newCategory));
+					}
+					catch (IllegalArgumentException e) {
+						System.err.println("Invalid question data: " + rawQuestion);
+					}
+				}
+				// make category out of that
+				_categories.add(newCategory);
+			}
+		}
+	}
+
+	/**
+	 * Called when reset is triggered by the user.
 	 */
 	public void reset() {
 		if (getState() != State.GAME) {
@@ -252,11 +258,29 @@ public class QuinzicalModel implements GsonPostProcessable {
 		}
 	}
 
-	/*
-	 * set the screen state to MENU, and this state is enum defined in this class
+	/**
+	 * Set category directory location
 	 */
-	public void backToMainMenu() {
-		_state.set(State.MENU);
+	private void setCategoriesLocation(String categoriesLocation) {
+		_categoriesLocation = categoriesLocation;
+	}
+
+	/**
+	 * Check whether text for clue is disabled or enabled
+	 */
+	public boolean textVisible() {
+		return _textEnabled.get();
+	}
+
+	/**
+	 * Set text visibility to what is not the current visibility.
+	 * <p>
+	 * This text visibility refers to the visibility of the question string.
+	 * An alternative text is displayed (press T again to revert the visibility)
+	 */
+	public void toggleTextVisibility() {
+		_textEnabled.set(!_textEnabled.get());
+		save();
 	}
 
 	/**
@@ -266,29 +290,5 @@ public class QuinzicalModel implements GsonPostProcessable {
 		MENU,
 		GAME,
 		PRACTICE,
-	}
-
-	/**
-	 * check whether text for clue is disabled or enabled
-	 */
-	public boolean textVisible() {
-		return _textEnabled.get();
-	}
-
-	/*
-	 * return whether text for clue is visible
-	 */
-	public BooleanProperty getTextVisibleProperty() {
-		return _textEnabled;
-	}
-
-	/**
-	 * set text visibility to what is not the current visibility
-	 * This text visibility refers to the visibility of the question string.
-	 * An alternative text is displayed (press T again to revert the visibility)
-	 */
-	public void toggleTextVisibility() {
-		_textEnabled.set(!_textEnabled.get());
-		save();
 	}
 }

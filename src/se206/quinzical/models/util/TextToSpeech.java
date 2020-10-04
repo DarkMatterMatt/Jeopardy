@@ -1,10 +1,11 @@
 package se206.quinzical.models.util;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 /**
  * Class that deals with text to speech stuff using espeak and festival
- *
  */
 public class TextToSpeech {
 	private double _speedMultiplier = 1;

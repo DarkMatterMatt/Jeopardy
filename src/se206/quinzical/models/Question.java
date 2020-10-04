@@ -1,24 +1,21 @@
 package se206.quinzical.models;
 
-import java.text.Normalizer;
+import se206.quinzical.models.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import se206.quinzical.models.util.StringUtils;
 
 /**
  * Represents a question; has answer (list of), a question.
- *
  */
 public class Question {
 	private final List<String> _answer;
 	private final String _question;
 	private transient Category _category;
+	private int _numAttempted;
 	private Status _status = Status.UNATTEMPTED;
 	private int _value = -1;
-	private int _numAttempted;
 
 	/**
 	 * Copy constructor, create a copy of a Question
@@ -31,24 +28,24 @@ public class Question {
 		_value = origQuestion._value;
 		_numAttempted = origQuestion._numAttempted;
 	}
-	
-	/*
-	 * Constructor created with the directly given strings
+
+	/**
+	 * Create question with answers
 	 */
-	public Question(Category category, String question, String ...answer) {
+	public Question(Category category, String question, String... answer) {
 		_answer = Arrays.asList(answer);
 		_category = category;
 		_question = question;
 	}
 
-	/*
-	 * Create a question given a raw formatted string of question, to a given category.
+	/**
+	 * Create a question from raw string
 	 */
 	public Question(String raw, Category category) {
 		_category = category;
 
 		String[] processed = raw.split("\\|");
-		if(processed.length <= 1) {
+		if (processed.length <= 1) {
 			throw new IllegalArgumentException("format of a question is: <Question>|<Answer1>|<Answer2>...");
 		}
 
@@ -61,7 +58,7 @@ public class Question {
 				answersProcessed.add(ans);
 			}
 		}
-		if(answersProcessed.size()==0) {
+		if (answersProcessed.size() == 0) {
 			throw new IllegalArgumentException("provide at least one answer that is not empty");
 		}
 		_answer = answersProcessed;
@@ -85,7 +82,7 @@ public class Question {
 	}
 
 	/**
-	 * @return true if the answer is correct (case insensitive, normalizes input)
+	 * Return true if the answer is correct (case insensitive, normalizes input)
 	 */
 	public boolean checkAnswer(String rawInput) {
 		// check if input matches any normalized answer
@@ -96,22 +93,15 @@ public class Question {
 		return correct;
 	}
 
-	/*
-	 * indicate to itself that this question has been skipped
-	 */
-	public void skipQuestion() {
-		_status = Status.SKIPPED;
-	}
-
-	/*
-	 * return the answer(s) in a list
+	/**
+	 * Return the answer(s) in a list
 	 */
 	public List<String> getAnswer() {
 		return _answer;
 	}
 
-	/*
-	 * return the category
+	/**
+	 * Return the category
 	 */
 	public Category getCategory() {
 		return _category;
@@ -125,32 +115,32 @@ public class Question {
 		_category = category;
 	}
 
-	/*
-	 * return the question string
-	 */
-	public String getQuestion() {
-		return _question;
-	}
-
-	/*
-	 * return the status of this question (refer to the enum State below)
-	 */
-	public Status getStatus() {
-		return _status;
-	}
-
-	/*
-	 * return the number of times this question was attempted
+	/**
+	 * Return the number of times this question was attempted
 	 */
 	public int getNumAttempted() {
 		return _numAttempted;
 	}
 
-	/*
-	 * set the number of attempted to a given number
+	/**
+	 * Set the number of attempted to a given number
 	 */
 	public void setNumAttempted(int i) {
 		_numAttempted = i;
+	}
+
+	/**
+	 * Return the question string
+	 */
+	public String getQuestion() {
+		return _question;
+	}
+
+	/**
+	 * Return the status of this question (refer to the enum State below)
+	 */
+	public Status getStatus() {
+		return _status;
 	}
 
 	/**
@@ -165,6 +155,13 @@ public class Question {
 	 */
 	public void setValue(int value) {
 		_value = value;
+	}
+
+	/**
+	 * Indicate to itself that this question has been skipped
+	 */
+	public void skipQuestion() {
+		_status = Status.SKIPPED;
 	}
 
 	/**
