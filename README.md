@@ -29,15 +29,15 @@ You must have the following folders/files in one folder:
 - `javafx-sdk-11.0.2` folder that contains JavaFX libraries
 - `quinzical.sh` containing script that runs the application. 
 
-**Option 1: Run with the script file**\
+**Option 1: Run with the script file**
 
-Move into the folder that contains all of the folders/files above and run the script.\
+Move into the folder that contains all of the folders/files above and run the script.
 
 To do this, enter these two commands into the bash (assuming your current directory is the folder that contains the above folders/files:\
     `chmod 777 quinzical.sh`\
     `./script.sh`\
 
-**Option 2: Run from the runnable jar (for experts!)**\
+**Option 2: Run from the runnable jar (for experts!)**
 
 Download the [latest compiled release](https://github.com/SOFTENG206-2020/assignment-3-and-project-team-24/releases/latest/download/quinzical.jar).
 Then run `java --module-path /path/to/javafx/lib/ --add-modules javafx.controls -jar quinzical.jar`.
