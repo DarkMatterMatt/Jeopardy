@@ -13,7 +13,7 @@ import se206.quinzical.models.QuinzicalModel;
 
 /**
  * AlertFactory puts alert screen on a separate window.
- * Serves as a warning for user action when exiting or reseting
+ * Serves as a warning for user action when exiting or resetting
  */
 public class AlertFactory {
 

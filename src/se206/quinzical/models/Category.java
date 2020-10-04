@@ -143,7 +143,7 @@ public class Category implements GsonPostProcessable {
 	/**
 	 * Set the active question of practice module to the given question.
 	 */
-	public void setActiveQUestionInPracticeModule(Question q) {
+	public void setActiveQuestionInPracticeModule(Question q) {
 		_activeQuestionInPracticeModule = _questions.indexOf(q);
 	}
 

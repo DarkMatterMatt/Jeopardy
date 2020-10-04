@@ -38,7 +38,7 @@ public class PracticeModel extends QuizModel {
 		// and change the active question to different random question
 		if (correct || q.getNumAttempted() >= 3) {
 			q.setNumAttempted(0);
-			q.getCategory().setActiveQUestionInPracticeModule(q.getCategory().getRandomQuestion());
+			q.getCategory().setActiveQuestionInPracticeModule(q.getCategory().getRandomQuestion());
 			setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
 			return;
 		}

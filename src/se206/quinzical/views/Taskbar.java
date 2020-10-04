@@ -30,16 +30,12 @@ public class Taskbar extends ViewBase {
 
 		// exit button view
 		ImageView exit = createButton("/se206/quinzical/assets/exit.png");
-		exit.setOnMouseClicked(e -> {
-			AlertFactory.getExitAlert(this);
-		});
+		exit.setOnMouseClicked(e -> AlertFactory.getExitAlert(this));
 		Tooltip.install(exit, new Tooltip("Quit"));
 
 		// reset button view
 		_reset = createButton("/se206/quinzical/assets/reset.png");
-		_reset.setOnMouseClicked(e -> {
-			AlertFactory.getResetAlert(this, model);
-		});
+		_reset.setOnMouseClicked(e -> AlertFactory.getResetAlert(this, model));
 		Tooltip.install(_reset, new Tooltip("Reset game"));
 
 		// home button view

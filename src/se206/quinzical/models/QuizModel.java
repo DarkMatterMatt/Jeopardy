@@ -163,10 +163,7 @@ public abstract class QuizModel implements GsonPostProcessable {
 			Image img = new Image(new FileInputStream("./categories/" + categoryName + ".png"));
 			icon.setImage(img);
 		}
-		catch (NullPointerException e) {
-			icon.setImage("/se206/quinzical/assets/icon-missing.png");
-		}
-		catch (FileNotFoundException e) {
+		catch (NullPointerException | FileNotFoundException e) {
 			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		}
 	}

@@ -105,9 +105,9 @@ public class CategoriesList extends ViewBase {
 	 *
 	 * @author hajinkim
 	 */
-	public static class CategoriesListItemView {
-		Category _category;
-		HBox _container = new HBox();
+	private static class CategoriesListItemView {
+		private final Category _category;
+		private final HBox _container = new HBox();
 
 		public CategoriesListItemView(Category item) {
 			_category = item;
@@ -131,6 +131,5 @@ public class CategoriesList extends ViewBase {
 		public HBox getView() {
 			return _container;
 		}
-
 	}
 }

@@ -51,7 +51,7 @@ public class Question {
 
 		_question = processed[0].trim();
 		String[] answers = Arrays.copyOfRange(processed, 1, processed.length);
-		List<String> answersProcessed = new ArrayList<String>();
+		List<String> answersProcessed = new ArrayList<>();
 		for (String ans : answers) {
 			String tmp = ans.trim();
 			if (!tmp.isEmpty()) {
