@@ -4,7 +4,7 @@ JavaFX based quiz application created by Hajin Kim and Matt Moran.
 
 ## Aim of the game
 
-The aim of the game is to answer all the questions in the main quiz module and get the highest money possible at the end.
+The aim of the game is to take home the cash! Answer questions correctly to increase your winnings. But be warned, incorrect answers will penalise you!
 
 ## Runtime Requirements
 
