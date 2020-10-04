@@ -43,7 +43,7 @@ There are two main modules in this game.
 
 **Practice Module**\
 You can attempt any of the categories and questions available from the supplied set of questions and categories! Press any category on the left, and you will get a random question selected from that category.\
-Rules:\
+Rules:
 - You can attempt the question three times.
 - The category will display the same question until you have attempted it 3 times, have correctly answered it, or pressed skip.
 - You can skip question any time.
@@ -51,7 +51,18 @@ Rules:\
 - Hint will be displayed at the third attempt; the hint given is the first letter of one of the acceptable answers.
 
 **Main Module**\
-You can 
+You will be greeted with a randomly selected set of 5 categories, each category containing randomly selected 5 questions. 
+Rules:
+- Clicking category gives you the lowest value question available in that category.
+- The first question is worth $100, second one $200, third one $300, fourth one $400, and fifth one - the last question - $500.
+- You will have ONE attempt for each question. You do not lose anything for incorrectly answering a question.
+
+## Other auxiliary stuff that might be worth noting
+- Taskbar (the top bar containing icons) contains speech slider, text visibility toggle button, back-to-home button, reset button (only available in the main module), exit button.
+- Resetting the game will reset the main module progress and the score, and you will be taken back to the main screen.
+- You can repeat the question as many times as you want by pressing the 
+- You can drag around and resize the screen
+- You can press keys or mouse during the display of correct/incorrect answer indication screen to skip that page.
 
 ## How to navigate around the game
 // with screenshot?
