@@ -38,7 +38,17 @@ public class PracticeModel extends QuizModel {
 		// and change the active question to different random question
 		if (correct || q.getNumAttempted() >= 3) {
 			q.setNumAttempted(0);
-			q.getCategory().setActiveQuestionInPracticeModule(q.getCategory().getRandomQuestion());
+
+			Category category = q.getCategory();
+			Question nextQuestion = category.getRandomQuestion();
+			if (category.getQuestions().size() >= 2) {
+				// never give the same question twice in a row
+				while (nextQuestion == category.getActiveQuestionInPracticeModule()) {
+					nextQuestion = category.getRandomQuestion();
+				}
+			}
+			q.getCategory().setActiveQuestionInPracticeModule(nextQuestion);
+
 			setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
 			return;
 		}
