@@ -1,7 +1,9 @@
 package se206.quinzical.views;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
@@ -17,7 +19,7 @@ import java.util.List;
  */
 public class IncorrectPane extends ViewBase {
 	private static final int TIMEOUT_SECS = 4;
-	private final TextFlow _answerLabel = new TextFlow();
+	private final TextFlow _answerTextFlow = new TextFlow();
 	private final VBox _container = new VBox();
 	private final QuizModel _model;
 	private final AnimatedProgressBar _progressBarView;
@@ -28,19 +30,15 @@ public class IncorrectPane extends ViewBase {
 
 		// show incorrect answer
 		Label incorrectLabel = new Label("Incorrect!");
-		Label answerPrefixLabel = new Label("The correct answer was ");
-		_answerLabel.setPrefWidth(300);
-		TextFlow answerText = new TextFlow(answerPrefixLabel, _answerLabel);
-		answerText.setStyle("-fx-alignment: center");
 
-		answerText.getStyleClass().add("text-flow");
+		_answerTextFlow.getStyleClass().add("text-flow");
 		incorrectLabel.getStyleClass().addAll("text-bold", "text-main");
 
 		Label interactToSkipLabel = new Label("Click or press any key to skip...");
 		interactToSkipLabel.getStyleClass().add("interact-to-skip");
 
 		// add elements and styles to container
-		_container.getChildren().addAll(incorrectLabel, answerText, interactToSkipLabel, _progressBarView.getView());
+		_container.getChildren().addAll(incorrectLabel, _answerTextFlow, interactToSkipLabel, _progressBarView.getView());
 		_container.getStyleClass().add("incorrect-view");
 		addStylesheet("incorrect.css");
 
@@ -89,19 +87,27 @@ public class IncorrectPane extends ViewBase {
 	 */
 	private void questionUpdate(Question q) {
 		if (q != null) {
-			_answerLabel.getChildren().clear();
-			List<String> answerList = q.getAnswer();
-			for (int i = 0; i < answerList.size(); i++) {
-				Label part = new Label(answerList.get(i));
-				part.getStyleClass().add("text-bold");
-				_answerLabel.getChildren().add(part);
-				if (i != answerList.size() - 1) {
-					_answerLabel.getChildren().add(new Label(" or "));
-				}
-				else {
-					_answerLabel.getChildren().add(new Label("."));
-				}
+			List<Node> children = _answerTextFlow.getChildren();
+			children.clear();
+			children.add(createTextNode("The correct answer was ", "text-white"));
+
+			for (String a : q.getAnswer()) {
+				children.add(createTextNode(" or ", "text-white"));
+				children.add(createTextNode(a, "text-bold", "text-white"));
 			}
+
+			// remove first " or " text node, add a trailing full stop
+			children.remove(1);
+			children.add(createTextNode(".", "text-white"));
 		}
+	}
+
+	/**
+	 * Create a text node with specified content & style classes
+	 */
+	private Text createTextNode(String text, String ...styleClasses) {
+		Text t = new Text(text);
+		t.getStyleClass().addAll(styleClasses);
+		return t;
 	}
 }
