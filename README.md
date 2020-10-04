@@ -33,9 +33,9 @@ You must have the following folders/files in one folder:
 
 Move into the folder that contains all of the folders/files above and run the script.
 
-To do this, enter these two commands into the bash (assuming your current directory is the folder that contains the above folders/files:\
-    `chmod 777 quinzical.sh`\
-    `./script.sh`\
+To do this, enter these two commands into the bash (assuming your current directory is the folder that contains the above folders/files):
+- `chmod 777 quinzical.sh`\
+- `./script.sh`
 
 **Option 2: Run from the runnable jar (for experts!)**
 
