@@ -8,7 +8,7 @@ import se206.quinzical.models.QuinzicalModel;
 /**
  * This class is Pane type, and it does not contain any atoms.
  * It is the main menu which is shown when the game is first loaded.
- * 
+ * <p>
  * Used by QuinzicalSwitch
  */
 public class MenuPane extends ViewBase {

@@ -40,12 +40,12 @@ public class PracticeSwitch extends ViewBase {
 }
 
 class PracticeSwitcher extends SwitcherBase {
+	// incorrect, correct, question asking
+	private final AnswerPane _answerPane;
 	private final CorrectPane _correctPane;
 	private final IncorrectPane _incorrectPane;
 	private final HBox _nothingChosen;
 	private final PracticeModel _practiceModel;
-	// incorrect, correct, question asking
-	private final AnswerPane _answerPane;
 
 	public PracticeSwitcher(PracticeModel practiceModel) {
 		_practiceModel = practiceModel;

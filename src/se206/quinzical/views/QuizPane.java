@@ -7,9 +7,8 @@ import se206.quinzical.models.QuinzicalModel;
  * This is Pane type.
  * Structure of the screen for real and practice game.
  * Contains HeaderPane and QuizContentSwitch.
- * 
+ * <p>
  * Used by QuinzicalSwitch.
- *
  */
 public class QuizPane extends ViewBase {
 	private final VBox _container = new VBox();

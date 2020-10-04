@@ -17,10 +17,10 @@ public class GameSwitch extends SwitcherBase {
 	private final CorrectPane _correctPane;
 	private final GameOverPane _gameOverPane;
 	private final IncorrectPane _incorrectPane;
-	private final SkipPane _skipPane;
 	private final QuinzicalModel _model;
 	private final PresetQuinzicalModel _presetModel;
 	private final HBox _questionSelectContainer = new HBox();
+	private final SkipPane _skipPane;
 
 	public GameSwitch(QuinzicalModel model) {
 		_model = model;

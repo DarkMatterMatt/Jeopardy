@@ -1,11 +1,10 @@
 package se206.quinzical.views;
 
 import se206.quinzical.models.QuinzicalModel;
+
 /**
  * This class is switch type.
  * Switches between real game and practice game upon request.
- * 
- *
  */
 public class QuizContentSwitch extends SwitcherBase {
 	private final GameSwitch _gameView;

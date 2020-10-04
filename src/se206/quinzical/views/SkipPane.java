@@ -1,6 +1,5 @@
 package se206.quinzical.views;
 
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
@@ -8,15 +7,11 @@ import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This class is Pane type, and contains AnimatedProgressBar atom.
  * View for incorrect answer screen, after an incorrect answer has been submitted
- *
+ * <p>
  * Used by GameSwitch and PracticeSwitch.
- *
  */
 public class SkipPane extends ViewBase {
 	private static final int TIMEOUT_SECS = 4;

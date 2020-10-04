@@ -12,21 +12,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.Category;
-import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.QuizModel;
 
 /**
  * This class is Pane type.
  * It lists possible categories the user can select in a one-column list.
  * Each cell's string value is retrieved from the list of categories from the QuinzicalModel.
- * 
+ *
  * @author hajinkim
  */
 public class CategoriesList extends ViewBase {
 	private final Pane _container;
 	private final ListView<Category> _listView;
-	private final HBox _textBox;
 	private final QuizModel _model;
+	private final HBox _textBox;
 
 	public CategoriesList(QuizModel model) {
 		_model = model;
@@ -40,8 +39,8 @@ public class CategoriesList extends ViewBase {
 		data.addAll(model.getCategories());
 
 		// set up list view
-		_listView = new ListView<Category>(data);
-		_container = new VBox(_textBox,_listView);
+		_listView = new ListView<>(data);
+		_container = new VBox(_textBox, _listView);
 		_listView.setStyle("-fx-padding: 0px;");
 		_listView.setMinWidth(300);
 
@@ -54,14 +53,16 @@ public class CategoriesList extends ViewBase {
 				@Override
 				public void updateItem(Category item, boolean empty) {
 					super.updateItem(item, empty);
-					if(empty || item == null) {
+					if (empty || item == null) {
 						setText(null);
 						setGraphic(null);
-					}else {
+					}
+					else {
 						HBox displayedItem = new CategoriesListItemView(item).getView();
-						if(item.isSelected()) {
+						if (item.isSelected()) {
 							displayedItem.getStyleClass().addAll("text-bold", "category", "selected");
-						}else {
+						}
+						else {
 							displayedItem.getStyleClass().addAll("text-bold", "category", "not-selected");
 						}
 						setGraphic(displayedItem);
@@ -70,18 +71,18 @@ public class CategoriesList extends ViewBase {
 				}
 			};
 			cell.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-		        if (event.getButton()== MouseButton.PRIMARY && (! cell.isEmpty())) {
-		        	Category item = cell.getItem();
-		            for (Category c: model.getCategories()) {
-		            	c.setUnselected();
-		            }
-		            _listView.refresh();
-		            item.setSelected();
+				if (event.getButton() == MouseButton.PRIMARY && (!cell.isEmpty())) {
+					Category item = cell.getItem();
+					for (Category c : model.getCategories()) {
+						c.setUnselected();
+					}
+					_listView.refresh();
+					item.setSelected();
 
-		            _model.selectCategory(item);
+					_model.selectCategory(item);
 
-		        }
-		    });
+				}
+			});
 			return cell;
 
 		});
@@ -101,11 +102,12 @@ public class CategoriesList extends ViewBase {
 	/**
 	 * Objects of this type is a graphic (HBox) that prettifies
 	 * each category String for each cell.
+	 *
 	 * @author hajinkim
 	 */
-	public class CategoriesListItemView{
-		HBox _container = new HBox();
+	public static class CategoriesListItemView {
 		Category _category;
+		HBox _container = new HBox();
 
 		public CategoriesListItemView(Category item) {
 			_category = item;
@@ -113,10 +115,11 @@ public class CategoriesList extends ViewBase {
 			label.setWrapText(true);
 			_container.getChildren().add(label);
 
-			//styling
+			// styling
 			if (item.isSelected()) {
 				label.getStyleClass().add("text-black");
-			} else {
+			}
+			else {
 				label.getStyleClass().add("text-white");
 			}
 		}

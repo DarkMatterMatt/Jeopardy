@@ -8,7 +8,7 @@ import se206.quinzical.models.QuizModel;
 /**
  * This class is Pane type.
  * View for game over screen, after all questions have been attempted
- * 
+ * <p>
  * Used by GameSwitch
  */
 public class GameOverPane extends ViewBase {

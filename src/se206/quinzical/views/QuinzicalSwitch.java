@@ -6,11 +6,11 @@ import se206.quinzical.models.QuinzicalModel;
  * This class is Switch type.
  * Top level view that contains everything about GUI.
  * Switches between real game/ practice/ menu.
- * 
+ * <p>
  * Uses MenuPane, QuizPane.
  * Used by se206.quinzical.Main
- * @author hajinkim
  *
+ * @author hajinkim
  */
 public class QuinzicalSwitch extends SwitcherBase {
 	private final MenuPane _menuView;

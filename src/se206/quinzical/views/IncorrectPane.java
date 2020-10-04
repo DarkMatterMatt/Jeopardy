@@ -1,7 +1,5 @@
 package se206.quinzical.views;
 
-import java.util.List;
-
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
@@ -9,12 +7,13 @@ import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
 
+import java.util.List;
+
 /**
  * This class is Pane type, and contains AnimatedProgressBar atom.
  * View for incorrect answer screen, after an incorrect answer has been submitted
- * 
+ * <p>
  * Used by GameSwitch and PracticeSwitch.
- * 
  */
 public class IncorrectPane extends ViewBase {
 	private static final int TIMEOUT_SECS = 4;
@@ -31,10 +30,9 @@ public class IncorrectPane extends ViewBase {
 		Label incorrectLabel = new Label("Incorrect!");
 		Label answerPrefixLabel = new Label("The correct answer was ");
 		_answerLabel.setPrefWidth(300);
-//		Label answerSuffixLabel = new Label(".");
 		TextFlow answerText = new TextFlow(answerPrefixLabel, _answerLabel);
 		answerText.setStyle("-fx-alignment: center");
-		
+
 		answerText.getStyleClass().add("text-flow");
 		incorrectLabel.getStyleClass().addAll("text-bold", "text-main");
 
@@ -93,13 +91,14 @@ public class IncorrectPane extends ViewBase {
 		if (q != null) {
 			_answerLabel.getChildren().clear();
 			List<String> answerList = q.getAnswer();
-			for(int i = 0; i<answerList.size(); i++) {
+			for (int i = 0; i < answerList.size(); i++) {
 				Label part = new Label(answerList.get(i));
 				part.getStyleClass().add("text-bold");
 				_answerLabel.getChildren().add(part);
-				if(i!=answerList.size()-1) {
+				if (i != answerList.size() - 1) {
 					_answerLabel.getChildren().add(new Label(" or "));
-				}else {
+				}
+				else {
 					_answerLabel.getChildren().add(new Label("."));
 				}
 			}

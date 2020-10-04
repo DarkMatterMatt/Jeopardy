@@ -2,37 +2,28 @@ package se206.quinzical.views;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import se206.quinzical.DragAndResizeHelper;
 import javafx.util.Duration;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
  * This is Atom type.
  * View for taskbar. Contains reset & quit button, and other various functions
- *
+ * <p>
  * Used by HeaderView.
  */
 public class Taskbar extends ViewBase {
 	private final HBox _container = new HBox();
 	private final QuinzicalModel _model;
 	private final ImageView _reset;
-	private final StackPane _toggleText;
 	private final Timeline _speedSliderHideTimer = new Timeline();
+	private final StackPane _toggleText;
 
 	public Taskbar(QuinzicalModel model) {
 		_model = model;
@@ -53,10 +44,7 @@ public class Taskbar extends ViewBase {
 
 		// home button view
 		ImageView home = createButton("/se206/quinzical/assets/home.png");
-		home.setOnMouseClicked(e -> {
-			//change state to menu
-			model.backToMainMenu();
-		});
+		home.setOnMouseClicked(e -> model.backToMainMenu());
 		Tooltip.install(home, new Tooltip("Main Menu"));
 
 		// text and notext icons
@@ -89,8 +77,8 @@ public class Taskbar extends ViewBase {
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
 	}
 
-	/*
-	 * create an icon button given an image file name.
+	/**
+	 * Create an icon button given an image file name.
 	 */
 	private ImageView createButton(String filename) {
 		ImageView v = new ImageView(new Image(getClass().getResourceAsStream(filename)));
@@ -103,8 +91,8 @@ public class Taskbar extends ViewBase {
 		return v;
 	}
 
-	/*
-	 * slider that user can manouver 
+	/**
+	 * Slider to change speed of text speech
 	 */
 	private Slider createSpeedSlider() {
 		Slider slider = new Slider(-1, 1, 0);

@@ -10,7 +10,6 @@ import javafx.scene.layout.StackPane;
  * Every class that extends this class acts as a GUI component
  * that switches to different panes for display, while hiding
  * panes that does ot get displayed.
- *
  */
 public abstract class SwitcherBase extends ViewBase {
 	private final StackPane _container = new StackPane();
@@ -20,8 +19,8 @@ public abstract class SwitcherBase extends ViewBase {
 		return _container;
 	}
 
-	/*
-	 * switch to the provided view
+	/**
+	 * Switch to the provided view
 	 */
 	protected void switchToView(Parent show) {
 		for (Node n : _container.getChildren()) {

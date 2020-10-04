@@ -2,10 +2,10 @@ package se206.quinzical.views;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import se206.quinzical.DragAndResizeHelper;
@@ -17,8 +17,8 @@ import se206.quinzical.models.QuinzicalModel;
  */
 public class AlertFactory {
 
-	/*
-	 * activate the exit alert
+	/**
+	 * Activate the exit alert
 	 */
 	public static void getExitAlert(Taskbar origin) {
 		Alert exitAlert = new Alert(AlertType.NONE);
@@ -27,8 +27,8 @@ public class AlertFactory {
 
 		// style alert
 		DialogPane dialogue = exitAlert.getDialogPane();
-		ButtonType yes = new ButtonType("Yup",ButtonBar.ButtonData.YES);
-		ButtonType no = new ButtonType("Actually nah",ButtonBar.ButtonData.NO);
+		ButtonType yes = new ButtonType("Yup", ButtonBar.ButtonData.YES);
+		ButtonType no = new ButtonType("Actually nah", ButtonBar.ButtonData.NO);
 		dialogue.getButtonTypes().addAll(yes, no);
 		dialogue.getStylesheets().addAll(
 				origin.getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
@@ -38,13 +38,11 @@ public class AlertFactory {
 		Stage diaStage = (Stage) dialogue.getScene().getWindow();
 		diaStage.initStyle(StageStyle.UNDECORATED);
 		DragAndResizeHelper.addResizeListener(diaStage);
-		exitAlert.showAndWait().filter(res -> res==yes).ifPresent(res -> {
-			Platform.exit();
-		});
+		exitAlert.showAndWait().filter(res -> res == yes).ifPresent(res -> Platform.exit());
 	}
 
-	/*
-	 * activate the reset alert
+	/**
+	 * Activate the reset alert
 	 */
 	public static void getResetAlert(Taskbar origin, QuinzicalModel model) {
 		Alert resetAlert = new Alert(AlertType.NONE);
@@ -53,8 +51,8 @@ public class AlertFactory {
 
 		// style alert
 		DialogPane dialogue = resetAlert.getDialogPane();
-		ButtonType yes = new ButtonType("Yup",ButtonBar.ButtonData.YES);
-		ButtonType no = new ButtonType("Actually nah",ButtonBar.ButtonData.NO);
+		ButtonType yes = new ButtonType("Yup", ButtonBar.ButtonData.YES);
+		ButtonType no = new ButtonType("Actually nah", ButtonBar.ButtonData.NO);
 		dialogue.getButtonTypes().addAll(yes, no);
 		dialogue.getStylesheets().addAll(
 				origin.getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
@@ -64,9 +62,6 @@ public class AlertFactory {
 		Stage diaStage = (Stage) dialogue.getScene().getWindow();
 		diaStage.initStyle(StageStyle.UNDECORATED);
 		DragAndResizeHelper.addResizeListener(diaStage);
-		resetAlert.showAndWait().filter(res -> res==yes).ifPresent(res -> {
-			model.reset();
-		});
+		resetAlert.showAndWait().filter(res -> res == yes).ifPresent(res -> model.reset());
 	}
-
 }

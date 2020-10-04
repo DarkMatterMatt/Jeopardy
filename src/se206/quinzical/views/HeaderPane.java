@@ -8,9 +8,8 @@ import se206.quinzical.models.QuinzicalModel;
 /**
  * This class is Pane type.
  * View for the header, and contains TaskBar atom, title, and score
- * 
+ * <p>
  * This Pane is used by QuizPane
- * 
  */
 public class HeaderPane extends ViewBase {
 	private final VBox _container = new VBox();

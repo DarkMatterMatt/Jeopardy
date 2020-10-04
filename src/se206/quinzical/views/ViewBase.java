@@ -11,13 +11,13 @@ import javafx.scene.Parent;
  * upon getView() call.
  */
 public abstract class ViewBase {
-    public abstract Parent getView();
+	/**
+	 * Add style sheet with the given file name, assuming they exist in se206.quinzical.styles package
+	 */
+	protected void addStylesheet(String filename) {
+		String stylesheet = getClass().getResource("/se206/quinzical/styles/" + filename).toExternalForm();
+		getView().getStylesheets().add(stylesheet);
+	}
 
-    /*
-     * add style sheet with the given file name, assuming they exist in se206.quinzical.styles package
-     */
-    protected void addStylesheet(String filename) {
-        String stylesheet = getClass().getResource("/se206/quinzical/styles/" + filename).toExternalForm();
-        getView().getStylesheets().add(stylesheet);
-    }
+	public abstract Parent getView();
 }

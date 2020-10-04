@@ -12,10 +12,9 @@ import se206.quinzical.models.Question;
 /**
  * This class is Pane type.
  * Shows category preview that shows:
- * 	- name of the category
- * 	- active question's value
+ * - name of the category
+ * - active question's value
  * Used by GameSwitch
- *
  */
 public class CategoryPreviewPane extends ViewBase {
 	private final Label _category = new Label();
@@ -135,7 +134,7 @@ public class CategoryPreviewPane extends ViewBase {
 		}
 		else {
 			int nextValue = q.getValue();
-			String categoryName = (q.getCategory()!=null)?q.getCategory().getName():"";
+			String categoryName = (q.getCategory() != null) ? q.getCategory().getName() : "";
 
 			// update values
 			_playFor.setText("Play for ");

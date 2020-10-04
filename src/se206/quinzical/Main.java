@@ -9,7 +9,6 @@ import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.util.KeyEventManager;
 import se206.quinzical.views.QuinzicalSwitch;
 import se206.quinzical.views.ViewBase;
-import se206.quinzical.views.QuizPane;
 
 /**
  * Main stage setup
