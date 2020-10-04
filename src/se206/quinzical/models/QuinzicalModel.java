@@ -3,14 +3,19 @@ package se206.quinzical.models;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.hildan.fxgson.FxGson;
-import se206.quinzical.models.util.*;
+import se206.quinzical.models.util.FileHelper;
+import se206.quinzical.models.util.GsonPostProcessable;
+import se206.quinzical.models.util.GsonPostProcessingEnabler;
+import se206.quinzical.models.util.TextToSpeech;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -65,7 +70,8 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	public static QuinzicalModel load(String saveFileLocation) {
 		try (Reader reader = new FileReader(saveFileLocation)) {
-			QuinzicalModel model = GSON.fromJson(reader, QuinzicalModel.class);
+			Type type = new TypeToken<QuinzicalModel>() { }.getType();
+			QuinzicalModel model = GSON.fromJson(reader, type);
 			model.setSaveFileLocation(saveFileLocation);
 			return model;
 		}
