@@ -1,44 +1,65 @@
 # Quinzical
+
 JavaFX based quiz application created by Hajin Kim and Matt Moran.
 
 ## Aim of the game
+
 The aim of the game is to answer all the questions in the main quiz module and get the highest money possible at the end.
 
-## Requirements
-- Java8+
-- For quiz clues voiceover: Espeak or Festival
-- Bash is required to run the script file that runs the program
+## Runtime Requirements
+
+- Java 8+ ([GitHub](https://github.com/openjdk/jdk), [installation instructions](https://openjdk.java.net/install/))
+- JavaFX ([GitHub](https://github.com/openjdk/jfx), [download](https://gluonhq.com/products/javafx/))
+- (optional) Espeak or Festival
+
+## Development Requirements
+
+- Java 8+ ([GitHub](https://github.com/openjdk/jdk), [installation instructions](https://openjdk.java.net/install/))
+- JavaFX ([GitHub](https://github.com/openjdk/jfx), [download](https://gluonhq.com/products/javafx/))
+- Gson ([GitHub](https://github.com/google/gson), [direct download `.jar`](https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar))
+- FX-Gson ([GitHub](https://github.com/joffrey-bion/fx-gson), [direct download `.jar`](https://repo1.maven.org/maven2/org/hildan/fxgson/fx-gson/3.1.2/fx-gson-3.1.2.jar))
 
 ## How to run it
-Firstly, download the required files from github repository or from SOFTENG206 A3 submission (team 24). You must have the following folders/files in one folder (most likely called 'assignment-3-and-project-team-24'):\
+
+Make sure you meet the __Runtime Requirements__.
+
+You must have the following folders/files in one folder:
 - `quinzical.jar` runnable jar file containing compiled JavaFX quiz application
 - `categories` folder containing questions and icon resources
 - `javafx-sdk-11.0.2` folder that contains JavaFX libraries
-- `quinzical.sh` containing script that runs the application
+- `quinzical.sh` containing script that runs the application. 
 
-**Option 1: How to run Quinzical with the script file**\
-Move into the folder that contains all of the folders/files above, and run the script. To do this, follow steps below:
+**Option 1: Run with the script file**\
 
-Assuming the folder 'assignment-3-and-project-team-24' is visible at your current directory, type:\
-    `cd assignment-3-and-project-team-24`\
-to move into the folder. Then type:\
+Move into the folder that contains all of the folders/files above and run the script.\
+
+To do this, enter these two commands into the bash (assuming your current directory is the folder that contains the above folders/files:\
     `chmod 777 quinzical.sh`\
-to change the permission of the script to executable. Then lastly, type:\
     `./script.sh`\
-which will run the program.\
 
-**Option 2: How to run Quinzical directly from the runnable jar**\
-Change current directory of bash to the folder containing the required files/folders. You can run the .jar file with this command on bash: `java --module-path ./javafx-sdk-11.0.2/lib --add-modules javafx.controls -jar ./quinzical.jar`
+**Option 2: Run from the runnable jar (for experts!)**\
+
+Download the [latest compiled release](https://github.com/SOFTENG206-2020/assignment-3-and-project-team-24/releases/latest/download/quinzical.jar).
+Then run `java --module-path /path/to/javafx/lib/ --add-modules javafx.controls -jar quinzical.jar`.
+ 
+Don't have JavaFX? Check out [jfxRunner](https://github.com/DarkMatterMatt/jfxrunner/releases/latest), which handles JavaFX
+for you. Just run `java -jar jfxrunner.jar quinzical.jar` (you might have to wait for a moment while JavaFX is downloaded!).
 
 ## Features
-- Our Quinzical application features _40+ NZ related questions, 7 categories_. That's huge!
-- If your system has Festival, it will pronounce questions with appropriate NZ accent, including Maori macrons.
+
+- Our Quinzical application features _80+ NZ related questions, 7 categories_. That's huge!
+- Advanced text-to-speech support for reading questions (`festival` must be in PATH). 
+- Secret-sauce custom NZ voice with accurate pronunciation of Māori words
 - Unlike our previous application, _Jeopardy_, our brand-new application comes with __Practice module__! Here you can get comfortable with our application interface, try out some questions before attempting the __Main module__.
-- We also have option to disable quiz for those who want to improve listening ability, or want to put yourself into a challenge (why would you?).
-- We have a speed slider for the clue voiceover!
 - Want to start over during the quiz, or have to suddenly exit the game for a family dinner? We got you covered :) Exit at any screen and you will land on the exact page or question you were at last time.
+- Customize you own categories and questions
+- Amazing interface
+- Cross-platform support
+- Resizable and draggable window
+- Questions support have multiple answers - never be incorrectly marked!
 
 ## Two Modules
+
 There are two main modules in this game.
 
 **Practice Module**\
@@ -64,12 +85,17 @@ Rules:
 - You can drag around and resize the screen
 - You can press keys or mouse during the display of correct/incorrect answer indication screen to skip that page.
 
-## How to navigate around the game
+## Usage
 // with screenshot?
+// TODO: annotated screenshots
 
-## Taskbar icons explanation
-// can look at tool tips
+## Customize Questions and Categories
+The game reads categories from a `./categories` folder (relative to the current working directory).
 
-## Customize questions
-// reads files from ./categories folder
-// format is <Question>|<Answer>|<Answer2>...
+Inside this folder, there should be one or more files which are named as their category.
+<br>Example: `./categories/animals` is the `animals` category.
+
+Each file is in a pipe-delimited format without a header row. The format is `question|answer1|answer2|...answerN`.
+<br>Example: `What is the highest mountain in New Zealand|Mount Cook|Aorangi|Aoraki`.
+
+Changes to categories and questions will not be processed until you reset the game.
