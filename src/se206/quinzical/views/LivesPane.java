@@ -3,10 +3,11 @@ package se206.quinzical.views;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuinzicalModel;
-import se206.quinzical.models.QuizModel;
 
 /**
  * Pane for international section, that shows remaining lives as heart icons and 
@@ -14,28 +15,48 @@ import se206.quinzical.models.QuizModel;
  */
 public class LivesPane extends ViewBase {
 	private final VBox _container = new VBox();
-	private final VBox _highscores = new VBox();
-	private final VBox _lives = new VBox();
+	private final VBox _highscoreBox = new VBox();
+	private final VBox _livesBox = new VBox();
+
 	private QuinzicalModel _model;
 	
 	public LivesPane(QuinzicalModel model) {
 		_model = model;
 
 		// add the box containing lives into the container
-		_container.getChildren().addAll(_lives);
-		
-		
+		_container.getChildren().addAll(_highscoreBox, _livesBox);
+		_highscoreBox.setSpacing(10);
+		_container.setSpacing(40);
+
 		// styles
 		this.addStylesheet("lives.css");
 		_container.getStyleClass().addAll("lives");
-		_highscores.getStyleClass().addAll("highscore-container");
-		_lives.getStyleClass().addAll("heart-container");
+		_highscoreBox.getStyleClass().addAll("highscore-container");
+		_livesBox.getStyleClass().addAll("heart-container");
 		
-		
+		updateScore();
 		updateLives();
+		// add score property
 		_model.getLivesProperty().addListener((obs,newVal,oldVal)->updateLives());
 	}
 	
+	public void updateScore() {
+		_highscoreBox.getChildren().clear();
+
+		Label highscore = new Label("High:");
+		Label hscore = new Label("10");
+		Label yourscore = new Label("You:");
+		Label yscore = new Label("5");
+
+		_highscoreBox.setAlignment(Pos.CENTER);
+		highscore.getStyleClass().addAll("text-white", "text-medium", "text-bold");
+		yourscore.getStyleClass().addAll("text-white", "text-medium", "text-bold");
+		hscore.getStyleClass().addAll("text-white", "text-medium");
+		yscore.getStyleClass().addAll("text-white", "text-medium");
+		_highscoreBox.getChildren().addAll(highscore, hscore, yourscore, yscore);
+
+
+	}
 	
 	public void updateLives() {
 		// make as many icons as the maximum number of lives
@@ -57,17 +78,17 @@ public class LivesPane extends ViewBase {
 			hearts.add(new Icon("/se206/quinzical/assets/emptyHeart.png"));
 		}
 		
-		_lives.getChildren().clear();
+		_livesBox.getChildren().clear();
 		for(Icon icon: hearts) {
 			Parent heart = icon.getView();
 			heart.getStyleClass().addAll("heart");
-			_lives.getChildren().addAll(heart);
+			_livesBox.getChildren().addAll(heart);
 			
 		}
 	}
 	
 	@Override
-	public Parent getView() {
+	public VBox getView() {
 		return _container;
 	}
 
