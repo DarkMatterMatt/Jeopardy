@@ -1,5 +1,9 @@
 package se206.quinzical.models;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.List;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -7,10 +11,6 @@ import javafx.scene.image.Image;
 import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.TextToSpeech;
 import se206.quinzical.views.Icon;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Base class defining the behaviour of QuizModel.
@@ -166,6 +166,20 @@ public abstract class QuizModel implements GsonPostProcessable {
 		catch (NullPointerException | FileNotFoundException e) {
 			icon.setImage("/se206/quinzical/assets/icon-missing.png");
 		}
+	}
+
+	/**
+	 * checks if the current state is international section
+	 */
+	public boolean currentStateIsInternationalSection() {
+		return _model.getState() == QuinzicalModel.State.INTERNATIONAL;
+	}
+
+	/**
+	 * gets international category from quinzical model
+	 */
+	public Category getInternationalCategoryFromQuinzicalModel() {
+		return _model.getInternationalCategory();
 	}
 
 	/**
