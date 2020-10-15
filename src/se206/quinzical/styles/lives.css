@@ -1,0 +1,19 @@
+.lives {
+    -fx-alignment: center;
+    -fx-background-color: -c-grey-01;
+    -fx-padding: 48;
+}
+
+.lives .heart {
+    -fx-padding: 8 0 8 0;
+}
+
+.lives .highscore {
+    -fx-padding: 24 0 32 0;
+    -fx-wrap-text: true;
+}
+
+.lives .heart-container, .lives .highscore-container {
+    /* -fx-alignment: center-left; */
+    -fx-max-width: 480;
+}
