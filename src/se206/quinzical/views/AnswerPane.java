@@ -6,7 +6,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import se206.quinzical.models.*;
+import se206.quinzical.models.PracticeModel;
+import se206.quinzical.models.PresetQuinzicalModel;
+import se206.quinzical.models.Question;
+import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.models.QuizModel;
 
 /**
  * This class is a Pane type, and uses AnswerTextField atom.
@@ -109,6 +113,10 @@ public class AnswerPane extends ViewBase {
 	private void onVisibilityChanged() {
 		if (!_container.isVisible()) {
 			// container is hidden
+			return;
+		}
+		if (_model.getModel().getState() == QuinzicalModel.State.INTERNATIONAL) {
+			questionUpdate(_model.getInternationalCategoryFromQuinzicalModel().getRandomQuestion());
 			return;
 		}
 		if (!_isPracticeMode && _model.getModel().getState() != QuinzicalModel.State.GAME
