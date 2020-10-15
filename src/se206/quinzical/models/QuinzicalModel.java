@@ -1,27 +1,35 @@
 package se206.quinzical.models;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.hildan.fxgson.FxGson;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import org.hildan.fxgson.FxGson;
 import se206.quinzical.models.util.FileHelper;
 import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.GsonPostProcessingEnabler;
 import se206.quinzical.models.util.TextToSpeech;
-
-import java.io.*;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Quinzical Model represents the model for the whole game.
@@ -36,6 +44,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 			.disableHtmlEscaping()
 			.create();
 	private final List<Category> _categories = new ArrayList<>();
+	private Category _internationalCategory = new Category("International"); // placeholder for now
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
@@ -227,7 +236,11 @@ public class QuinzicalModel implements GsonPostProcessable {
 					}
 				}
 				// make category out of that
-				_categories.add(newCategory);
+				if (newCategory.getName().equals("INTERNATIONAL")) {
+					_internationalCategory = newCategory;
+				} else {
+					_categories.add(newCategory);
+				}
 			}
 		}
 	}
@@ -322,6 +335,13 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	public IntegerProperty getLivesProperty() {
 		return _lives;
+	}
+
+	/**
+	 * Get international category
+	 */
+	public Category getInternationalCategory() {
+		return _internationalCategory;
 	}
 
 	/**
