@@ -44,7 +44,8 @@ public class QuinzicalModel implements GsonPostProcessable {
 			.disableHtmlEscaping()
 			.create();
 	private final List<Category> _categories = new ArrayList<>();
-	private Category _internationalCategory = new Category("International"); // placeholder for now
+	public static final String INTERNATIONAL = "INTERNATIONAL";
+	private Category _internationalCategory = new Category(INTERNATIONAL); // placeholder for now
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
@@ -236,7 +237,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 					}
 				}
 				// make category out of that
-				if (newCategory.getName().equals("INTERNATIONAL")) {
+				if (newCategory.getName().equals(INTERNATIONAL)) {
 					_internationalCategory = newCategory;
 				} else {
 					_categories.add(newCategory);
