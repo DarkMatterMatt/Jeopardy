@@ -14,6 +14,5 @@
 }
 
 .lives .heart-container, .lives .highscore-container {
-    /* -fx-alignment: center-left; */
     -fx-max-width: 480;
 }
