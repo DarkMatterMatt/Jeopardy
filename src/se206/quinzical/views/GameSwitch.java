@@ -7,7 +7,7 @@ import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
- * This is Pane type.
+ * This is Switch type.
  * Main content layout for the 'real' game
  * <p>
  * Used by QuizContentSwitch
