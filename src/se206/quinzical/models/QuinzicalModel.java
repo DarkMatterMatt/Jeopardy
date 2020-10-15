@@ -5,8 +5,10 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.hildan.fxgson.FxGson;
 import se206.quinzical.models.util.FileHelper;
@@ -41,6 +43,9 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
 	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
+	private static final Integer MAXIMUM_LIVES = 3;
+	private final IntegerProperty _lives = new SimpleIntegerProperty(MAXIMUM_LIVES);
+
 
 	public QuinzicalModel() {
 		this(null);
@@ -287,6 +292,36 @@ public class QuinzicalModel implements GsonPostProcessable {
 	public void toggleTextVisibility() {
 		_textEnabled.set(!_textEnabled.get());
 		save();
+	}
+	
+	/**
+	 * Reduce the number of lives for international section
+	 */
+	public void reduceLives() {
+		_lives.set((_lives.get()!=0)?(_lives.get()-1):(0));
+	}
+	/**
+
+	/**
+	 * get the max number of lives
+	 */
+	public int getMaxLives() {
+		return MAXIMUM_LIVES;
+	}
+	
+	/**
+	 * reset lives
+	 */
+	public void resetLives() {
+		_lives.set(MAXIMUM_LIVES);
+	}
+	/**
+	 * Get lives property that is listenable
+	 * lives are applicable for the international section
+	 * can also be used to retrieve the current number of lives for the international section
+	 */
+	public IntegerProperty getLivesProperty() {
+		return _lives;
 	}
 
 	/**
