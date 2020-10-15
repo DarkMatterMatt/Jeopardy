@@ -51,6 +51,9 @@ public class HeaderPane extends ViewBase {
 			case PRACTICE:
 				_subtitleLabel.setText("Practice Mode");
 				break;
+			case INTERNATIONAL:
+				_subtitleLabel.setText("International section");
+				break;
 			case MENU:
 				break;
 			default:

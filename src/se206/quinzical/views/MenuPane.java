@@ -28,6 +28,11 @@ public class MenuPane extends ViewBase {
 		Label practiceLabel = new Label("Practice");
 		practiceLabel.getStyleClass().addAll("btn", "text-gold");
 		practiceLabel.setOnMouseClicked(e -> model.beginPracticeGame());
+		
+		// international button
+		Label internationalLabel = new Label("International");
+		internationalLabel.getStyleClass().addAll("btn", "text-gold");
+		internationalLabel.setOnMouseClicked(e -> model.beginInternationalGame());
 
 		// quit button
 		Label quitLabel = new Label("Quit");
@@ -37,7 +42,7 @@ public class MenuPane extends ViewBase {
 		// add styles
 		addStylesheet("menu.css");
 		_container.getStyleClass().add("menu");
-		_container.getChildren().addAll(titleLabel, playLabel, practiceLabel, quitLabel);
+		_container.getChildren().addAll(titleLabel, playLabel, practiceLabel, internationalLabel, quitLabel);
 	}
 
 	@Override

@@ -10,13 +10,16 @@ public class QuizContentSwitch extends SwitcherBase {
 	private final GameSwitch _gameView;
 	private final QuinzicalModel _model;
 	private final PracticeSwitch _practiceView;
-
+	private final InternationalSwitch _internationalView;
+	
 	public QuizContentSwitch(QuinzicalModel model) {
 		_model = model;
 
 		_gameView = new GameSwitch(_model);
 		_practiceView = new PracticeSwitch(_model);
-		getView().getChildren().addAll(_gameView.getView(), _practiceView.getView());
+		_internationalView = new InternationalSwitch(_model);
+		
+		getView().getChildren().addAll(_gameView.getView(), _practiceView.getView(), _internationalView.getView());
 
 		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
@@ -29,6 +32,9 @@ public class QuizContentSwitch extends SwitcherBase {
 				break;
 			case PRACTICE:
 				switchToView(_practiceView.getView());
+				break;
+			case INTERNATIONAL:
+				switchToView(_internationalView.getView());
 				break;
 			case MENU:
 				break;

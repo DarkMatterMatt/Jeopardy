@@ -331,5 +331,10 @@ public class QuinzicalModel implements GsonPostProcessable {
 		MENU,
 		GAME,
 		PRACTICE,
+		INTERNATIONAL,
+	}
+
+	public void beginInternationalGame() {
+		_state.set(State.INTERNATIONAL);
 	}
 }

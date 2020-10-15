@@ -146,6 +146,7 @@ public class Taskbar extends ViewBase {
 				break;
 			case MENU:
 			case PRACTICE:
+			case INTERNATIONAL:
 				_reset.setVisible(false);
 				_reset.setManaged(false);
 				break;
