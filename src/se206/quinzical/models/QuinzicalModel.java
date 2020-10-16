@@ -44,8 +44,6 @@ public class QuinzicalModel implements GsonPostProcessable {
 			.disableHtmlEscaping()
 			.create();
 	private final List<Category> _categories = new ArrayList<>();
-	public static final String INTERNATIONAL = "INTERNATIONAL";
-	private Category _internationalCategory = new Category(INTERNATIONAL); // placeholder for now
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
@@ -53,8 +51,12 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final TextToSpeech _textToSpeech = new TextToSpeech();
 	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
 	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
+	public static final String INTERNATIONAL = "INTERNATIONAL";
+	private Category _internationalCategory = new Category(INTERNATIONAL);
 	private static final Integer MAXIMUM_LIVES = 3;
 	private final IntegerProperty _lives = new SimpleIntegerProperty(MAXIMUM_LIVES);
+	private final IntegerProperty _currentInternationalScore = new SimpleIntegerProperty(0);
+	private final IntegerProperty _InternationalHighScore = new SimpleIntegerProperty(0);
 
 
 	public QuinzicalModel() {
@@ -129,6 +131,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	public void beginPracticeGame() {
 		setState(State.PRACTICE);
+		this.getPracticeModel().setState(QuizModel.State.SELECT_CATEGORY);
 	}
 
 	/**
@@ -355,7 +358,32 @@ public class QuinzicalModel implements GsonPostProcessable {
 		INTERNATIONAL,
 	}
 
+	/**
+	 * change current gamemode to international game
+	 */
 	public void beginInternationalGame() {
 		_state.set(State.INTERNATIONAL);
+		this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
 	}
+
+	public void increaseInternationalScore() {
+		this._currentInternationalScore.set(this._currentInternationalScore.get() + 1);
+	}
+
+	public int getCurrentInternationalScore() {
+		return this._currentInternationalScore.get();
+	}
+
+	public void resetCurrentInternationalScore() {
+		this._currentInternationalScore.set(0);
+	}
+
+	public void setInternationalHighScore(int value) {
+		this._InternationalHighScore.set(value);
+	}
+
+	public int getInternationalHighscore() {
+		return this._InternationalHighScore.get();
+	}
+
 }
