@@ -1,6 +1,7 @@
 package se206.quinzical.views;
 
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.models.util.KeyboardShortcuts;
 
 /**
  * This class is Switch type.
@@ -27,6 +28,11 @@ public class QuinzicalSwitch extends SwitcherBase {
 
 		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
+
+		// add home/menu shortcut
+		KeyboardShortcuts.addKeyboardShortcut(ev -> {
+			_model.backToMainMenu();
+		}, KeyboardShortcuts.HOME);
 	}
 
 	private void onModelStateChange() {
