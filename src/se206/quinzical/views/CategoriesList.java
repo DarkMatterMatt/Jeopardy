@@ -12,7 +12,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.Category;
+import se206.quinzical.models.PracticeModel;
 import se206.quinzical.models.QuizModel;
+import se206.quinzical.models.util.KeyboardShortcuts;
+
+import java.util.List;
 
 /**
  * This class is Pane type.
@@ -93,6 +97,56 @@ public class CategoriesList extends ViewBase {
 
 		_container.getStyleClass().add("categories-list");
 		addStylesheet("category-listview.css");
+
+		// move up/down categories by using arrow keys
+		KeyboardShortcuts.addKeyboardShortcut(ev -> {
+			if (!isActive()) return;
+
+			List<Category> categories = _model.getCategories();
+			for (int i = categories.size() - 1; i > 0; i--) {
+				if (categories.get(i).isSelected()) {
+					categories.get(i).setUnselected();
+					categories.get(i - 1).setSelected();
+					_listView.scrollTo(i - 1);
+					_listView.refresh();
+					_model.selectCategory(categories.get(i - 1));
+					break;
+				}
+			}
+		}, KeyboardShortcuts.LIST_MOVE_UP_ONE_ITEM);
+		KeyboardShortcuts.addKeyboardShortcut(ev -> {
+			if (!isActive()) return;
+
+			List<Category> categories = _model.getCategories();
+			for (int i = 0; i < categories.size() - 1; i++) {
+				if (categories.get(i).isSelected()) {
+					categories.get(i).setUnselected();
+					categories.get(i + 1).setSelected();
+					_listView.scrollTo(i + 1);
+					_listView.refresh();
+					_model.selectCategory(categories.get(i + 1));
+					break;
+				}
+			}
+		}, KeyboardShortcuts.LIST_MOVE_DOWN_ONE_ITEM);
+	}
+
+	/**
+	 * Returns true when this view is shown
+	 */
+	public boolean isActive() {
+		if (!_model.isActive()) return false;
+
+		switch (_model.getState()) {
+			case SELECT_CATEGORY:
+			case CATEGORY_PREVIEW:
+				return true;
+			case ANSWER_QUESTION:
+			case RETRY_INCORRECT_ANSWER:
+				return (_model instanceof PracticeModel);
+			default:
+				return false;
+		}
 	}
 
 	public Parent getView() {
