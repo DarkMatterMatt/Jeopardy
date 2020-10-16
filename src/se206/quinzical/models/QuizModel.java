@@ -44,6 +44,11 @@ public abstract class QuizModel implements GsonPostProcessable {
 	 * Return to category selection
 	 */
 	public void finishQuestion() {
+		if (this.currentStateIsInternationalSection()) {
+			setState(State.SELECT_CATEGORY);
+			return;
+		}
+
 		if (getState() != State.CORRECT_ANSWER && getState() != State.INCORRECT_ANSWER && getState() != State.SKIP_ANSWER) {
 			throw new IllegalStateException("Can only reset when in the CORRECT_ANSWER, INCORRECT_ANSWER or SKIP_ANSWER state");
 		}
