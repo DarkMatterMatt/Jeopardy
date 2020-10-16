@@ -29,6 +29,11 @@ public abstract class QuizModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Returns true if this model is being modified by the user
+	 */
+	public abstract boolean isActive();
+
+	/**
 	 * Submit an answer for the current question
 	 */
 	public abstract void answerQuestion(String answer);

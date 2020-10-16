@@ -26,6 +26,14 @@ public class PresetQuinzicalModel extends QuizModel {
 	}
 
 	/**
+	 * Returns true if this model is being modified by the user
+	 */
+	@Override
+	public boolean isActive() {
+		return _model.getState() == QuinzicalModel.State.GAME;
+	}
+
+	/**
 	 * Check if the given answer is correct & change to appropriate state.
 	 */
 	@Override

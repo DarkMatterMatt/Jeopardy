@@ -20,6 +20,14 @@ public class PracticeModel extends QuizModel {
 	}
 
 	/**
+	 * Returns true if this model is being modified by the user
+	 */
+	@Override
+	public boolean isActive() {
+		return _model.getState() == QuinzicalModel.State.PRACTICE;
+	}
+
+	/**
 	 * Check if the given answer by the user is correct & make appropriate state changes.
 	 */
 	@Override
