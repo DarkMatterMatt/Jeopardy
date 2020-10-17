@@ -239,7 +239,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 				// make category out of that
 				if (newCategory.getName().equals(INTERNATIONAL)) {
 					_internationalCategory = newCategory;
-				} else {
+				} else if (newCategory.getQuestions().size() > 0) {
 					_categories.add(newCategory);
 				}
 			}
@@ -307,7 +307,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 		_textEnabled.set(!_textEnabled.get());
 		save();
 	}
-	
+
 	/**
 	 * Reduce the number of lives for international section
 	 */
@@ -322,7 +322,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	public int getMaxLives() {
 		return MAXIMUM_LIVES;
 	}
-	
+
 	/**
 	 * reset lives
 	 */
