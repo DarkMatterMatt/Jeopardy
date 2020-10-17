@@ -32,15 +32,21 @@ public class PracticeModel extends QuizModel {
 	 */
 	@Override
 	public void answerQuestion(String answer) {
+		if (_model.getPracticeModel().currentStateIsInternationalSection()) {
+			handleInternationalQuestion(answer);
+			return;
+		}
 		if (getState() != State.ANSWER_QUESTION && getState() != State.RETRY_INCORRECT_ANSWER) {
-			throw new IllegalStateException("Previous state should be ANSWER_QUESTION or RETRY_INCORRECT_ANSWER, found " + getState());
+			throw new IllegalStateException(
+					"Previous state should be ANSWER_QUESTION or RETRY_INCORRECT_ANSWER, found " + getState());
 		}
 		boolean correct = getCurrentQuestion().checkAnswer(answer);
 
 		// count number of attempts
 		Question q = getCurrentQuestion();
 		// increase number of attempt for that question
-		if (!correct) q.setNumAttempted(q.getNumAttempted() + 1);
+		if (!correct)
+			q.setNumAttempted(q.getNumAttempted() + 1);
 
 		// if that question has been answered 3 times, reset that question
 		// and change the active question to different random question
@@ -63,6 +69,28 @@ public class PracticeModel extends QuizModel {
 		// incorrect, answered less than 3 times, let the user retry
 		setState(State.RETRY_INCORRECT_ANSWER);
 		setState(State.ANSWER_QUESTION);
+	}
+
+	private void handleInternationalQuestion(String answer) {
+		Question q = this.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule();
+		boolean correct = q.checkAnswer(answer);
+
+		// if correct, leave the number of lives, increase score
+		if (!correct)
+			_model.reduceLives();
+		if (correct)
+			_model.increaseInternationalScore();
+
+		// TODO:if the lives are depleted, switch scene to game over
+		// TODO:register highscore, reset score
+
+		// change the question
+		_model.getInternationalCategory()
+				.setActiveQuestionInPracticeModule(_model.getInternationalCategory().getRandomQuestion());
+
+		// change to correct/incorrect answer screen
+		setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
+
 	}
 
 	/**
