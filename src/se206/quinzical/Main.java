@@ -3,6 +3,7 @@ package se206.quinzical;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import se206.quinzical.models.QuinzicalModel;
@@ -42,7 +43,7 @@ public class Main extends Application {
 
         // KeyEventManager handles key presses, allows anyone to listen to events
         KeyEventManager keyEventManager = KeyEventManager.getInstance();
-        scene.setOnKeyPressed(keyEventManager::onKeyPress);
-        scene.setOnKeyReleased(keyEventManager::onKeyRelease);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEventManager::onKeyPress);
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, keyEventManager::onKeyRelease);
     }
 }
