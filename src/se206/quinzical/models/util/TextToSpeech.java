@@ -74,7 +74,8 @@ public class TextToSpeech {
 		// kill any existing speaking
 		Process oldP = _activeTTS.getAndSet(p);
 		if (oldP != null) {
-			oldP.descendants().filter(ProcessHandle::isAlive).forEach(ProcessHandle::destroy);
+			oldP.descendants().forEach(ProcessHandle::destroy);
+			oldP.destroy();
 		}
 
 		try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()))) {
@@ -88,10 +89,6 @@ public class TextToSpeech {
 
 			// speak!
 			bw.write("(SayText \"" + words.replace("\"", "") + "\")");
-			bw.newLine();
-
-			// exit after finished speaking
-			bw.write("(quit)");
 			bw.newLine();
 		}
 		catch (IOException e) {
