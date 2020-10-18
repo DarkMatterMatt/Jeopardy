@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import se206.quinzical.DragAndResizeHelper;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.models.util.TextToSpeech;
 
 /**
  * AlertFactory puts alert screen on a separate window.
@@ -38,7 +39,10 @@ public class AlertFactory {
 		Stage diaStage = (Stage) dialogue.getScene().getWindow();
 		diaStage.initStyle(StageStyle.UNDECORATED);
 		DragAndResizeHelper.addResizeListener(diaStage);
-		exitAlert.showAndWait().filter(res -> res == yes).ifPresent(res -> Platform.exit());
+		exitAlert.showAndWait().filter(res -> res == yes).ifPresent(res -> {
+			TextToSpeech.getInstance().cancel();
+			Platform.exit();
+		});
 	}
 
 	/**
@@ -62,6 +66,9 @@ public class AlertFactory {
 		Stage diaStage = (Stage) dialogue.getScene().getWindow();
 		diaStage.initStyle(StageStyle.UNDECORATED);
 		DragAndResizeHelper.addResizeListener(diaStage);
-		resetAlert.showAndWait().filter(res -> res == yes).ifPresent(res -> model.reset());
+		resetAlert.showAndWait().filter(res -> res == yes).ifPresent(res -> {
+			TextToSpeech.getInstance().cancel();
+			model.reset();
+		});
 	}
 }

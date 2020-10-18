@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.models.util.TextToSpeech;
 
 /**
  * This is Atom type.
@@ -40,7 +41,10 @@ public class Taskbar extends ViewBase {
 
 		// home button view
 		ImageView home = createButton("/se206/quinzical/assets/home.png");
-		home.setOnMouseClicked(e -> model.backToMainMenu());
+		home.setOnMouseClicked(e -> {
+			TextToSpeech.getInstance().cancel();
+			model.backToMainMenu();
+		});
 		Tooltip.install(home, new Tooltip("Main Menu"));
 
 		// text and notext icons
