@@ -10,8 +10,32 @@ import java.util.function.Consumer;
  * Class that deals with text to speech stuff using espeak and festival
  */
 public class TextToSpeech {
+	private static final TextToSpeech _instance = new TextToSpeech();
 	private transient final AtomicReference<Process> _activeTTS = new AtomicReference<>();
 	private double _speedMultiplier = 1;
+
+	private TextToSpeech() {
+	}
+
+	/**
+	 * Returns the global TextToSpeech instance
+	 * <p>
+	 * This should only be stored in `transient` fields to avoid being persisted when the parent class is serialized
+	 */
+	public static TextToSpeech getInstance() {
+		return _instance;
+	}
+
+	/**
+	 * Immediately stop text to speech
+	 */
+	public void cancel() {
+		Process oldP = _activeTTS.get();
+		if (oldP != null) {
+			oldP.descendants().forEach(ProcessHandle::destroy);
+			oldP.destroy();
+		}
+	}
 
 	private Process executeInBackground(String... cmd) {
 		try {
@@ -39,6 +63,12 @@ public class TextToSpeech {
 		speak(words, null);
 	}
 
+	/**
+	 * Speak words using the default text to speech engine
+	 *
+	 * @param words    words to speak
+	 * @param callback consumer to execute when speech is complete
+	 */
 	public void speak(String words, Consumer<Process> callback) {
 		speakFestival(words, callback);
 	}
@@ -62,6 +92,12 @@ public class TextToSpeech {
 		speakFestival(words, null);
 	}
 
+	/**
+	 * Speak words using the festival text to speech engine
+	 *
+	 * @param words    words to speak
+	 * @param callback consumer to execute when speech is complete
+	 */
 	public void speakFestival(String words, Consumer<Process> callback) {
 		Process p;
 		try {

@@ -48,7 +48,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
-	private final TextToSpeech _textToSpeech = new TextToSpeech();
+	private transient final TextToSpeech _textToSpeech = TextToSpeech.getInstance();
 	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
 	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
 	public static final String INTERNATIONAL = "INTERNATIONAL";
