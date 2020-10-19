@@ -21,6 +21,7 @@ public class GameSwitch extends SwitcherBase {
 	private final PresetQuinzicalModel _presetModel;
 	private final HBox _questionSelectContainer = new HBox();
 	private final SkipPane _skipPane;
+	private final HBox _pregameCategorySelection = new HBox();
 
 	public GameSwitch(QuinzicalModel model) {
 		_model = model;
@@ -33,12 +34,14 @@ public class GameSwitch extends SwitcherBase {
 		_skipPane = new SkipPane(_presetModel);
 		_gameOverPane = new GameOverPane(_presetModel);
 		generateSelectionContainerContents();
+		generateGameModeInitialScreen();
 
 		// add styles
 		addStylesheet("game.css");
 		getView().getStyleClass().add("game");
 		getView().getChildren().addAll(_questionSelectContainer, _answerQuestion.getView(),
-				_correctPane.getView(), _incorrectPane.getView(), _skipPane.getView(), _gameOverPane.getView());
+				_correctPane.getView(), _incorrectPane.getView(), _skipPane.getView(), _gameOverPane.getView(),
+				_pregameCategorySelection);
 
 		// listen for state changes
 		onModelStateChange();
@@ -58,6 +61,11 @@ public class GameSwitch extends SwitcherBase {
 		_questionSelectContainer.getChildren().addAll(categoriesListPane.getView(), categoryPreviewContainer);
 	}
 
+	private void generateGameModeInitialScreen() {
+		_pregameCategorySelection.getChildren().addAll(new CategoriesListMultipleSelectionPane(_presetModel).getView(),
+				new CategorySelectionPane().getView());
+	}
+
 	private void onModelStateChange() {
 		switch (_presetModel.getState()) {
 			case RESET:
@@ -66,7 +74,11 @@ public class GameSwitch extends SwitcherBase {
 				break;
 			case SELECT_CATEGORY:
 			case CATEGORY_PREVIEW:
-				switchToView(_questionSelectContainer);
+				if (_presetModel.needToBeInitialised()) {
+					switchToView(_pregameCategorySelection);
+				} else {
+					switchToView(_questionSelectContainer);
+				}
 				break;
 			case INCORRECT_ANSWER:
 				switchToView(_incorrectPane.getView());
