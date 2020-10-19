@@ -104,7 +104,9 @@ public class TextToSpeech {
 			p = new ProcessBuilder("festival").start();
 		}
 		catch (IOException e) {
-			callback.accept(null);
+			if (callback != null) {
+				callback.accept(null);
+			}
 			return;
 		}
 
