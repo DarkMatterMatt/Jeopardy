@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
+import se206.quinzical.models.util.TextToSpeech;
 
 /**
  * This is a Pane type.
@@ -69,5 +70,6 @@ public class CorrectPane extends ViewBase {
 		}
 		// container was made visible
 		_progressBarView.start();
+		TextToSpeech.getInstance().speak("Correct");
 	}
 }
