@@ -1,12 +1,12 @@
 package se206.quinzical.models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import se206.quinzical.models.util.RandomNumberGenerator;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import se206.quinzical.models.util.RandomNumberGenerator;
 
 /**
  * PresetQuinzicalModel contains categories, questions, score & other game info for the main mode.
@@ -19,9 +19,11 @@ public class PresetQuinzicalModel extends QuizModel {
 	private static final int QUESTIONS_PER_CATEGORY = 5;
 	private final List<Category> _categories = new ArrayList<>();
 	private final IntegerProperty _score = new SimpleIntegerProperty();
+	private boolean _toBeInitialised;
 
 	public PresetQuinzicalModel(QuinzicalModel model) {
 		super(model);
+		_toBeInitialised = true;
 		loadQuestions();
 	}
 
@@ -181,5 +183,13 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 		getCurrentQuestion().skipQuestion();
 		setState(State.SKIP_ANSWER);
+	}
+
+	/**
+	 * returns whether the categories need to be initialised (5 categories selection
+	 */
+	public boolean needToBeInitialised() {
+		System.out.println(_toBeInitialised);
+		return _toBeInitialised;
 	}
 }
