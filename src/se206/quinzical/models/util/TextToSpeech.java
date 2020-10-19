@@ -96,7 +96,7 @@ public class TextToSpeech {
 	 * Speak words using the festival text to speech engine
 	 *
 	 * @param words    words to speak
-	 * @param callback consumer to execute when speech is complete
+	 * @param callback consumer to execute when speech is complete. Process is null when speech execution fails
 	 */
 	public void speakFestival(String words, Consumer<Process> callback) {
 		Process p;
@@ -104,6 +104,7 @@ public class TextToSpeech {
 			p = new ProcessBuilder("festival").start();
 		}
 		catch (IOException e) {
+			callback.accept(null);
 			return;
 		}
 
