@@ -149,12 +149,14 @@ public class AnswerPane extends ViewBase {
 		setHintVisible(false);
 		clearInput();
 		focusInput();
+		_timer.stop();
 
 		if (q == null) {
 			_categoryLabel.setText("Welp");
 			_questionLabel.setText("There is no available question in this category");
 			_answerInputView.getView().setVisible(false);
 			_repeatIcon.getView().setVisible(false);
+			_timer.getView().setVisible(false);
 			_model.skinCategoryImage(_iconView, "icon-missing.png");
 			return;
 		}
@@ -177,6 +179,7 @@ public class AnswerPane extends ViewBase {
 		_categoryLabel.setText(categoryName);
 		_answerInputView.getView().setVisible(true);
 		_repeatIcon.getView().setVisible(true);
+		_timer.getView().setVisible(!_isPracticeMode);
 		_questionLabel.setText(question);
 		_hintText.setText("Hint: the answer starts with letter " + q.getAnswer().get(0).charAt(0));
 	}
