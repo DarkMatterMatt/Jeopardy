@@ -54,6 +54,9 @@ public class HeaderPane extends ViewBase {
 			case INTERNATIONAL:
 				_subtitleLabel.setText("International section");
 				break;
+			case LEADERBOARD:
+				_subtitleLabel.setText("Leaderboard");
+				break;
 			case MENU:
 				break;
 			default:

@@ -57,7 +57,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final IntegerProperty _lives = new SimpleIntegerProperty(MAXIMUM_LIVES);
 	private final IntegerProperty _currentInternationalScore = new SimpleIntegerProperty(0);
 	private final IntegerProperty _InternationalHighScore = new SimpleIntegerProperty(0);
-
+	private final LeaderboardModel _leaderboardModel = new LeaderboardModel();
 
 	public QuinzicalModel() {
 		this(null);
@@ -120,6 +120,13 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Display the leaderboard containing 'real' game scores
+	 */
+	public void showLeaderboard() {
+		_state.set(State.LEADERBOARD);
+	}
+
+	/**
 	 * Changes to the 'real' game state
 	 */
 	public void beginGame() {
@@ -153,6 +160,13 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	public PresetQuinzicalModel getPresetModel() {
 		return _presetModel;
+	}
+
+	/**
+	 * Return the leaderboard model (scores for main module)
+	 */
+	public LeaderboardModel getLeaderboardModel() {
+		return _leaderboardModel;
 	}
 
 	/**
@@ -356,6 +370,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 		GAME,
 		PRACTICE,
 		INTERNATIONAL,
+		LEADERBOARD,
 	}
 
 	/**
