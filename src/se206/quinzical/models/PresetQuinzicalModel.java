@@ -15,11 +15,13 @@ import se206.quinzical.models.util.RandomNumberGenerator;
  */
 public class PresetQuinzicalModel extends QuizModel {
 	private static final int CATEGORIES_PER_GAME = 5;
+	private static final int MAX_PREGAME_CATEGORY_SELECTION = 5;
 	private static final double INCORRECT_SCORE_MULTIPLIER = 0.5;
 	private static final int QUESTIONS_PER_CATEGORY = 5;
 	private final List<Category> _categories = new ArrayList<>();
 	private final IntegerProperty _score = new SimpleIntegerProperty();
 	private boolean _toBeInitialised;
+	private IntegerProperty _pregameUpdate;
 
 	public PresetQuinzicalModel(QuinzicalModel model) {
 		super(model);
@@ -191,5 +193,53 @@ public class PresetQuinzicalModel extends QuizModel {
 	public boolean needToBeInitialised() {
 		System.out.println(_toBeInitialised);
 		return _toBeInitialised;
+	}
+
+	/**
+	 * return those categories that are selected for pregame
+	 */
+	public List<Category> getPregameSelectedCategories() {
+		List<Category> fullCategories = _model.getCategories();
+		List<Category> result = new ArrayList<Category>();
+		for (Category c : fullCategories) {
+			if (c.isPregameSelected()) {
+				result.add(c);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * check if current pregame selection exceeds selection of 5 categories if on 5
+	 */
+	public boolean pregameCategorySelectionLimitReached() {
+		List<Category> fullCategories = _model.getCategories();
+		int count = 0;
+		for (Category c : fullCategories) {
+			if (c.isPregameSelected()) {
+				count++;
+			}
+			if (count >= MAX_PREGAME_CATEGORY_SELECTION) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * integer property for notifying user about the change in pregame category
+	 */
+	public IntegerProperty getPregameUpdateProperty() {
+		if (_pregameUpdate == null) {
+			_pregameUpdate = new SimpleIntegerProperty();
+		}
+		return _pregameUpdate;
+	}
+
+	/**
+	 * notify pregame category is updated
+	 */
+	public void notifyPregameCategoryUpdated() {
+		_pregameUpdate.set(_pregameUpdate.get() + 1);
 	}
 }
