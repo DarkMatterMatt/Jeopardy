@@ -55,5 +55,7 @@ public class GameOverPane extends ViewBase {
 			_titleLabel.setText("Welp.");
 			_subtitleLabel.setText("I guess there's a first time for everything.\nYou managed to get every question wrong!");
 		}
+
+		_model.getModel().getLeaderboardModel().addScore(_model.getScore(), "TEMPORARY_NAME");
 	}
 }
