@@ -168,6 +168,12 @@ public abstract class QuizModel implements GsonPostProcessable {
 	public void skinCategoryImage(Icon icon, String categoryName) {
 		if (categoryName.equals("icon-missing.png")) {
 			icon.setImage("/se206/quinzical/assets/icon-missing.png");
+			return;
+		}
+
+		if (categoryName.equals("toBeFilledIcon.png")) {
+			icon.setImage("/se206/quinzical/assets/toBeFilledIcon.png");
+			return;
 		}
 
 		if (categoryName.equals(QuinzicalModel.INTERNATIONAL)) {
