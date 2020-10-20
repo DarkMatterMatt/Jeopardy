@@ -62,8 +62,8 @@ public class GameSwitch extends SwitcherBase {
 	}
 
 	private void generateGameModeInitialScreen() {
-		_pregameCategorySelection.getChildren().addAll(new CategoriesListMultipleSelectionPane(_presetModel).getView(),
-				new CategorySelectionPane().getView());
+		_pregameCategorySelection.getChildren().addAll(new CategoriesListMultipleSelectionPane(_model).getView(),
+				new CategorySelectionPane(_model).getView());
 	}
 
 	private void onModelStateChange() {
