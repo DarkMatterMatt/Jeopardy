@@ -5,12 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.Category;
-import se206.quinzical.models.QuizModel;
+import se206.quinzical.models.QuinzicalModel;
 
 /**
  * TODO: change this javadoc. This class is Pane type. It lists possible
@@ -22,10 +23,10 @@ import se206.quinzical.models.QuizModel;
 public class CategoriesListMultipleSelectionPane extends ViewBase {
 	private final VBox _container;
 	private final ListView<Category> _listView;
-	private final QuizModel _model;
+	private final QuinzicalModel _model;
 	private final HBox _textBox;
 
-	public CategoriesListMultipleSelectionPane(QuizModel model) {
+	public CategoriesListMultipleSelectionPane(QuinzicalModel model) {
 		_model = model;
 
 		// set up the top header box
@@ -43,8 +44,8 @@ public class CategoriesListMultipleSelectionPane extends ViewBase {
 		_listView.setMinWidth(300);
 
 		// avoid non-selection thin blue box by preemptively selecting one cell
-		_listView.getSelectionModel().select(0);
 		_listView.getFocusModel().focus(0);
+		_listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		_listView.setCellFactory((ListView<Category> param) -> {
 			ListCell<Category> cell = new ListCell<Category>() {
@@ -74,18 +75,21 @@ public class CategoriesListMultipleSelectionPane extends ViewBase {
 
 					if (item.isSelected()) {
 						item.setUnselected();
+						_listView.getSelectionModel().select(item);
 					} else {
 						item.setSelected();
+						_listView.getSelectionModel().clearSelection(cell.getIndex());
 					}
 
 					_listView.refresh();
-					_model.selectCategory(item);
+
 
 				}
 			});
 			return cell;
 
 		});
+
 
 		// style
 		topText.getStyleClass().addAll("text-large", "text-bold", "text-gold");
