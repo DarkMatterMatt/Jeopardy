@@ -8,6 +8,7 @@ import javafx.scene.text.TextFlow;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
+import se206.quinzical.models.util.TextToSpeech;
 
 import java.util.List;
 
@@ -87,6 +88,9 @@ public class IncorrectPane extends ViewBase {
 	 */
 	private void questionUpdate(Question q) {
 		if (q != null) {
+			// speak correct answer
+			TextToSpeech.getInstance().speak("Incorrect. The correct answer was " + q.getAnswer());
+
 			List<Node> children = _answerTextFlow.getChildren();
 			children.clear();
 			children.add(createTextNode("The correct answer was ", "text-white"));

@@ -30,3 +30,17 @@
 .answer .hint-text {
     -fx-padding: 4 0 0 0;
 }
+
+.answer .progress-bar {
+    -fx-padding: 12 0 0 0;
+    -fx-pref-height: 24;
+    -fx-max-width: 480;
+}
+
+.answer .animated-progress-bar > .track {
+    -fx-background-color: linear-gradient(from 25% 50% to 90% 50%, -c-green, -c-red);
+}
+
+.answer .animated-progress-bar > .bar {
+    -fx-background-color: -c-grey-01;
+}

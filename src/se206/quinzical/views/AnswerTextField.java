@@ -85,7 +85,7 @@ public class AnswerTextField extends ViewBase {
 		return _container;
 	}
 
-	private void submit() {
+	public void submit() {
 		TextToSpeech.getInstance().cancel();
 		_model.answerQuestion(_answerInput.getText());
 	}

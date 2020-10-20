@@ -6,6 +6,7 @@ import javafx.scene.text.TextFlow;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
+import se206.quinzical.models.util.TextToSpeech;
 
 /**
  * This class is Pane type, and contains AnimatedProgressBar atom.
@@ -87,6 +88,9 @@ public class SkipPane extends ViewBase {
 	 */
 	private void questionUpdate(Question q) {
 		if (q != null) {
+			// speak correct answer
+			TextToSpeech.getInstance().speak("Skipped. The correct answer was " + q.getAnswer());
+
 			_answerLabel.getChildren().clear();
 
 			q.getAnswer().forEach(a -> {
