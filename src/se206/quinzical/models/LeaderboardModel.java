@@ -7,7 +7,6 @@ import java.util.Collections;
 
 public class LeaderboardModel {
 	private final ObservableList<Entry> sortedScores = FXCollections.observableArrayList();
-	private final ObservableList<Entry> sortedScoresReadOnly = FXCollections.unmodifiableObservableList(sortedScores);
 
 	public void addScore(int score, String name) {
 		sortedScores.add(new Entry(score, name));
@@ -15,7 +14,7 @@ public class LeaderboardModel {
 	}
 
 	public ObservableList<Entry> getSortedScores() {
-		return sortedScoresReadOnly;
+		return sortedScores;
 	}
 
 	public static class Entry implements Comparable<Entry> {

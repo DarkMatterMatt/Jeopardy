@@ -21,7 +21,7 @@ public class QuizContentSwitch extends SwitcherBase {
 		_internationalView = new InternationalSwitch(_model);
 		_leaderboardPane = new LeaderboardPane(_model.getLeaderboardModel());
 
-		getView().getChildren().addAll(_gameView.getView(), _practiceView.getView(), _internationalView.getView());
+		getView().getChildren().addAll(_gameView.getView(), _practiceView.getView(), _internationalView.getView(), _leaderboardPane.getView());
 
 		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
