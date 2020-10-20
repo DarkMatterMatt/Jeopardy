@@ -1,12 +1,12 @@
 package se206.quinzical.models;
 
-import se206.quinzical.models.util.GsonPostProcessable;
-import se206.quinzical.models.util.RandomNumberGenerator;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import se206.quinzical.models.util.GsonPostProcessable;
+import se206.quinzical.models.util.RandomNumberGenerator;
 
 /**
  * Category class stores information about one category.
@@ -17,6 +17,7 @@ public class Category implements GsonPostProcessable {
 	private int _activeQuestion = 0;
 	private int _activeQuestionInPracticeModule = -1;
 	private boolean _isSelected = false;
+	private boolean _isPregameSelected = false;
 
 	/**
 	 * Constructor that makes an empty Category
@@ -126,6 +127,13 @@ public class Category implements GsonPostProcessable {
 	}
 
 	/**
+	 * Check if this category is selected by the user for pregame
+	 */
+	public boolean isPregameSelected() {
+		return _isPregameSelected;
+	}
+
+	/**
 	 * Set active question to the next question in the list
 	 */
 	public void moveToNextQuestion() {
@@ -160,4 +168,21 @@ public class Category implements GsonPostProcessable {
 	public void setUnselected() {
 		_isSelected = false;
 	}
+
+	/**
+	 * Set the selected state to be true (when clicked in pregame category
+	 * selection)
+	 */
+	public void setPregameSelected() {
+		_isPregameSelected = true;
+	}
+
+	/**
+	 * Set the selected state to be false (when clicked in pregame category
+	 * selection)
+	 */
+	public void setPregameUnselected() {
+		_isPregameSelected = false;
+	}
+
 }
