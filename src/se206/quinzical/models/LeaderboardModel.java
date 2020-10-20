@@ -1,25 +1,27 @@
 package se206.quinzical.models;
 
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.Collections;
-import java.util.List;
 
 public class LeaderboardModel {
-	private final List<Entry> sortedScores = new ArrayList<>();
+	private final ObservableList<Entry> sortedScores = FXCollections.observableArrayList();
+	private final ObservableList<Entry> sortedScoresReadOnly = FXCollections.unmodifiableObservableList(sortedScores);
 
 	public void addScore(int score, String name) {
 		sortedScores.add(new Entry(score, name));
 		Collections.sort(sortedScores);
 	}
 
-	public List<Entry> getSortedScores() {
-		return Collections.unmodifiableList(sortedScores);
+	public ObservableList<Entry> getSortedScores() {
+		return sortedScoresReadOnly;
 	}
 
-	private static class Entry implements Comparable<Entry> {
-		private final long createdAt;
-		private final String name;
-		private final int score;
+	public static class Entry implements Comparable<Entry> {
+		public final long createdAt;
+		public final String name;
+		public final int score;
 
 		public Entry(int score, String name) {
 			this.score = score;
