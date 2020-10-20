@@ -58,7 +58,7 @@ public class CategoriesListMultipleSelectionPane extends ViewBase {
 					}
 					else {
 						HBox displayedItem = new CategoriesListItemView(item).getView();
-						if (item.isSelected()) {
+						if (item.isPregameSelected()) {
 							displayedItem.getStyleClass().addAll("text-bold", "category", "selected");
 						}
 						else {
@@ -73,17 +73,15 @@ public class CategoriesListMultipleSelectionPane extends ViewBase {
 				if (event.getButton() == MouseButton.PRIMARY && (!cell.isEmpty())) {
 					Category item = cell.getItem();
 
-					if (item.isSelected()) {
-						item.setUnselected();
-						_listView.getSelectionModel().select(item);
+					if (item.isPregameSelected()) {
+						item.setPregameUnselected();
 					} else {
-						item.setSelected();
-						_listView.getSelectionModel().clearSelection(cell.getIndex());
+						if (!_model.getPresetModel().pregameCategorySelectionLimitReached()) {
+							item.setPregameSelected();
+						}
 					}
-
+					_model.getPresetModel().notifyPregameCategoryUpdated();
 					_listView.refresh();
-
-
 				}
 			});
 			return cell;
