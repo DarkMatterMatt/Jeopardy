@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import se206.quinzical.models.util.RandomNumberGenerator;
 
@@ -20,12 +22,12 @@ public class PresetQuinzicalModel extends QuizModel {
 	private static final int QUESTIONS_PER_CATEGORY = 5;
 	private final List<Category> _categories = new ArrayList<>();
 	private final IntegerProperty _score = new SimpleIntegerProperty();
-	private boolean _toBeInitialised;
+	private BooleanProperty _toBeInitialised = new SimpleBooleanProperty();
 	private IntegerProperty _pregameUpdate;
 
 	public PresetQuinzicalModel(QuinzicalModel model) {
 		super(model);
-		_toBeInitialised = true;
+		_toBeInitialised.set(true);
 		loadQuestions();
 	}
 
@@ -127,13 +129,18 @@ public class PresetQuinzicalModel extends QuizModel {
 	}
 
 	/**
-	 * Select 5 categories, each containing random 5 questions.
+	 * Select 5 categories, each containing random 5 questions. This is fed in from
+	 * pregame category selection (refer to
+	 * {@link se206.quinzical.views.PregameCategoriesListPane},
+	 * {@link se206.quinzical.views.PregameCategoryIconsPreviewPane})
 	 */
 	private void loadQuestions() {
 		_categories.clear();
 
-		// pick the five categories that will be used for this game
-		List<Category> fullCategories = RandomNumberGenerator.getNRandom(_model.getCategories(), CATEGORIES_PER_GAME);
+		// get the five categories that will be used for this game
+		List<Category> fullCategories = getPregameSelectedCategories();
+		// the selection is reset
+		resetPregameSelectedCategories();
 
 		for (Category fullCategory : fullCategories) {
 			// this new category will have a copy of each of the questions, with the value set
@@ -153,10 +160,13 @@ public class PresetQuinzicalModel extends QuizModel {
 		}
 	}
 
+
 	/**
 	 * This is triggered when user resets the game.
 	 */
 	public void reset() {
+		this.setNeedToBeInitialised();
+		this.resetPregameSelectedCategories();
 		setScore(0);
 
 		// randomly select another set of categories/questions
@@ -191,7 +201,7 @@ public class PresetQuinzicalModel extends QuizModel {
 	 * returns whether the categories need to be initialised (5 categories selection
 	 */
 	public boolean checkNeedToBeInitialised() {
-		return _toBeInitialised;
+		return _toBeInitialised.get();
 	}
 	
 	/**
@@ -199,7 +209,8 @@ public class PresetQuinzicalModel extends QuizModel {
 	 * category selection is required
 	 */
 	public void setHasBeenInitialised() {
-		_toBeInitialised = false;
+		loadQuestions();
+		_toBeInitialised.set(false);
 	}
 	
 	/**
@@ -207,7 +218,14 @@ public class PresetQuinzicalModel extends QuizModel {
 	 * category selection is required
 	 */
 	public void setNeedToBeInitialised() {
-		_toBeInitialised = true;
+		_toBeInitialised.set(true);
+	}
+
+	/**
+	 * returns toBeInitialised property that a caller can set itself a listener to
+	 */
+	public BooleanProperty getToBeInitialisedProperty() {
+		return _toBeInitialised;
 	}
 
 	/**
@@ -222,6 +240,16 @@ public class PresetQuinzicalModel extends QuizModel {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * reset all the category selection for pregame
+	 */
+	private void resetPregameSelectedCategories() {
+		List<Category> fullCategories = _model.getCategories();
+		for (Category c : fullCategories) {
+			c.setPregameUnselected();
+		}
 	}
 
 	/**
@@ -257,4 +285,5 @@ public class PresetQuinzicalModel extends QuizModel {
 	public void notifyPregameCategoryUpdated() {
 		_pregameUpdate.set(_pregameUpdate.get() + 1);
 	}
+
 }
