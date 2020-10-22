@@ -3,6 +3,8 @@ package se206.quinzical.models;
 import java.util.Collections;
 import java.util.List;
 
+import se206.quinzical.views.AlertFactory;
+
 /**
  * PracticeModel is the QuizModel for practice module. (used by PracticeSwitch).
  * In addition to the role of QuizModel, it sets the question to be displayed
@@ -83,6 +85,25 @@ public class PracticeModel extends QuizModel {
 
 		// TODO:if the lives are depleted, switch scene to game over
 		// TODO:register highscore, reset score
+		// if lives = 1 & incorrect
+		// switch screen to game over
+		// check if the current score exceeds highscore
+		// else register score to be higher by 1
+		// if the current score is the same as highscore, then increase highscore as
+		// well
+		// turn on the flag of having exceeded highscore?
+		if (_model.getLivesProperty().get() == 1 && !correct) {
+			AlertFactory.getCustomWarning("Game over!", "Start over again");
+			// switch screen to game over
+			// check if the current score exceeds highscore
+		} else {
+			if (correct) {
+				if (_model.getInternationalHighscore() == _model.getCurrentInternationalScore()) {
+					int newScore = _model.getCurrentInternationalScore() + 1;
+					_model.setInternationalHighScore(newScore);
+				}
+				_model.increaseInternationalScore();
+			}
 
 		// change the question
 		_model.getInternationalCategory()
