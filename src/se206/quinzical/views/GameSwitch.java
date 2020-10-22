@@ -50,7 +50,7 @@ public class GameSwitch extends SwitcherBase {
 	}
 
 	private void generateSelectionContainerContents() {
-		CategoriesList categoriesListPane = new CategoriesList(_presetModel);
+		CategoriesListPane categoriesListPane = new CategoriesListPane(_presetModel);
 		CategoryPreviewPane categoryPreviewPane = new CategoryPreviewPane(_presetModel);
 
 		// categoryPreviewPane is centered inside its container
@@ -64,7 +64,7 @@ public class GameSwitch extends SwitcherBase {
 
 	private void generateGameModeInitialScreen() {
 		_pregameCategorySelection.setSpacing(25);
-		VBox multipleSelectionList = new PregameCategoriesList(_model).getView();
+		VBox multipleSelectionList = new PregameCategoriesListPane(_model).getView();
 		VBox pregameCategorySelection = new PregameCategoryIconsPreviewPane(_model).getView();
 		pregameCategorySelection.setAlignment(Pos.CENTER);
 		HBox.setHgrow(pregameCategorySelection, Priority.ALWAYS);

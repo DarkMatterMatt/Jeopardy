@@ -22,7 +22,7 @@ public class PracticeSwitch extends ViewBase {
 	public PracticeSwitch(QuinzicalModel model) {
 		_model = model;
 
-		CategoriesList list = new CategoriesList(_model.getPracticeModel());
+		CategoriesListPane list = new CategoriesListPane(_model.getPracticeModel());
 		SwitcherBase content = new PracticeSwitcher(_model.getPracticeModel());
 		// center the answer view
 		VBox listContainer = new VBox(list.getView());
