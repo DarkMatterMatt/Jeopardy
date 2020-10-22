@@ -37,7 +37,8 @@ public class LivesPane extends ViewBase {
 		updateScore();
 		updateLives();
 		// add score property
-		_model.getLivesProperty().addListener((obs,newVal,oldVal)->updateLives());
+		_model.getLivesProperty().addListener((obs, newVal, oldVal) -> updateLives());
+		_model.getScoreProperty().addListener((obs, n, o) -> updateScore());
 	}
 	
 	public void updateScore() {
