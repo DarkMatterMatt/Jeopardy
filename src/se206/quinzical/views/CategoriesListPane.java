@@ -1,5 +1,7 @@
 package se206.quinzical.views;
 
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
@@ -16,8 +18,6 @@ import se206.quinzical.models.PracticeModel;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyboardShortcuts;
 
-import java.util.List;
-
 /**
  * This class is Pane type.
  * It lists possible categories the user can select in a one-column list.
@@ -25,13 +25,13 @@ import java.util.List;
  *
  * @author hajinkim
  */
-public class CategoriesList extends ViewBase {
+public class CategoriesListPane extends ViewBase {
 	private final Pane _container;
 	private final ListView<Category> _listView;
 	private final QuizModel _model;
 	private final HBox _textBox;
 
-	public CategoriesList(QuizModel model) {
+	public CategoriesListPane(QuizModel model) {
 		_model = model;
 
 		// set up the top header box

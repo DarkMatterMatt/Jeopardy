@@ -14,19 +14,21 @@ import se206.quinzical.models.Category;
 import se206.quinzical.models.QuinzicalModel;
 
 /**
- * TODO: change this javadoc. This class is Pane type. It lists possible
- * categories the user can select in a one-column list. Each cell's string value
- * is retrieved from the list of categories from the QuinzicalModel.
- *
+ * This class is Pane type.
+ * 
+ * It lists possible categories the user can select to be included in the actual
+ * game. Multiple selection is possible. The cell's string value is retrieved
+ * from the list of categories from the QuinzicalModel.
+ * 
  * @author hajinkim
  */
-public class PregameCategoriesList extends ViewBase {
+public class PregameCategoriesListPane extends ViewBase {
 	private final VBox _container;
 	private final ListView<Category> _listView;
 	private final QuinzicalModel _model;
 	private final HBox _textBox;
 
-	public PregameCategoriesList(QuinzicalModel model) {
+	public PregameCategoriesListPane(QuinzicalModel model) {
 		_model = model;
 
 		// set up the top header box

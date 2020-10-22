@@ -9,6 +9,15 @@ import javafx.scene.layout.VBox;
 import se206.quinzical.models.Category;
 import se206.quinzical.models.QuinzicalModel;
 
+/**
+ * This class is pane type
+ * 
+ * This pane displays the icons associated with selected categories from
+ * PregameCategoriesListPane
+ * 
+ * @author hajinkim
+ *
+ */
 public class PregameCategoryIconsPreviewPane extends ViewBase {
 	private final VBox _container = new VBox();
 	private final Label _instruction = new Label();
