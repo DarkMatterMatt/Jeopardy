@@ -44,9 +44,9 @@ public class LivesPane extends ViewBase {
 		_highscoreBox.getChildren().clear();
 
 		Label highscore = new Label("High:");
-		Label hscore = new Label("10");
+		Label hscore = new Label("" + _model.getInternationalHighscore());
 		Label yourscore = new Label("You:");
-		Label yscore = new Label("5");
+		Label yscore = new Label("" + _model.getCurrentInternationalScore());
 
 		_highscoreBox.setAlignment(Pos.CENTER);
 		highscore.getStyleClass().addAll("text-white", "text-medium", "text-bold");
