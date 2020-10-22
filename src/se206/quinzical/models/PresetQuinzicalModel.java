@@ -190,6 +190,9 @@ public class PresetQuinzicalModel extends QuizModel {
 	 * Indicate to the model that question is skipped
 	 */
 	public void skipQuestion() {
+		if (_model.getState() == QuinzicalModel.State.INTERNATIONAL) {
+			return;
+		}
 		if (getState() != State.ANSWER_QUESTION) {
 			throw new IllegalStateException("Previous state should be ANSWER_QUESTION, found " + getState());
 		}
