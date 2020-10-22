@@ -20,7 +20,9 @@ import se206.quinzical.models.QuinzicalModel;
  */
 public class PregameCategoryIconsPreviewPane extends ViewBase {
 	private final VBox _container = new VBox();
+	private final VBox _iconsBox = new VBox();
 	private final Label _instruction = new Label();
+	private final HBox _submitButton = new HBox();
 	private final HBox _topRow = new HBox();
 	private final HBox _botRow = new HBox();
 	private final QuinzicalModel _model;
@@ -32,9 +34,32 @@ public class PregameCategoryIconsPreviewPane extends ViewBase {
 		_botRow.setAlignment(Pos.CENTER);
 		_topRow.setSpacing(10);
 		_botRow.setSpacing(10);
-		_container.setSpacing(10);
-		_container.setAlignment(Pos.CENTER);
-		_container.getChildren().addAll(_topRow, _botRow);
+		_iconsBox.setSpacing(10);
+		_iconsBox.getChildren().addAll(_topRow, _botRow);
+
+		_instruction.setText("Choose five categories of your taste :3");
+		_instruction.getStyleClass().addAll("text-white", "text-bold");
+
+
+		Icon icon = new Icon("/se206/quinzical/assets/submitButton.png");
+		icon.setSize(75, 75);
+		_submitButton.getChildren().add(icon.getView());
+		icon.getView().setOnMouseClicked(e -> {
+			if (model.getPresetModel().pregameCategorySelectionLimitReached()) {
+				// (to be initialised is false)
+				// gameswitch should change to the game mode screen
+				// all the selected categories should pipeline to the game mode
+				// (different class) when reset is pressed, toBeInitialised should be set to
+				// true
+			} else {
+				AlertFactory.getCustomWarning("Friendly reminder", "Select 5 categories to proceed!");
+			}
+		});
+
+		_container.getChildren().addAll(_instruction, _iconsBox, icon.getView());
+		_container.setSpacing(30);
+		_container.setAlignment(Pos.CENTER_RIGHT);
+
 
 		onPregameCategoryChange();
 		_model.getPresetModel().getPregameUpdateProperty().addListener((o, n, v) -> onPregameCategoryChange());
@@ -48,6 +73,7 @@ public class PregameCategoryIconsPreviewPane extends ViewBase {
 		// TODO Auto-generated method stub
 		return _container;
 	}
+
 
 	private void onPregameCategoryChange() {
 		// clear out all the icons
