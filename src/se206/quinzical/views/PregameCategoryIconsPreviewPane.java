@@ -9,14 +9,14 @@ import javafx.scene.layout.VBox;
 import se206.quinzical.models.Category;
 import se206.quinzical.models.QuinzicalModel;
 
-public class CategorySelectionPane extends ViewBase {
+public class PregameCategoryIconsPreviewPane extends ViewBase {
 	private final VBox _container = new VBox();
 	private final Label _instruction = new Label();
 	private final HBox _topRow = new HBox();
 	private final HBox _botRow = new HBox();
 	private final QuinzicalModel _model;
 	
-	public CategorySelectionPane(QuinzicalModel model) {
+	public PregameCategoryIconsPreviewPane(QuinzicalModel model) {
 		_model = model;
 
 		_topRow.setAlignment(Pos.CENTER);
