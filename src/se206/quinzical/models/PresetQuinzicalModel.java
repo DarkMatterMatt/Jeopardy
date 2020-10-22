@@ -190,9 +190,24 @@ public class PresetQuinzicalModel extends QuizModel {
 	/**
 	 * returns whether the categories need to be initialised (5 categories selection
 	 */
-	public boolean needToBeInitialised() {
-		System.out.println(_toBeInitialised);
+	public boolean checkNeedToBeInitialised() {
 		return _toBeInitialised;
+	}
+	
+	/**
+	 * set toBeInitialised status to false toBeInitialised status says if pregame
+	 * category selection is required
+	 */
+	public void setHasBeenInitialised() {
+		_toBeInitialised = false;
+	}
+	
+	/**
+	 * set toBeInitialied status to true toBeInitialised status says if pregame
+	 * category selection is required
+	 */
+	public void setNeedToBeInitialised() {
+		_toBeInitialised = true;
 	}
 
 	/**
