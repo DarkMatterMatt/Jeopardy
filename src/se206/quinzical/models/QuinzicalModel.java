@@ -366,6 +366,9 @@ public class QuinzicalModel implements GsonPostProcessable {
 		this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
 	}
 
+	public IntegerProperty getScoreProperty() {
+		return this._currentInternationalScore;
+	}
 	public void increaseInternationalScore() {
 		this._currentInternationalScore.set(this._currentInternationalScore.get() + 1);
 	}
