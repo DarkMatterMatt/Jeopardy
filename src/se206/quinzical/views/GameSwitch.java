@@ -1,5 +1,6 @@
 package se206.quinzical.views;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -62,8 +63,12 @@ public class GameSwitch extends SwitcherBase {
 	}
 
 	private void generateGameModeInitialScreen() {
-		_pregameCategorySelection.getChildren().addAll(new CategoriesListMultipleSelectionPane(_model).getView(),
-				new CategorySelectionPane(_model).getView());
+		_pregameCategorySelection.setSpacing(25);
+		VBox multipleSelectionList = new CategoriesListMultipleSelectionPane(_model).getView();
+		VBox pregameCategorySelection = new CategorySelectionPane(_model).getView();
+		pregameCategorySelection.setAlignment(Pos.CENTER);
+		HBox.setHgrow(pregameCategorySelection, Priority.ALWAYS);
+		_pregameCategorySelection.getChildren().addAll(multipleSelectionList, pregameCategorySelection);
 	}
 
 	private void onModelStateChange() {
