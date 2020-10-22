@@ -47,6 +47,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
+	private final ObjectProperty<Theme> _theme = new SimpleObjectProperty<>(Theme.BUMBLEBEE);
 	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
 	private transient final TextToSpeech _textToSpeech = TextToSpeech.getInstance();
 	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
@@ -181,6 +182,28 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	private void setSaveFileLocation(String saveFileLocation) {
 		_saveFileLocation = saveFileLocation;
+	}
+
+	/**
+	 * Return current application theme.
+	 */
+	public Theme getTheme() {
+		return _theme.get();
+	}
+
+	/**
+	 * Change application theme
+	 */
+	public void setTheme(Theme theme) {
+		_theme.set(theme);
+		save();
+	}
+
+	/**
+	 * Return theme property (e.g. so change listeners can be bound)
+	 */
+	public ObjectProperty<Theme> getThemeProperty() {
+		return _theme;
 	}
 
 	/**

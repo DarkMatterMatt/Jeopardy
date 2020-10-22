@@ -1,4 +1,27 @@
 .root {
+    -fx-font-family: "sans-serif";
+    -fx-font-size: 24;
+    -fx-background-color: -c-grey-00;
+
+    /* bare minimum default styles if a theme is not selected */
+    -c-gold: white;
+    -c-green: green;
+    -c-grey-00: black;
+    -c-grey-01: black;
+    -c-grey-03: black;
+    -c-grey-04: black;
+    -c-grey-08: black;
+    -c-off-white: white;
+    -c-red: red;
+}
+
+/* tooltips aren't children of the view, so we have to globally apply styles to them */
+.tooltip {
+    -fx-show-delay: 200ms;
+    -fx-font-size: 12;
+}
+
+.theme-bumblebee {
     -c-gold: #ffb400; /* hsl(42, 100%, 50%) */
     -c-green: #00ff00; /* hsl(120, 100%, 50%) */
     -c-grey-00: #121212; /* hsl(0, 0%, 7%) */
@@ -8,14 +31,40 @@
     -c-grey-08: #2d2d2d; /* hsl(0, 0%, 18%) */
     -c-off-white: #fcfcf4; /* hsl(60, 57%, 97%) */
     -c-red: #ff0000; /* hsl(0, 100%, 50%) */
-
-    -fx-font-family: "sans-serif";
-    -fx-font-size: 24;
-    -fx-background-color: -c-grey-00;
 }
 
-/* tooltips aren't children of the view, so we have to globally apply styles to them */
-.tooltip {
-    -fx-show-delay: 200ms;
-    -fx-font-size: 12;
+.theme-kiwi {
+    -c-gold: #8FC77C; /* hsl(104, 40%, 63%) */
+    -c-green: #00ff00; /* hsl(120, 100%, 50%) */
+    -c-grey-00: #1F1104; /* hsl(29, 75%, 7%) */
+    -c-grey-01: #361E08; /* hsl(29, 75%, 12%) */
+    -c-grey-03: #43250A; /* hsl(29, 75%, 15%) */
+    -c-grey-04: #47280A; /* hsl(29, 75%, 16%) */
+    -c-grey-08: #502D0B; /* hsl(29, 75%, 18%) */
+    -c-off-white: #FDF8F3; /* hsl(29, 75%, 97%) */
+    -c-red: #ff0000; /* hsl(0, 100%, 50%) */
+}
+
+.theme-ocean {
+    -c-gold: #0362D2; /* hsl(212, 98%, 42%) */
+    -c-green: #00ff00; /* hsl(120, 100%, 50%) */
+    -c-grey-00: #FFFFFF; /* hsl(121, 100%, 100%) */
+    -c-grey-01: #F5F9FF; /* hsl(121, 100%, 98%) */
+    -c-grey-03: #F0F7FF; /* hsl(121, 100%, 97%) */
+    -c-grey-04: #E5F1FF; /* hsl(121, 100%, 95%) */
+    -c-grey-08: #DBECFF; /* hsl(121, 100%, 93%) */
+    -c-off-white: #252525; /* hsl(0, 0%, 15%) */
+    -c-red: #ff0000; /* hsl(0, 100%, 50%) */
+}
+
+.theme-pink {
+    -c-gold: #5F2158; /* hsl(36, 48%, 25%) */
+    -c-green: #00ff00; /* hsl(120, 100%, 50%) */
+    -c-grey-00: #FFFFFF; /* hsl(300, 100%, 100%) */
+    -c-grey-01: #FFF5FF; /* hsl(300, 100%, 98%) */
+    -c-grey-03: #FFF0FF; /* hsl(300, 100%, 97%) */
+    -c-grey-04: #FFE5FF; /* hsl(300, 100%, 95%) */
+    -c-grey-08: #FFDBFF; /* hsl(300, 100%, 93%) */
+    -c-off-white: #FE1FE8; /* hsl(300, 99%, 56%) */
+    -c-red: #ff0000; /* hsl(0, 100%, 50%) */
 }

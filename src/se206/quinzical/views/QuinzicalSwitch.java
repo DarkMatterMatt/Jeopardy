@@ -3,6 +3,8 @@ package se206.quinzical.views;
 import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.util.KeyboardShortcuts;
 
+import java.util.Arrays;
+
 /**
  * This class is Switch type.
  * Top level view that contains everything about GUI.
@@ -28,6 +30,13 @@ public class QuinzicalSwitch extends SwitcherBase {
 
 		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
+
+		// listen for theme changes
+		getView().getStyleClass().add(_model.getTheme().getThemeClass());
+		_model.getThemeProperty().addListener((obs, old, val) -> {
+			if (old != null) getView().getStyleClass().remove(old.getThemeClass());
+			if (val != null) getView().getStyleClass().add(val.getThemeClass());
+		});
 
 		// add home/menu shortcut
 		KeyboardShortcuts.addKeyboardShortcut(ev -> {
