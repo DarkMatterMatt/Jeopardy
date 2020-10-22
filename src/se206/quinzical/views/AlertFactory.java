@@ -73,4 +73,28 @@ public class AlertFactory {
 			model.reset();
 		});
 	}
+
+	/**
+	 * This method will display a warning message (provided through method
+	 * parameter) with just 'Yup' button
+	 */
+	public static void getCustomWarning(String header, String message) {
+		Alert alert = new Alert(AlertType.NONE);
+		alert.setHeaderText(header);
+		alert.setContentText(message);
+
+		// style alert
+		DialogPane dialogue = alert.getDialogPane();
+		ButtonType yes = new ButtonType("Yup", ButtonBar.ButtonData.YES);
+		dialogue.getButtonTypes().addAll(yes);
+		dialogue.getStylesheets().addAll(
+				new AlertFactory().getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
+				new AlertFactory().getClass().getResource("/se206/quinzical/styles/dialogue.css").toExternalForm());
+		// stage of dialogue
+		Stage diaStage = (Stage) dialogue.getScene().getWindow();
+		diaStage.initStyle(StageStyle.UNDECORATED);
+		DragAndResizeHelper.addResizeListener(diaStage);
+		alert.showAndWait();
+	}
+
 }
