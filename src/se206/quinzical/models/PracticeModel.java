@@ -77,35 +77,24 @@ public class PracticeModel extends QuizModel {
 		Question q = this.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule();
 		boolean correct = q.checkAnswer(answer);
 
-		// if correct, leave the number of lives, increase score
-		if (!correct)
-			_model.reduceLives();
-		if (correct)
+		if (correct) {
+			if (_model.getCurrentInternationalScore() + 1 > _model.getInternationalHighscore()) {
+				_model.setInternationalHighScore(_model.getCurrentInternationalScore() + 1);
+			}
 			_model.increaseInternationalScore();
+		} else {
+			_model.reduceLives();
+			if (_model.getLivesProperty().get() == 0) {
+				AlertFactory.getCustomWarning("Game over!", "Start over again");
+				_model.resetCurrentInternationalScore();
+				_model.resetLives();
+			}
+		}
+
 
 		// TODO:if the lives are depleted, switch scene to game over
 		// TODO:register highscore, reset score
-		// if lives = 1 & incorrect
-		// switch screen to game over
-		// check if the current score exceeds highscore
-		// else register score to be higher by 1
-		// if the current score is the same as highscore, then increase highscore as
-		// well
 		// turn on the flag of having exceeded highscore?
-		if (_model.getLivesProperty().get() == 1 && !correct) {
-			AlertFactory.getCustomWarning("Game over!", "Start over again");
-			// switch screen to game over
-			// check if the current score exceeds highscore
-		} else {
-			if (correct) {
-				if (_model.getInternationalHighscore() == _model.getCurrentInternationalScore()) {
-					int newScore = _model.getCurrentInternationalScore() + 1;
-					_model.setInternationalHighScore(newScore);
-				}
-				_model.increaseInternationalScore();
-			}
-
-		}
 
 		// change to correct/incorrect answer screen
 		setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
