@@ -2,9 +2,7 @@ package se206.quinzical.views;
 
 import java.util.List;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,6 +21,9 @@ public class CategorySelectionPane extends ViewBase {
 
 		_topRow.setAlignment(Pos.CENTER);
 		_botRow.setAlignment(Pos.CENTER);
+		_topRow.setSpacing(10);
+		_botRow.setSpacing(10);
+		_container.setSpacing(10);
 		_container.setAlignment(Pos.CENTER);
 		_container.getChildren().addAll(_topRow, _botRow);
 
@@ -34,7 +35,7 @@ public class CategorySelectionPane extends ViewBase {
 	}
 
 	@Override
-	public Parent getView() {
+	public VBox getView() {
 		// TODO Auto-generated method stub
 		return _container;
 	}
@@ -45,9 +46,8 @@ public class CategorySelectionPane extends ViewBase {
 		_botRow.getChildren().clear();
 		for (int i = 0; i < 5; i++) {
 			Icon icon = new Icon();
-			icon.setSize(100, 100);
+			icon.setSize(120, 120);
 			icon.getView().setStyle("-fx-background-color: -c-grey-03;" + "-fx-background-radius: 50%;");
-			icon.getView().setPadding(new Insets(20));
 			
 			List<Category> categories = _model.getPresetModel().getPregameSelectedCategories();
 			if (i < 3) {
