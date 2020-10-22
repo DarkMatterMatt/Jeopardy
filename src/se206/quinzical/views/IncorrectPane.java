@@ -1,5 +1,7 @@
 package se206.quinzical.views;
 
+import java.util.List;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -9,8 +11,6 @@ import se206.quinzical.models.Question;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
 import se206.quinzical.models.util.TextToSpeech;
-
-import java.util.List;
 
 /**
  * This class is Pane type, and contains AnimatedProgressBar atom.
@@ -87,15 +87,26 @@ public class IncorrectPane extends ViewBase {
 	 * Update to show correct answer
 	 */
 	private void questionUpdate(Question q) {
-		if (q != null) {
+		boolean isInternational = _model.currentStateIsInternationalSection();
+		if (q != null || isInternational) {
+			
 			// speak correct answer
-			TextToSpeech.getInstance().speak("Incorrect. The correct answer was " + q.getAnswer());
+			if (isInternational) {
+				TextToSpeech.getInstance().speak("Incorrect. The correct answer was " + _model
+						.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule().getAnswer());
+			} else {
+				TextToSpeech.getInstance().speak("Incorrect. The correct answer was " + q.getAnswer());
+			}
 
 			List<Node> children = _answerTextFlow.getChildren();
 			children.clear();
 			children.add(createTextNode("The correct answer was ", "text-white"));
 
-			for (String a : q.getAnswer()) {
+			List<String> answers = (isInternational)
+					? (_model.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule()
+							.getAnswer())
+					: (q.getAnswer());
+			for (String a : answers) {
 				children.add(createTextNode(" or ", "text-white"));
 				children.add(createTextNode(a, "text-bold", "text-white"));
 			}
