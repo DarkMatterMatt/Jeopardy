@@ -105,9 +105,7 @@ public class PracticeModel extends QuizModel {
 				_model.increaseInternationalScore();
 			}
 
-		// change the question
-		_model.getInternationalCategory()
-				.setActiveQuestionInPracticeModule(_model.getInternationalCategory().getRandomQuestion());
+		}
 
 		// change to correct/incorrect answer screen
 		setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
