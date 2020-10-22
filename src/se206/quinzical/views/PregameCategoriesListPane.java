@@ -98,6 +98,7 @@ public class PregameCategoriesListPane extends ViewBase {
 		_container.getStyleClass().add("categories-list");
 		addStylesheet("category-listview.css");
 
+		_model.getPresetModel().getToBeInitialisedProperty().addListener((obs, n, old) -> _listView.refresh());
 	}
 
 	@Override

@@ -32,9 +32,9 @@ public class PregameCategoryIconsPreviewPane extends ViewBase {
 
 		_topRow.setAlignment(Pos.CENTER);
 		_botRow.setAlignment(Pos.CENTER);
-		_topRow.setSpacing(10);
-		_botRow.setSpacing(10);
-		_iconsBox.setSpacing(10);
+		_topRow.setSpacing(18);
+		_botRow.setSpacing(18);
+		_iconsBox.setSpacing(18);
 		_iconsBox.getChildren().addAll(_topRow, _botRow);
 
 		_instruction.setText("Choose five categories of your taste :3");
@@ -46,11 +46,8 @@ public class PregameCategoryIconsPreviewPane extends ViewBase {
 		_submitButton.getChildren().add(icon.getView());
 		icon.getView().setOnMouseClicked(e -> {
 			if (model.getPresetModel().pregameCategorySelectionLimitReached()) {
-				// (to be initialised is false)
-				// gameswitch should change to the game mode screen
-				// all the selected categories should pipeline to the game mode
-				// (different class) when reset is pressed, toBeInitialised should be set to
-				// true
+				model.getPresetModel().setHasBeenInitialised();
+				onPregameCategoryChange();
 			} else {
 				AlertFactory.getCustomWarning("Friendly reminder", "Select 5 categories to proceed!");
 			}
