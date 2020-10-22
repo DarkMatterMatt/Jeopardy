@@ -33,7 +33,7 @@ public class Taskbar extends ViewBase {
 
 		// exit button view
 		ImageView exit = createButton("/se206/quinzical/assets/exit.png");
-		exit.setOnMouseClicked(e -> AlertFactory.getExitAlert(this));
+		exit.setOnMouseClicked(e -> AlertFactory.getExitAlert(this, model));
 		Tooltip.install(exit, new Tooltip("Quit"));
 
 		// reset button view
