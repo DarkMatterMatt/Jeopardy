@@ -83,8 +83,6 @@ public class LeaderboardPane extends ViewBase {
 	}
 
 	private void update() {
-		System.out.println("update");
-
 		// clear grid & reinitialize - very inefficient, but easy
 		_grid.getChildren().clear();
 		_grid.addRow(0,
@@ -102,7 +100,6 @@ public class LeaderboardPane extends ViewBase {
 			else if (i == 3) rank = createImageView(TROPHY_BRONZE);
 
 			// default to blank name & score
-			System.out.println(i + ": " + scores.size());
 			if (i > scores.size()) {
 				_grid.addRow(i, rank, createText(""), createText(""));
 				continue;
