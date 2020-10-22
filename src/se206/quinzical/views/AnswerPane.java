@@ -124,15 +124,17 @@ public class AnswerPane extends ViewBase {
 	 * Called when we are ready to leave this screen
 	 */
 	private void onVisibilityChanged() {
+		if (_model.getModel().getState() == QuinzicalModel.State.INTERNATIONAL) {
+			questionUpdate(_model.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule());
+			return;
+		}
+
 		if (!_container.isVisible()) {
 			// container is hidden
 			_timer.stop();
 			return;
 		}
-		if (_model.getModel().getState() == QuinzicalModel.State.INTERNATIONAL) {
-			questionUpdate(_model.getInternationalCategoryFromQuinzicalModel().getRandomQuestion());
-			return;
-		}
+
 		if (!_isPracticeMode && _model.getModel().getState() != QuinzicalModel.State.GAME
 				|| _isPracticeMode && _model.getModel().getState() != QuinzicalModel.State.PRACTICE) {
 			// this game is not active
