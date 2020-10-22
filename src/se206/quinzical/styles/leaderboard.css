@@ -4,7 +4,6 @@
 
 .leaderboard .grid {
     -fx-padding: 24;
-    -fx-border-color: red;
     -fx-background-color: -c-grey-01;
     -fx-alignment: center;
     -fx-hgap: 16;
