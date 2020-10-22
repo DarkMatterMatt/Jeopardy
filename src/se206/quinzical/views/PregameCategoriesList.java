@@ -20,13 +20,13 @@ import se206.quinzical.models.QuinzicalModel;
  *
  * @author hajinkim
  */
-public class CategoriesListMultipleSelectionPane extends ViewBase {
+public class PregameCategoriesList extends ViewBase {
 	private final VBox _container;
 	private final ListView<Category> _listView;
 	private final QuinzicalModel _model;
 	private final HBox _textBox;
 
-	public CategoriesListMultipleSelectionPane(QuinzicalModel model) {
+	public PregameCategoriesList(QuinzicalModel model) {
 		_model = model;
 
 		// set up the top header box

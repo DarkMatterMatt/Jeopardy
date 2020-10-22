@@ -64,7 +64,7 @@ public class GameSwitch extends SwitcherBase {
 
 	private void generateGameModeInitialScreen() {
 		_pregameCategorySelection.setSpacing(25);
-		VBox multipleSelectionList = new CategoriesListMultipleSelectionPane(_model).getView();
+		VBox multipleSelectionList = new PregameCategoriesList(_model).getView();
 		VBox pregameCategorySelection = new PregameCategoryIconsPreviewPane(_model).getView();
 		pregameCategorySelection.setAlignment(Pos.CENTER);
 		HBox.setHgrow(pregameCategorySelection, Priority.ALWAYS);
