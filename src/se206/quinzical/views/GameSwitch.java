@@ -47,6 +47,7 @@ public class GameSwitch extends SwitcherBase {
 		// listen for state changes
 		onModelStateChange();
 		_presetModel.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
+		_presetModel.getToBeInitialisedProperty().addListener(e -> onModelStateChange());
 	}
 
 	private void generateSelectionContainerContents() {
@@ -79,9 +80,13 @@ public class GameSwitch extends SwitcherBase {
 				break;
 			case SELECT_CATEGORY:
 			case CATEGORY_PREVIEW:
-				if (_presetModel.needToBeInitialised()) {
+				if (_presetModel.checkNeedToBeInitialised()) {
+					_pregameCategorySelection.getChildren().clear();
+					generateGameModeInitialScreen();
 					switchToView(_pregameCategorySelection);
 				} else {
+					_questionSelectContainer.getChildren().clear();
+					generateSelectionContainerContents();
 					switchToView(_questionSelectContainer);
 				}
 				break;
