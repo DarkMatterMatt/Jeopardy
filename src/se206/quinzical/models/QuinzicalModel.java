@@ -30,6 +30,7 @@ import se206.quinzical.models.util.FileHelper;
 import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.GsonPostProcessingEnabler;
 import se206.quinzical.models.util.TextToSpeech;
+import se206.quinzical.views.AlertFactory;
 
 /**
  * Quinzical Model represents the model for the whole game.
@@ -408,8 +409,13 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 * change current gamemode to international game
 	 */
 	public void beginInternationalGame() {
-		setState(State.INTERNATIONAL);
-		this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
+		if (this.checkInternationalSectionCanStart()) {
+			setState(State.INTERNATIONAL);
+			this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
+		} else {
+			AlertFactory.getCustomWarning("This section is locked!",
+					"You gotta complete at least two categories in Play mode.");
+		}
 	}
 
 	public IntegerProperty getScoreProperty() {
@@ -433,6 +439,30 @@ public class QuinzicalModel implements GsonPostProcessable {
 
 	public int getInternationalHighscore() {
 		return this._InternationalHighScore.get();
+	}
+
+	/**
+	 * Check if international section can start prerequisites - toBeInitialised
+	 * state should not be true - presetmodel's categories size must be 5 - number
+	 * of finished categories (in preset model) should be 2 or more
+	 * 
+	 * @return true Means international section can start
+	 */
+	public boolean checkInternationalSectionCanStart() {
+		if(_categories == null || getPresetModel().getCategories().size() != 5 || getPresetModel().checkNeedToBeInitialised()) {
+			return false;
+		}
+		int count = 0;
+		for (Category c : getPresetModel().getCategories()) {
+			if (c.getNumRemaining() == 0) {
+				count++;
+			}
+		}
+		if (count >= 2) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
