@@ -11,10 +11,10 @@ import se206.quinzical.models.QuinzicalModel;
 
 /**
  * This class is pane type
- * 
+ *
  * This pane displays the icons associated with selected categories from
  * PregameCategoriesListPane
- * 
+ *
  * @author hajinkim
  *
  */
@@ -26,7 +26,7 @@ public class PregameCategoryIconsPreviewPane extends ViewBase {
 	private final HBox _topRow = new HBox();
 	private final HBox _botRow = new HBox();
 	private final QuinzicalModel _model;
-	
+
 	public PregameCategoryIconsPreviewPane(QuinzicalModel model) {
 		_model = model;
 
@@ -49,7 +49,7 @@ public class PregameCategoryIconsPreviewPane extends ViewBase {
 				model.getPresetModel().setHasBeenInitialised();
 				onPregameCategoryChange();
 			} else {
-				AlertFactory.getCustomWarning("Friendly reminder", "Select 5 categories to proceed!");
+				AlertFactory.getCustomWarning(_model, "Friendly reminder", "Select 5 categories to proceed!");
 			}
 		});
 
@@ -80,7 +80,7 @@ public class PregameCategoryIconsPreviewPane extends ViewBase {
 			Icon icon = new Icon();
 			icon.setSize(120, 120);
 			icon.getView().setStyle("-fx-background-color: -c-grey-03;" + "-fx-background-radius: 50%;");
-			
+
 			List<Category> categories = _model.getPresetModel().getPregameSelectedCategories();
 			if (i < 3) {
 				if (categories.size() - 1 < i) {

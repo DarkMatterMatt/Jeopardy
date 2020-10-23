@@ -85,7 +85,7 @@ public class PracticeModel extends QuizModel {
 		} else {
 			_model.reduceLives();
 			if (_model.getLivesProperty().get() == 0) {
-				AlertFactory.getCustomWarning("Game over!", "Start over again");
+				AlertFactory.getCustomWarning(_model, "Game over!", "Start over again");
 				_model.resetCurrentInternationalScore();
 				_model.resetLives();
 			}

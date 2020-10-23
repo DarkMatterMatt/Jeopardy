@@ -17,84 +17,88 @@ import se206.quinzical.models.util.TextToSpeech;
  * Serves as a warning for user action when exiting or resetting
  */
 public class AlertFactory {
+	private static final ButtonType BUTTON_NO = new ButtonType("Actually nah", ButtonBar.ButtonData.NO);
+	private static final ButtonType BUTTON_YES = new ButtonType("Yup", ButtonBar.ButtonData.YES);
 
 	/**
-	 * Activate the exit alert
+	 * Create alert dialog with specified theme, content & buttons.
+	 *
+	 * @param themeClass  theme to apply, should be fetched from {@link QuinzicalModel#getTheme()}
+	 * @param header      title message to display
+	 * @param message     message content / description to display
+	 * @param buttonTypes buttons to add
 	 */
-	public static void getExitAlert(Taskbar origin, QuinzicalModel model) {
-		Alert exitAlert = new Alert(AlertType.NONE);
-		exitAlert.setHeaderText("Sad to see you go!");
-		exitAlert.setContentText("Are you sure you want to exit Quinzical?");
+	private static Alert createAlert(String themeClass, String header, String message, ButtonType... buttonTypes) {
+		// create alert, set content
+		Alert alert = new Alert(AlertType.NONE);
+		alert.setHeaderText(header);
+		alert.setContentText(message);
 
-		// style alert
-		DialogPane dialogue = exitAlert.getDialogPane();
-		ButtonType yes = new ButtonType("Yup", ButtonBar.ButtonData.YES);
-		ButtonType no = new ButtonType("Actually nah", ButtonBar.ButtonData.NO);
-		dialogue.getButtonTypes().addAll(yes, no);
-		dialogue.getStylesheets().addAll(
-				origin.getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
-				origin.getClass().getResource("/se206/quinzical/styles/dialogue.css").toExternalForm()
-		);
-		dialogue.getStyleClass().add(model.getTheme().getThemeClass());
-		// stage of dialogue
-		Stage diaStage = (Stage) dialogue.getScene().getWindow();
-		diaStage.initStyle(StageStyle.UNDECORATED);
-		DragAndResizeHelper.addResizeListener(diaStage);
-		exitAlert.showAndWait().filter(res -> res == yes).ifPresent(res -> {
-			TextToSpeech.getInstance().cancel();
-			Platform.exit();
-		});
-	}
+		// add buttons & style alert
+		DialogPane dialog = alert.getDialogPane();
+		dialog.getButtonTypes().addAll(buttonTypes);
+		dialog.getStylesheets().addAll(
+				AlertFactory.class.getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
+				AlertFactory.class.getResource("/se206/quinzical/styles/dialogue.css").toExternalForm());
+		dialog.getStyleClass().add(themeClass);
 
-	/**
-	 * Activate the reset alert
-	 */
-	public static void getResetAlert(Taskbar origin, QuinzicalModel model) {
-		Alert resetAlert = new Alert(AlertType.NONE);
-		resetAlert.setHeaderText("Be careful! You are about to lose your money");
-		resetAlert.setContentText("Are you sure you want to reset?");
+		// remove stage styles, make it draggable & resizable
+		Stage dialogStage = (Stage) dialog.getScene().getWindow();
+		dialogStage.initStyle(StageStyle.UNDECORATED);
+		DragAndResizeHelper.addResizeListener(dialogStage);
 
-		// style alert
-		DialogPane dialogue = resetAlert.getDialogPane();
-		ButtonType yes = new ButtonType("Yup", ButtonBar.ButtonData.YES);
-		ButtonType no = new ButtonType("Actually nah", ButtonBar.ButtonData.NO);
-		dialogue.getButtonTypes().addAll(yes, no);
-		dialogue.getStylesheets().addAll(
-				origin.getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
-				origin.getClass().getResource("/se206/quinzical/styles/dialogue.css").toExternalForm()
-		);
-		dialogue.getStyleClass().add(model.getTheme().getThemeClass());
-		// stage of dialogue
-		Stage diaStage = (Stage) dialogue.getScene().getWindow();
-		diaStage.initStyle(StageStyle.UNDECORATED);
-		DragAndResizeHelper.addResizeListener(diaStage);
-		resetAlert.showAndWait().filter(res -> res == yes).ifPresent(res -> {
-			TextToSpeech.getInstance().cancel();
-			model.reset();
-		});
+		return alert;
 	}
 
 	/**
 	 * This method will display a warning message (provided through method
 	 * parameter) with just 'Yup' button
 	 */
-	public static void getCustomWarning(String header, String message) {
-		Alert alert = new Alert(AlertType.NONE);
-		alert.setHeaderText(header);
-		alert.setContentText(message);
-
-		// style alert
-		DialogPane dialogue = alert.getDialogPane();
-		ButtonType yes = new ButtonType("Yup", ButtonBar.ButtonData.YES);
-		dialogue.getButtonTypes().addAll(yes);
-		dialogue.getStylesheets().addAll(
-				new AlertFactory().getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
-				new AlertFactory().getClass().getResource("/se206/quinzical/styles/dialogue.css").toExternalForm());
-		// stage of dialogue
-		Stage diaStage = (Stage) dialogue.getScene().getWindow();
-		diaStage.initStyle(StageStyle.UNDECORATED);
-		DragAndResizeHelper.addResizeListener(diaStage);
+	public static void getCustomWarning(QuinzicalModel model, String header, String message) {
+		Alert alert = createAlert(
+				model.getTheme().getThemeClass(),
+				header,
+				message,
+				new ButtonType("Yup", ButtonBar.ButtonData.YES)
+		);
 		alert.showAndWait();
 	}
 
+	/**
+	 * Activate the exit alert
+	 */
+	public static void getExitAlert(QuinzicalModel model) {
+		Alert alert = createAlert(
+				model.getTheme().getThemeClass(),
+				"Sad to see you go!",
+				"Are you sure you want to exit Quinzical?",
+				BUTTON_YES,
+				BUTTON_NO
+		);
+		alert.showAndWait()
+				.filter(res -> res == BUTTON_YES)
+				.ifPresent(res -> {
+					TextToSpeech.getInstance().cancel();
+					Platform.exit();
+				});
+	}
+
+	/**
+	 * Activate the reset alert
+	 */
+	public static void getResetAlert(QuinzicalModel model) {
+		Alert alert = createAlert(
+				model.getTheme().getThemeClass(),
+				"Be careful! You are about to lose your money",
+				"Are you sure you want to reset?",
+				BUTTON_YES,
+				BUTTON_NO
+		);
+		alert.showAndWait()
+				.filter(res -> res == BUTTON_YES)
+				.ifPresent(res -> {
+					TextToSpeech.getInstance().cancel();
+					model.reset();
+				});
+	}
 }

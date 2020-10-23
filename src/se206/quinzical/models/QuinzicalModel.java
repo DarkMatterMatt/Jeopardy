@@ -413,7 +413,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 			setState(State.INTERNATIONAL);
 			this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
 		} else {
-			AlertFactory.getCustomWarning("This section is locked!",
+			AlertFactory.getCustomWarning(this, "This section is locked!",
 					"You gotta complete at least two categories in Play mode.");
 		}
 	}
@@ -445,7 +445,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 * Check if international section can start prerequisites - toBeInitialised
 	 * state should not be true - presetmodel's categories size must be 5 - number
 	 * of finished categories (in preset model) should be 2 or more
-	 * 
+	 *
 	 * @return true Means international section can start
 	 */
 	public boolean checkInternationalSectionCanStart() {
