@@ -2,6 +2,7 @@ package se206.quinzical.views;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -25,13 +26,14 @@ public class Taskbar extends ViewBase {
 	private final ImageView _reset;
 	private final Timeline _speedSliderHideTimer = new Timeline();
 	private final StackPane _toggleText;
+	private final Slider _speedSlider;
 
 	public Taskbar(QuinzicalModel model) {
 		_model = model;
 
 		// exit button view
 		ImageView exit = createButton("/se206/quinzical/assets/exit.png");
-		exit.setOnMouseClicked(e -> AlertFactory.getExitAlert(this));
+		exit.setOnMouseClicked(e -> AlertFactory.getExitAlert(this, model));
 		Tooltip.install(exit, new Tooltip("Quit"));
 
 		// reset button view
@@ -65,9 +67,9 @@ public class Taskbar extends ViewBase {
 		Tooltip.install(noText, new Tooltip("Text Currently Invisible"));
 
 		// text speed slider
-		Slider speedSlider = createSpeedSlider();
+		_speedSlider = createSpeedSlider();
 
-		_container.getChildren().addAll(speedSlider, _toggleText, home, _reset, exit);
+		_container.getChildren().addAll(_speedSlider, _toggleText, home, _reset, exit);
 		_container.setSpacing(10);
 		_container.getStyleClass().add("taskbar");
 		addStylesheet("taskbar.css");
@@ -141,18 +143,41 @@ public class Taskbar extends ViewBase {
 		return _container;
 	}
 
+	/**
+	 * Show nodes in taskbar
+	 */
+	private void showNodes(Node...nodes) {
+		for (Node n : nodes) {
+			n.setVisible(true);
+			n.setManaged(true);
+		}
+	}
+
+	/**
+	 * Hide nodes in taskbar
+	 */
+	private void hideNodes(Node...nodes) {
+		for (Node n : nodes) {
+			n.setVisible(false);
+			n.setManaged(false);
+		}
+	}
+
 	private void onModelStateChange() {
 		// show reset button ONLY during game state
 		switch (_model.getState()) {
 			case GAME:
-				_reset.setVisible(true);
-				_reset.setManaged(true);
+				showNodes(_reset, _speedSlider, _toggleText);
 				break;
 			case MENU:
 			case PRACTICE:
 			case INTERNATIONAL:
-				_reset.setVisible(false);
-				_reset.setManaged(false);
+				hideNodes(_reset);
+				showNodes(_speedSlider, _toggleText);
+				break;
+			case LEADERBOARD:
+			case THEME_SELECT:
+				hideNodes(_reset, _speedSlider, _toggleText);
 				break;
 			default:
 				throw new UnsupportedOperationException("Unexpected model state");

@@ -11,15 +11,19 @@ public class QuizContentSwitch extends SwitcherBase {
 	private final QuinzicalModel _model;
 	private final PracticeSwitch _practiceView;
 	private final InternationalSwitch _internationalView;
-	
+	private final LeaderboardPane _leaderboardPane;
+	private final ThemeSelectPane _themeSelectPane;
+
 	public QuizContentSwitch(QuinzicalModel model) {
 		_model = model;
 
 		_gameView = new GameSwitch(_model);
 		_practiceView = new PracticeSwitch(_model);
 		_internationalView = new InternationalSwitch(_model);
-		
-		getView().getChildren().addAll(_gameView.getView(), _practiceView.getView(), _internationalView.getView());
+		_leaderboardPane = new LeaderboardPane(_model.getLeaderboardModel());
+		_themeSelectPane = new ThemeSelectPane(_model);
+
+		getView().getChildren().addAll(_gameView.getView(), _practiceView.getView(), _internationalView.getView(), _leaderboardPane.getView(), _themeSelectPane.getView());
 
 		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
@@ -35,6 +39,12 @@ public class QuizContentSwitch extends SwitcherBase {
 				break;
 			case INTERNATIONAL:
 				switchToView(_internationalView.getView());
+				break;
+			case LEADERBOARD:
+				switchToView(_leaderboardPane.getView());
+				break;
+			case THEME_SELECT:
+				switchToView(_themeSelectPane.getView());
 				break;
 			case MENU:
 				break;

@@ -21,7 +21,7 @@ public class AlertFactory {
 	/**
 	 * Activate the exit alert
 	 */
-	public static void getExitAlert(Taskbar origin) {
+	public static void getExitAlert(Taskbar origin, QuinzicalModel model) {
 		Alert exitAlert = new Alert(AlertType.NONE);
 		exitAlert.setHeaderText("Sad to see you go!");
 		exitAlert.setContentText("Are you sure you want to exit Quinzical?");
@@ -35,6 +35,7 @@ public class AlertFactory {
 				origin.getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
 				origin.getClass().getResource("/se206/quinzical/styles/dialogue.css").toExternalForm()
 		);
+		dialogue.getStyleClass().add(model.getTheme().getThemeClass());
 		// stage of dialogue
 		Stage diaStage = (Stage) dialogue.getScene().getWindow();
 		diaStage.initStyle(StageStyle.UNDECORATED);
@@ -62,6 +63,7 @@ public class AlertFactory {
 				origin.getClass().getResource("/se206/quinzical/styles/theme.css").toExternalForm(),
 				origin.getClass().getResource("/se206/quinzical/styles/dialogue.css").toExternalForm()
 		);
+		dialogue.getStyleClass().add(model.getTheme().getThemeClass());
 		// stage of dialogue
 		Stage diaStage = (Stage) dialogue.getScene().getWindow();
 		diaStage.initStyle(StageStyle.UNDECORATED);

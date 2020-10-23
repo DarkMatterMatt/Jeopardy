@@ -47,6 +47,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
 	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
+	private final ObjectProperty<Theme> _theme = new SimpleObjectProperty<>(Theme.BUMBLEBEE);
 	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
 	private transient final TextToSpeech _textToSpeech = TextToSpeech.getInstance();
 	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
@@ -57,7 +58,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final IntegerProperty _lives = new SimpleIntegerProperty(MAXIMUM_LIVES);
 	private final IntegerProperty _currentInternationalScore = new SimpleIntegerProperty(0);
 	private final IntegerProperty _InternationalHighScore = new SimpleIntegerProperty(0);
-
+	private final LeaderboardModel _leaderboardModel = new LeaderboardModel();
 
 	public QuinzicalModel() {
 		this(null);
@@ -116,7 +117,21 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 * Set the screen state to MENU, and this state is enum defined in this class
 	 */
 	public void backToMainMenu() {
-		_state.set(State.MENU);
+		setState(State.MENU);
+	}
+
+	/**
+	 * Display the leaderboard containing 'real' game scores
+	 */
+	public void showLeaderboard() {
+		setState(State.LEADERBOARD);
+	}
+
+	/**
+	 * Display the leaderboard containing 'real' game scores
+	 */
+	public void showThemeSelection() {
+		setState(State.THEME_SELECT);
 	}
 
 	/**
@@ -156,6 +171,13 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Return the leaderboard model (scores for main module)
+	 */
+	public LeaderboardModel getLeaderboardModel() {
+		return _leaderboardModel;
+	}
+
+	/**
 	 * Return current save file location
 	 */
 	public String getSaveFileLocation() {
@@ -167,6 +189,28 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	private void setSaveFileLocation(String saveFileLocation) {
 		_saveFileLocation = saveFileLocation;
+	}
+
+	/**
+	 * Return current application theme.
+	 */
+	public Theme getTheme() {
+		return _theme.get();
+	}
+
+	/**
+	 * Change application theme
+	 */
+	public void setTheme(Theme theme) {
+		_theme.set(theme);
+		save();
+	}
+
+	/**
+	 * Return theme property (e.g. so change listeners can be bound)
+	 */
+	public ObjectProperty<Theme> getThemeProperty() {
+		return _theme;
 	}
 
 	/**
@@ -356,13 +400,15 @@ public class QuinzicalModel implements GsonPostProcessable {
 		GAME,
 		PRACTICE,
 		INTERNATIONAL,
+		LEADERBOARD,
+		THEME_SELECT,
 	}
 
 	/**
 	 * change current gamemode to international game
 	 */
 	public void beginInternationalGame() {
-		_state.set(State.INTERNATIONAL);
+		setState(State.INTERNATIONAL);
 		this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
 	}
 

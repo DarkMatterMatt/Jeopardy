@@ -1,0 +1,11 @@
+.leaderboard {
+    -fx-padding: 48;
+}
+
+.leaderboard .grid {
+    -fx-padding: 24;
+    -fx-background-color: -c-grey-01;
+    -fx-alignment: center;
+    -fx-hgap: 16;
+    -fx-vgap: 16;
+}

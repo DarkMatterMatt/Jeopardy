@@ -1,0 +1,29 @@
+.theme-select .grid {
+    -fx-padding: 48;
+    -fx-alignment: center;
+    -fx-hgap: 24;
+    -fx-vgap: 24;
+}
+
+.theme-select .theme-sample {
+    -fx-background-color: -c-grey-03;
+}
+
+.theme-select .theme-sample .title-container {
+    -fx-background-color: -c-gold;
+    -fx-padding: 16;
+}
+
+.theme-select .theme-sample .description {
+    -fx-padding: 16;
+}
+
+.theme-select .theme-sample .select-container {
+    -fx-alignment: center-right;
+    -fx-padding: 0 16 16 0;
+}
+
+.theme-select .theme-sample .select {
+    -fx-background-color: -c-gold;
+    -fx-padding: 8 16 8 16;
+}
