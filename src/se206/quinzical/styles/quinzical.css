@@ -20,6 +20,10 @@
     -fx-font-size: 32;
 }
 
+.text-medium-large {
+    -fx-font-size: 28;
+}
+
 .text-medium {
     -fx-font-size: 24;
 }
