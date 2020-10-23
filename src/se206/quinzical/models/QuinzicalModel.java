@@ -47,7 +47,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private final List<Category> _categories = new ArrayList<>();
 	private final PracticeModel _practiceModel;
 	private final PresetQuinzicalModel _presetModel;
-	private final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
+	private transient final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
 	private final ObjectProperty<Theme> _theme = new SimpleObjectProperty<>(Theme.BUMBLEBEE);
 	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
 	private transient final TextToSpeech _textToSpeech = TextToSpeech.getInstance();
