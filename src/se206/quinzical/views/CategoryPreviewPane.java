@@ -82,6 +82,8 @@ public class CategoryPreviewPane extends ViewBase {
 		double confirmHeight = _confirm.getView().getBoundsInLocal().getHeight();
 
 		if (contentHeight > containerHeight) {
+			_content.setLayoutY((230 - 84) / 2);
+			_confirm.getView().setLayoutY(230 - 48 - 32);
 			// hacky fix: before anything is initialized, the content height is something
 			// ridiculous because the width is tiny and the text wraps to be very very tall
 			return;
