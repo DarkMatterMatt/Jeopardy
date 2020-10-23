@@ -39,6 +39,11 @@ public class MenuPane extends ViewBase {
 		leaderboardLabel.getStyleClass().addAll("btn", "text-gold");
 		leaderboardLabel.setOnMouseClicked(e -> model.showLeaderboard());
 
+		// show theme selection button
+		Label themesLabel = new Label("Themes");
+		themesLabel.getStyleClass().addAll("btn", "text-gold");
+		themesLabel.setOnMouseClicked(e -> model.showThemeSelection());
+
 		// quit button
 		Label quitLabel = new Label("Quit");
 		quitLabel.getStyleClass().addAll("btn", "text-gold");
@@ -47,7 +52,7 @@ public class MenuPane extends ViewBase {
 		// add styles
 		addStylesheet("menu.css");
 		_container.getStyleClass().add("menu");
-		_container.getChildren().addAll(titleLabel, playLabel, practiceLabel, internationalLabel, leaderboardLabel, quitLabel);
+		_container.getChildren().addAll(titleLabel, playLabel, practiceLabel, internationalLabel, leaderboardLabel, themesLabel, quitLabel);
 	}
 
 	@Override

@@ -50,6 +50,7 @@ public class QuinzicalSwitch extends SwitcherBase {
 			case PRACTICE:
 			case INTERNATIONAL:
 			case LEADERBOARD:
+			case THEME_SELECT:
 				switchToView(_quizView.getView());
 				break;
 			case MENU:

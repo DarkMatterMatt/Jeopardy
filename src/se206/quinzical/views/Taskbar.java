@@ -176,6 +176,7 @@ public class Taskbar extends ViewBase {
 				showNodes(_speedSlider, _toggleText);
 				break;
 			case LEADERBOARD:
+			case THEME_SELECT:
 				hideNodes(_reset, _speedSlider, _toggleText);
 				break;
 			default:

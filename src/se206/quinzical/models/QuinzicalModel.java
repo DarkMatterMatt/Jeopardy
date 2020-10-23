@@ -117,14 +117,21 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 * Set the screen state to MENU, and this state is enum defined in this class
 	 */
 	public void backToMainMenu() {
-		_state.set(State.MENU);
+		setState(State.MENU);
 	}
 
 	/**
 	 * Display the leaderboard containing 'real' game scores
 	 */
 	public void showLeaderboard() {
-		_state.set(State.LEADERBOARD);
+		setState(State.LEADERBOARD);
+	}
+
+	/**
+	 * Display the leaderboard containing 'real' game scores
+	 */
+	public void showThemeSelection() {
+		setState(State.THEME_SELECT);
 	}
 
 	/**
@@ -394,13 +401,14 @@ public class QuinzicalModel implements GsonPostProcessable {
 		PRACTICE,
 		INTERNATIONAL,
 		LEADERBOARD,
+		THEME_SELECT,
 	}
 
 	/**
 	 * change current gamemode to international game
 	 */
 	public void beginInternationalGame() {
-		_state.set(State.INTERNATIONAL);
+		setState(State.INTERNATIONAL);
 		this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
 	}
 

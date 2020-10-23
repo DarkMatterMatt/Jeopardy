@@ -57,6 +57,9 @@ public class HeaderPane extends ViewBase {
 			case LEADERBOARD:
 				_subtitleLabel.setText("Leaderboard");
 				break;
+			case THEME_SELECT:
+				_subtitleLabel.setText("Theme Selection");
+				break;
 			case MENU:
 				break;
 			default:
