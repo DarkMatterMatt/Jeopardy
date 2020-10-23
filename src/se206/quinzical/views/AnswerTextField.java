@@ -12,7 +12,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import se206.quinzical.models.QuizModel;
-import se206.quinzical.models.util.TextToSpeech;
+
+import java.util.function.Consumer;
 
 /**
  * This class is atom type.
@@ -24,9 +25,11 @@ public class AnswerTextField extends ViewBase {
 	private final TextField _answerInput = new TextField();
 	private final HBox _container = new HBox();
 	private final QuizModel _model;
+	private final Consumer<String> _onSubmit;
 
-	public AnswerTextField(QuizModel model) {
+	public AnswerTextField(QuizModel model, Consumer<String> onSubmit) {
 		_model = model;
+		_onSubmit = onSubmit;
 
 		// user input
 		_answerInput.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume);
@@ -86,7 +89,6 @@ public class AnswerTextField extends ViewBase {
 	}
 
 	public void submit() {
-		TextToSpeech.getInstance().cancel();
-		_model.answerQuestion(_answerInput.getText());
+		_onSubmit.accept(_answerInput.getText());
 	}
 }

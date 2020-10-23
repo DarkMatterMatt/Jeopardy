@@ -11,6 +11,7 @@ import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.Question;
 import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.QuizModel;
+import se206.quinzical.models.util.TextToSpeech;
 
 /**
  * This class is a Pane type, and uses AnswerTextField atom.
@@ -38,7 +39,10 @@ public class AnswerPane extends ViewBase {
 
 	public AnswerPane(QuizModel model) {
 		_model = model;
-		_answerInputView = new AnswerTextField(_model);
+		_answerInputView = new AnswerTextField(_model, answer -> {
+			TextToSpeech.getInstance().cancel();
+			_model.answerQuestion(answer);
+		});
 		_isPracticeMode = _model instanceof PracticeModel;
 
 		Label hintDisplayedLabel = new Label("Hint Displayed  ");
