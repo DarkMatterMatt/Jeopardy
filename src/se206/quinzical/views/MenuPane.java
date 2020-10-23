@@ -13,8 +13,12 @@ import se206.quinzical.models.QuinzicalModel;
  */
 public class MenuPane extends ViewBase {
 	private final VBox _container = new VBox();
+	private final Label _internationalLabel = new Label("International");
+	private final QuinzicalModel _model;
 
 	public MenuPane(QuinzicalModel model) {
+		_model = model;
+
 		// big main title
 		Label titleLabel = new Label("Quinzical");
 		titleLabel.getStyleClass().addAll("title", "text-bold", "text-gold");
@@ -30,9 +34,8 @@ public class MenuPane extends ViewBase {
 		practiceLabel.setOnMouseClicked(e -> model.beginPracticeGame());
 
 		// international button
-		Label internationalLabel = new Label("International");
-		internationalLabel.getStyleClass().addAll("btn", "text-gold");
-		internationalLabel.setOnMouseClicked(e -> model.beginInternationalGame());
+		_internationalLabel.getStyleClass().addAll("btn", "text-gold");
+		_internationalLabel.setOnMouseClicked(e -> model.beginInternationalGame());
 
 		// show leaderboard button
 		Label leaderboardLabel = new Label("Leaderboard");
@@ -52,11 +55,23 @@ public class MenuPane extends ViewBase {
 		// add styles
 		addStylesheet("menu.css");
 		_container.getStyleClass().add("menu");
-		_container.getChildren().addAll(titleLabel, playLabel, practiceLabel, internationalLabel, leaderboardLabel, themesLabel, quitLabel);
+		_container.getChildren().addAll(titleLabel, playLabel, practiceLabel, _internationalLabel, leaderboardLabel, themesLabel, quitLabel);
+
+		// listen to state changes
+		onModelStateChange();
+		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
 	}
 
 	@Override
 	public VBox getView() {
 		return _container;
+	}
+
+	private void onModelStateChange() {
+		// only update when this screen is shown
+		if (_model.getState() != QuinzicalModel.State.MENU) return;
+
+		// grey internation button out when disabled
+		_internationalLabel.setOpacity(_model.checkInternationalSectionCanStart() ? 1 : 0.4);
 	}
 }
