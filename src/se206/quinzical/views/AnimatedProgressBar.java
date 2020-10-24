@@ -41,8 +41,15 @@ public class AnimatedProgressBar extends ViewBase {
 			}
 
 			@Override
+			public void stop() {
+				super.stop();
+				_progressBar.setProgress(0);
+			}
+
+			@Override
 			public void start() {
 				super.start();
+				_progressBar.setProgress(0);
 				startTime = System.nanoTime();
 			}
 		};
@@ -68,6 +75,7 @@ public class AnimatedProgressBar extends ViewBase {
 	 * Start animation
 	 */
 	public void start() {
+		_progressBarTimer.stop();
 		_progressBarTimer.start();
 	}
 
