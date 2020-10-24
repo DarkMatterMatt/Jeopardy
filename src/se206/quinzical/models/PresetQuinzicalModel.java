@@ -22,7 +22,7 @@ public class PresetQuinzicalModel extends QuizModel {
 	private static final int QUESTIONS_PER_CATEGORY = 5;
 	private final List<Category> _categories = new ArrayList<>();
 	private final IntegerProperty _score = new SimpleIntegerProperty();
-	private BooleanProperty _toBeInitialised = new SimpleBooleanProperty();
+	private BooleanProperty _toBeInitialised = new SimpleBooleanProperty(true);
 	private IntegerProperty _pregameUpdate;
 
 	public PresetQuinzicalModel(QuinzicalModel model) {
@@ -213,6 +213,9 @@ public class PresetQuinzicalModel extends QuizModel {
 	 * returns whether the categories need to be initialised (5 categories selection
 	 */
 	public boolean checkNeedToBeInitialised() {
+		if(_toBeInitialised == null) {
+			_toBeInitialised = new SimpleBooleanProperty(true);
+		}
 		return _toBeInitialised.get();
 	}
 
