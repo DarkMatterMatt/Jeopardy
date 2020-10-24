@@ -19,14 +19,14 @@
 /** style buttons **/
 .dialog-pane .button {
     -fx-background-color: -c-grey-00;
-    -fx-text-fill: white;
+    -fx-text-fill: -c-off-white;
     -fx-wrap-text: false;
     -fx-cursor: hand;
 }
 
 .dialog-pane .button:hover {
     -fx-background-color: -c-off-white;
-    -fx-text-fill: black;
+    -fx-text-fill: -c-grey-03;
     -fx-font-weight: bold;
 }
 
