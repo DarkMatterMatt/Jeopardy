@@ -77,7 +77,7 @@ public class PresetQuinzicalModel extends QuizModel {
 		// the next time the category is selected, the next question will be chosen
 		getCurrentQuestion().getCategory().moveToNextQuestion();
 
-		if (getNumRemaining() > 0) {
+		if (!allAttempted()) {
 			// update "current question" to be the next question in the same category
 			selectCategory(getCurrentQuestion().getCategory());
 		}
@@ -105,6 +105,15 @@ public class PresetQuinzicalModel extends QuizModel {
 	 */
 	public long getNumRemaining() {
 		return _categories.stream().mapToLong(Category::getNumRemaining).sum();
+	}
+
+	/**
+	 * Returns true when all questions have been attempted
+	 */
+	public boolean allAttempted() {
+		// bug means that this doesn't work :(
+		// return getNumRemaining() == 0;
+		return _categories.stream().allMatch(c -> c.getActiveQuestion() == null);
 	}
 
 	/**
@@ -206,7 +215,7 @@ public class PresetQuinzicalModel extends QuizModel {
 	public boolean checkNeedToBeInitialised() {
 		return _toBeInitialised.get();
 	}
-	
+
 	/**
 	 * set toBeInitialised status to false toBeInitialised status says if pregame
 	 * category selection is required
@@ -215,7 +224,7 @@ public class PresetQuinzicalModel extends QuizModel {
 		loadQuestions();
 		_toBeInitialised.set(false);
 	}
-	
+
 	/**
 	 * set toBeInitialied status to true toBeInitialised status says if pregame
 	 * category selection is required
