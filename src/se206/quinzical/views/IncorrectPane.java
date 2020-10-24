@@ -73,7 +73,7 @@ public class IncorrectPane extends ViewBase {
 	 * Called when we are ready to leave this screen
 	 */
 	private void onVisibilityChanged() {
-		if (!_container.isVisible()) {
+		if (!_container.isVisible() || !_model.isActive()) {
 			// container is hidden
 			_progressBarView.stop();
 			return;

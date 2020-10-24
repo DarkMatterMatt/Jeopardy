@@ -73,7 +73,7 @@ public class SkipPane extends ViewBase {
 	 * Check if we are visible, then update the question
 	 */
 	private void onVisibilityChanged() {
-		if (!_container.isVisible()) {
+		if (!_container.isVisible() || !_model.isActive()) {
 			// container is hidden
 			_progressBarView.stop();
 			return;
