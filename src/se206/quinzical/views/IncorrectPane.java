@@ -87,25 +87,18 @@ public class IncorrectPane extends ViewBase {
 	 * Update to show correct answer
 	 */
 	private void questionUpdate(Question q) {
-		boolean isInternational = _model.currentStateIsInternationalSection();
-		if (q != null || isInternational) {
-			
+		if (_model.currentStateIsInternationalSection()) {
+			q = _model .getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule();
+		}
+		if (q != null) {
 			// speak correct answer
-			if (isInternational) {
-				TextToSpeech.getInstance().speak("Incorrect. The correct answer was " + _model
-						.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule().getAnswer());
-			} else {
-				TextToSpeech.getInstance().speak("Incorrect. The correct answer was " + q.getAnswer());
-			}
+			TextToSpeech.getInstance().speak("Incorrect. The correct answer was " + q.getAnswer().get(0));
 
 			List<Node> children = _answerTextFlow.getChildren();
 			children.clear();
 			children.add(createTextNode("The correct answer was ", "text-white"));
 
-			List<String> answers = (isInternational)
-					? (_model.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule()
-							.getAnswer())
-					: (q.getAnswer());
+			List<String> answers = q.getAnswer();
 			for (String a : answers) {
 				children.add(createTextNode(" or ", "text-white"));
 				children.add(createTextNode(a, "text-bold", "text-white"));

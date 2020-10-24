@@ -89,7 +89,7 @@ public class SkipPane extends ViewBase {
 	private void questionUpdate(Question q) {
 		if (q != null) {
 			// speak correct answer
-			TextToSpeech.getInstance().speak("Skipped. The correct answer was " + q.getAnswer());
+			TextToSpeech.getInstance().speak("Skipped. The correct answer was " + q.getAnswer().get(0));
 
 			_answerLabel.getChildren().clear();
 
