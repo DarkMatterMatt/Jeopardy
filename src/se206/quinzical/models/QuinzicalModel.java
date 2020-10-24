@@ -410,6 +410,8 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	public void beginInternationalGame() {
 		if (this.checkInternationalSectionCanStart()) {
+			this.resetLives();
+			this.resetCurrentInternationalScore();
 			setState(State.INTERNATIONAL);
 			this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
 		} else {
