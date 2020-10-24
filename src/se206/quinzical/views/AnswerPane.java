@@ -93,7 +93,9 @@ public class AnswerPane extends ViewBase {
 			if (_isPracticeMode) {
 				throw new IllegalStateException("Answer timer should not be shown in practice mode");
 			}
-			((PresetQuinzicalModel) _model).skipQuestion();
+			if (_container.isVisible()) {
+				((PresetQuinzicalModel) _model).skipQuestion();
+			}
 		});
 		if (!_isPracticeMode) {
 			_container.getChildren().add(_timer.getView());
