@@ -69,7 +69,13 @@ public class Taskbar extends ViewBase {
 		// text speed slider
 		_speedSlider = createSpeedSlider();
 
-		_container.getChildren().addAll(_speedSlider, _toggleText, home, _reset, exit);
+		Icon help = new Icon("/se206/quinzical/assets/help.png");
+		help.setSize(30, 30);
+		help.getView().setOnMouseClicked(e -> {
+			generateUserHelpAlert();
+		});
+
+		_container.getChildren().addAll(_speedSlider, _toggleText, home, _reset, help.getView(), exit);
 		_container.setSpacing(10);
 		_container.getStyleClass().add("taskbar");
 		addStylesheet("taskbar.css");
@@ -77,6 +83,40 @@ public class Taskbar extends ViewBase {
 		// show reset button ONLY during game state
 		onModelStateChange();
 		_model.getStateProperty().addListener((obs, old, val) -> onModelStateChange());
+	}
+
+	private void generateUserHelpAlert() {
+		switch (_model.getState()) {
+		case GAME:
+			AlertFactory.getCustomWarning(_model, "GAME MODE",
+					"The goal is to get as many questions as possible (and earn $$$). "
+							+ "Skipped/incorrect question will result in deduction of half the value of the question\n\n"
+							+ "At the end of the game, you will be able to enter your name on the leaderboard!");
+			break;
+		case PRACTICE:
+			AlertFactory.getCustomWarning(_model, "PRACTICE MODE",
+					"Here, you can practice with all the available questions in the system without penalty to your main game money. "
+							+ "Start practicing by simply selecting one of the categories!\n\n"
+							+ "Also, note that you can switch around the categories using up and down keys.");
+			break;
+		case INTERNATIONAL:
+			AlertFactory.getCustomWarning(_model, "INTERNATIONAL MODE",
+					"Unlike all the other modes where all the questions are NZ-related, this mode presents you with global-context questions."
+							+ " The aim is to get as many questions as you can with 3 lives. ");
+			break;
+		case LEADERBOARD:
+			AlertFactory.getCustomWarning(_model, "LEADERBOARD",
+					"This section displays overall top 7 players of all times!"
+							+ " Complete the GAME MODE (accessible through PLAY) and enter your name to the hall of honor.");
+			break;
+		case THEME_SELECT:
+			AlertFactory.getCustomWarning(_model, "THEME",
+					"Simply choose select button on the theme that you most like. "
+							+ "After all, we don't want you to hate this game by forcing you a dark mode!");
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**
