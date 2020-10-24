@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.switches;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -6,6 +6,16 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.views.base.SwitcherBase;
+import se206.quinzical.views.pane.AnswerPane;
+import se206.quinzical.views.pane.answerstate.CorrectPane;
+import se206.quinzical.views.pane.answerstate.GameOverPane;
+import se206.quinzical.views.pane.answerstate.IncorrectPane;
+import se206.quinzical.views.pane.answerstate.SkipPane;
+import se206.quinzical.views.pane.category.CategoriesListPane;
+import se206.quinzical.views.pane.category.CategoryPreviewPane;
+import se206.quinzical.views.pane.pregame.PregameCategoriesListPane;
+import se206.quinzical.views.pane.pregame.PregameCategoryIconsPreviewPane;
 
 /**
  * This is Switch type.

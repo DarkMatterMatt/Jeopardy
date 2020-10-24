@@ -1,9 +1,11 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane.answerstate;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.QuizModel;
+import se206.quinzical.views.atom.AnswerTextField;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This class is Pane type.

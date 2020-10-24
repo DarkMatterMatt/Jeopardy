@@ -140,8 +140,8 @@ public class PresetQuinzicalModel extends QuizModel {
 	/**
 	 * Select 5 categories, each containing random 5 questions. This is fed in from
 	 * pregame category selection (refer to
-	 * {@link se206.quinzical.views.PregameCategoriesListPane},
-	 * {@link se206.quinzical.views.PregameCategoryIconsPreviewPane})
+	 * {@link se206.quinzical.views.pane.pregame.PregameCategoriesListPane},
+	 * {@link se206.quinzical.views.pane.pregame.PregameCategoryIconsPreviewPane})
 	 */
 	private void loadQuestions() {
 		_categories.clear();

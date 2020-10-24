@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane.category;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -8,6 +8,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import se206.quinzical.models.PresetQuinzicalModel;
 import se206.quinzical.models.Question;
+import se206.quinzical.views.atom.Icon;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This class is Pane type.

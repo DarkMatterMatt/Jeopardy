@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.atom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,19 +8,20 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.views.base.ViewBase;
 
 /**
- * Pane for international section, that shows remaining lives as heart icons and 
- * also shows high score & current score
+ * Atom that represents lives for international section, that shows remaining
+ * lives as heart icons and also shows high score & current score
  */
-public class LivesPane extends ViewBase {
+public class Lives extends ViewBase {
 	private final VBox _container = new VBox();
 	private final VBox _highscoreBox = new VBox();
 	private final VBox _livesBox = new VBox();
 
 	private QuinzicalModel _model;
 	
-	public LivesPane(QuinzicalModel model) {
+	public Lives(QuinzicalModel model) {
 		_model = model;
 
 		// add the box containing lives into the container

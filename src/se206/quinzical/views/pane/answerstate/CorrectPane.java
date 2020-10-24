@@ -1,10 +1,12 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane.answerstate;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyEventManager;
 import se206.quinzical.models.util.TextToSpeech;
+import se206.quinzical.views.atom.AnimatedProgressBar;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This is a Pane type.

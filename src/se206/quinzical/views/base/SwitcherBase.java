@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.base;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,7 +22,7 @@ public abstract class SwitcherBase extends ViewBase {
 	/**
 	 * Switch to the provided view
 	 */
-	protected void switchToView(Parent show) {
+	public void switchToView(Parent show) {
 		for (Node n : _container.getChildren()) {
 			n.setVisible(n == show);
 		}

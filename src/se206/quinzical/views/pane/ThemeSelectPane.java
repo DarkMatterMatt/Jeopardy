@@ -1,9 +1,10 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.Theme;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * Contains theme selection

@@ -1,7 +1,9 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane;
 
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.views.base.ViewBase;
+import se206.quinzical.views.switches.QuizContentSwitch;
 
 /**
  * This is Pane type.

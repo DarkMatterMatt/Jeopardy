@@ -1,7 +1,10 @@
-package se206.quinzical.views;
+package se206.quinzical.views.switches;
 
 import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.util.KeyboardShortcuts;
+import se206.quinzical.views.base.SwitcherBase;
+import se206.quinzical.views.pane.MenuPane;
+import se206.quinzical.views.pane.QuizPane;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.atom;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,6 +13,9 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.util.TextToSpeech;
+import se206.quinzical.views.AlertFactory;
+import se206.quinzical.views.base.SwitcherBase;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This is Atom type.

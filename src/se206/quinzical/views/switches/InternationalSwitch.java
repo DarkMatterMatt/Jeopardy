@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.switches;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -6,12 +6,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.views.atom.Lives;
+import se206.quinzical.views.base.SwitcherBase;
+import se206.quinzical.views.pane.AnswerPane;
+import se206.quinzical.views.pane.answerstate.CorrectPane;
+import se206.quinzical.views.pane.answerstate.IncorrectPane;
 
 public class InternationalSwitch extends SwitcherBase {
 	private final HBox _container = new HBox();
 	private final QuinzicalModel _model;
 	private final VBox _answerPane = new VBox();
-	private final LivesPane _livesPane;
+	private final Lives _livesPane;
 	private final IncorrectPane _incorrectPane;
 	private final CorrectPane _correctPane;
 
@@ -24,7 +29,7 @@ public class InternationalSwitch extends SwitcherBase {
 
 		// make a question box, make lives pane
 		updateAnswerPane();
-		_livesPane = new LivesPane(_model);
+		_livesPane = new Lives(_model);
 		HBox.setHgrow(_answerPane, Priority.ALWAYS);
 		VBox.setVgrow(_answerPane, Priority.ALWAYS);
 		// add them to the container

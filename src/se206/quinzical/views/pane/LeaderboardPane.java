@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane;
 
 import javafx.collections.ListChangeListener;
 import javafx.geometry.HPos;
@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import se206.quinzical.models.LeaderboardModel;
+import se206.quinzical.views.base.ViewBase;
 
 import java.util.List;
 

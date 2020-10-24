@@ -1,7 +1,8 @@
-package se206.quinzical.views;
+package se206.quinzical.views.atom;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.ProgressBar;
+import se206.quinzical.views.base.ViewBase;
 
 import java.util.function.Consumer;
 

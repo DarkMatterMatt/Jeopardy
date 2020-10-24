@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -12,6 +12,10 @@ import se206.quinzical.models.Question;
 import se206.quinzical.models.QuinzicalModel;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.TextToSpeech;
+import se206.quinzical.views.atom.AnimatedProgressBar;
+import se206.quinzical.views.atom.AnswerTextField;
+import se206.quinzical.views.atom.Icon;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This class is a Pane type, and uses AnswerTextField atom.

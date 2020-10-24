@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.atom;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,6 +12,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import se206.quinzical.models.QuizModel;
+import se206.quinzical.views.base.ViewBase;
 
 import java.util.function.Consumer;
 

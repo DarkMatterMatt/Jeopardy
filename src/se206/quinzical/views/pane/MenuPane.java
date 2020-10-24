@@ -1,9 +1,10 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This class is Pane type, and it does not contain any atoms.

@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.base;
 
 import javafx.scene.Parent;
 

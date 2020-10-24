@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane.pregame;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.Category;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This class is Pane type.

@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
 import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.TextToSpeech;
-import se206.quinzical.views.Icon;
+import se206.quinzical.views.atom.Icon;
 
 /**
  * Base class defining the behaviour of QuizModel.

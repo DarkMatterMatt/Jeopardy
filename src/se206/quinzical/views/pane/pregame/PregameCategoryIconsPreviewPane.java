@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane.pregame;
 
 import java.util.List;
 
@@ -8,6 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import se206.quinzical.models.Category;
 import se206.quinzical.models.QuinzicalModel;
+import se206.quinzical.views.AlertFactory;
+import se206.quinzical.views.atom.Icon;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This class is pane type

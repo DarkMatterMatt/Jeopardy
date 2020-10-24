@@ -1,4 +1,4 @@
-package se206.quinzical.views;
+package se206.quinzical.views.pane.category;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ import se206.quinzical.models.Category;
 import se206.quinzical.models.PracticeModel;
 import se206.quinzical.models.QuizModel;
 import se206.quinzical.models.util.KeyboardShortcuts;
+import se206.quinzical.views.base.ViewBase;
 
 /**
  * This class is Pane type.
