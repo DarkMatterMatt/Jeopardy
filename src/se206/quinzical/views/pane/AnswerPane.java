@@ -135,7 +135,7 @@ public class AnswerPane extends ViewBase {
 	 */
 	private void onVisibilityChanged() {
 		if (_model.getModel().getState() == QuinzicalModel.State.INTERNATIONAL) {
-			questionUpdate(_model.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule());
+			questionUpdate(_model.getInternationalCategory().getActiveQuestionInPracticeModule());
 			return;
 		}
 

@@ -49,7 +49,7 @@ public abstract class QuizModel implements GsonPostProcessable {
 	 * Return to category selection
 	 */
 	public void finishQuestion() {
-		if (currentStateIsInternationalSection()) {
+		if (internationalSectionActive()) {
 			setState(State.SELECT_CATEGORY);
 			return;
 		}
@@ -192,16 +192,16 @@ public abstract class QuizModel implements GsonPostProcessable {
 	}
 
 	/**
-	 * checks if the current state is international section
+	 * Checks if the international section is active
 	 */
-	public boolean currentStateIsInternationalSection() {
+	public boolean internationalSectionActive() {
 		return _model.getState() == QuinzicalModel.State.INTERNATIONAL;
 	}
 
 	/**
-	 * gets international category from quinzical model
+	 * Returns the international category
 	 */
-	public Category getInternationalCategoryFromQuinzicalModel() {
+	public Category getInternationalCategory() {
 		return _model.getInternationalCategory();
 	}
 

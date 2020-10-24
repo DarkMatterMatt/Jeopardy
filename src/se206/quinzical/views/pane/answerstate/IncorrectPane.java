@@ -89,8 +89,8 @@ public class IncorrectPane extends ViewBase {
 	 * Update to show correct answer
 	 */
 	private void questionUpdate(Question q) {
-		if (_model.currentStateIsInternationalSection()) {
-			q = _model .getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule();
+		if (_model.internationalSectionActive()) {
+			q = _model .getInternationalCategory().getActiveQuestionInPracticeModule();
 		}
 		if (q != null) {
 			// speak correct answer

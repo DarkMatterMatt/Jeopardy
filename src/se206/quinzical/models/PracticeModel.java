@@ -34,7 +34,7 @@ public class PracticeModel extends QuizModel {
 	 */
 	@Override
 	public void answerQuestion(String answer) {
-		if (_model.getPracticeModel().currentStateIsInternationalSection()) {
+		if (_model.getPracticeModel().internationalSectionActive()) {
 			handleInternationalQuestion(answer);
 			return;
 		}
@@ -74,7 +74,7 @@ public class PracticeModel extends QuizModel {
 	}
 
 	private void handleInternationalQuestion(String answer) {
-		Question q = getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule();
+		Question q = getInternationalCategory().getActiveQuestionInPracticeModule();
 		boolean correct = q.checkAnswer(answer);
 
 		if (correct) {
