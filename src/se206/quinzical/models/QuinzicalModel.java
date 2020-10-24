@@ -1,42 +1,30 @@
 package se206.quinzical.models;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import org.hildan.fxgson.FxGson;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
+import org.hildan.fxgson.FxGson;
 import se206.quinzical.models.util.FileHelper;
 import se206.quinzical.models.util.GsonPostProcessable;
 import se206.quinzical.models.util.GsonPostProcessingEnabler;
 import se206.quinzical.models.util.TextToSpeech;
 import se206.quinzical.views.AlertFactory;
 
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Quinzical Model represents the model for the whole game.
  * Is responsible for keeping track of all the state (including state of the screens, questions, categories, all the other sub-models)
  */
 public class QuinzicalModel implements GsonPostProcessable {
+	public static final String INTERNATIONAL = "INTERNATIONAL";
 	private static final String DEFAULT_CATEGORIES_LOCATION = "./categories/";
 	private static final String DEFAULT_SAVE_LOCATION = "./.save";
 	private static final Gson GSON = FxGson.coreBuilder()
@@ -44,22 +32,21 @@ public class QuinzicalModel implements GsonPostProcessable {
 			.setPrettyPrinting()
 			.disableHtmlEscaping()
 			.create();
-	private final List<Category> _categories = new ArrayList<>();
-	private final PracticeModel _practiceModel;
-	private final PresetQuinzicalModel _presetModel;
-	private transient final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
-	private final ObjectProperty<Theme> _theme = new SimpleObjectProperty<>(Theme.BUMBLEBEE);
-	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
-	private transient final TextToSpeech _textToSpeech = TextToSpeech.getInstance();
-	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
-	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
-	public static final String INTERNATIONAL = "INTERNATIONAL";
-	private Category _internationalCategory = new Category(INTERNATIONAL);
 	private static final Integer MAXIMUM_LIVES = 3;
-	private final IntegerProperty _lives = new SimpleIntegerProperty(MAXIMUM_LIVES);
+	private final List<Category> _categories = new ArrayList<>();
 	private final IntegerProperty _currentInternationalScore = new SimpleIntegerProperty(0);
 	private final IntegerProperty _internationalHighScore = new SimpleIntegerProperty(0);
 	private final LeaderboardModel _leaderboardModel = new LeaderboardModel();
+	private final IntegerProperty _lives = new SimpleIntegerProperty(MAXIMUM_LIVES);
+	private final PracticeModel _practiceModel;
+	private final PresetQuinzicalModel _presetModel;
+	private transient final ObjectProperty<State> _state = new SimpleObjectProperty<>(State.MENU);
+	private final BooleanProperty _textEnabled = new SimpleBooleanProperty(true);
+	private transient final TextToSpeech _textToSpeech = TextToSpeech.getInstance();
+	private final ObjectProperty<Theme> _theme = new SimpleObjectProperty<>(Theme.BUMBLEBEE);
+	private transient String _categoriesLocation = DEFAULT_CATEGORIES_LOCATION;
+	private Category _internationalCategory = new Category(INTERNATIONAL);
+	private transient String _saveFileLocation = DEFAULT_SAVE_LOCATION;
 
 	public QuinzicalModel() {
 		this(null);
@@ -89,7 +76,8 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	public static QuinzicalModel load(String saveFileLocation) {
 		try (Reader reader = new FileReader(saveFileLocation)) {
-			Type type = new TypeToken<QuinzicalModel>() { }.getType();
+			Type type = new TypeToken<QuinzicalModel>() {
+			}.getType();
 			QuinzicalModel model = GSON.fromJson(reader, type);
 			model.setSaveFileLocation(saveFileLocation);
 			return model;
@@ -122,24 +110,26 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
-	 * Display the leaderboard containing 'real' game scores
-	 */
-	public void showLeaderboard() {
-		setState(State.LEADERBOARD);
-	}
-
-	/**
-	 * Display the leaderboard containing 'real' game scores
-	 */
-	public void showThemeSelection() {
-		setState(State.THEME_SELECT);
-	}
-
-	/**
 	 * Changes to the 'real' game state
 	 */
 	public void beginGame() {
 		setState(State.GAME);
+	}
+
+	/**
+	 * Switch to international game mode
+	 */
+	public void beginInternationalGame() {
+		if (checkInternationalSectionCanStart()) {
+			resetLives();
+			resetInternationalScore();
+			setState(State.INTERNATIONAL);
+			getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
+		}
+		else {
+			AlertFactory.getCustomWarning(this, "This section is locked!",
+					"You gotta complete at least two categories in Play mode.");
+		}
 	}
 
 	/**
@@ -151,10 +141,72 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Check if international section can start prerequisites - toBeInitialised
+	 * state should not be true - PresetModel's categories size must be 5 - number
+	 * of finished categories (in preset model) should be 2 or more
+	 *
+	 * @return true if international section can start
+	 */
+	public boolean checkInternationalSectionCanStart() {
+		if (getPresetModel().getCategories().size() != 5 || getPresetModel().checkNeedToBeInitialised()) {
+			return false;
+		}
+		int count = 0;
+		for (Category c : getPresetModel().getCategories()) {
+			if (c.getNumRemaining() == 0) {
+				count++;
+			}
+		}
+		return count >= 2;
+	}
+
+	/**
 	 * Return the categories (ALL available categories)
 	 */
 	public List<Category> getCategories() {
 		return Collections.unmodifiableList(_categories);
+	}
+
+	/**
+	 * Get international category
+	 */
+	public Category getInternationalCategory() {
+		return _internationalCategory;
+	}
+
+	public int getInternationalHighScore() {
+		return _internationalHighScore.get();
+	}
+
+	public void setInternationalHighScore(int value) {
+		_internationalHighScore.set(value);
+	}
+
+	public int getInternationalScore() {
+		return _currentInternationalScore.get();
+	}
+
+	/**
+	 * Return the leaderboard model (scores for main module)
+	 */
+	public LeaderboardModel getLeaderboardModel() {
+		return _leaderboardModel;
+	}
+
+	/**
+	 * Get lives property that is listenable
+	 * lives are applicable for the international section
+	 * can also be used to retrieve the current number of lives for the international section
+	 */
+	public IntegerProperty getLivesProperty() {
+		return _lives;
+	}
+
+	/**
+	 * Get the max number of lives
+	 */
+	public int getMaxLives() {
+		return MAXIMUM_LIVES;
 	}
 
 	/**
@@ -172,13 +224,6 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
-	 * Return the leaderboard model (scores for main module)
-	 */
-	public LeaderboardModel getLeaderboardModel() {
-		return _leaderboardModel;
-	}
-
-	/**
 	 * Return current save file location
 	 */
 	public String getSaveFileLocation() {
@@ -192,26 +237,8 @@ public class QuinzicalModel implements GsonPostProcessable {
 		_saveFileLocation = saveFileLocation;
 	}
 
-	/**
-	 * Return current application theme.
-	 */
-	public Theme getTheme() {
-		return _theme.get();
-	}
-
-	/**
-	 * Change application theme
-	 */
-	public void setTheme(Theme theme) {
-		_theme.set(theme);
-		save();
-	}
-
-	/**
-	 * Return theme property (e.g. so change listeners can be bound)
-	 */
-	public ObjectProperty<Theme> getThemeProperty() {
-		return _theme;
+	public IntegerProperty getScoreProperty() {
+		return _currentInternationalScore;
 	}
 
 	/**
@@ -251,12 +278,38 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Return current application theme.
+	 */
+	public Theme getTheme() {
+		return _theme.get();
+	}
+
+	/**
+	 * Change application theme
+	 */
+	public void setTheme(Theme theme) {
+		_theme.set(theme);
+		save();
+	}
+
+	/**
+	 * Return theme property (e.g. so change listeners can be bound)
+	 */
+	public ObjectProperty<Theme> getThemeProperty() {
+		return _theme;
+	}
+
+	/**
 	 * After deserializing, we need to give each QuizModel a reference to its parent model (removed during serialization)
 	 */
 	@Override
 	public void gsonPostProcess() {
 		_presetModel.setQuinzicalModel(this);
 		_practiceModel.setQuinzicalModel(this);
+	}
+
+	public void increaseInternationalScore() {
+		_currentInternationalScore.set(_currentInternationalScore.get() + 1);
 	}
 
 	private void loadCategories() {
@@ -287,11 +340,19 @@ public class QuinzicalModel implements GsonPostProcessable {
 				// make category out of that
 				if (newCategory.getName().equals(INTERNATIONAL)) {
 					_internationalCategory = newCategory;
-				} else if (newCategory.getQuestions().size() > 0) {
+				}
+				else if (newCategory.getQuestions().size() > 0) {
 					_categories.add(newCategory);
 				}
 			}
 		}
+	}
+
+	/**
+	 * Reduce the number of lives for international section
+	 */
+	public void reduceLives() {
+		_lives.set((_lives.get() != 0) ? (_lives.get() - 1) : (0));
 	}
 
 	/**
@@ -303,6 +364,17 @@ public class QuinzicalModel implements GsonPostProcessable {
 		}
 		loadCategories();
 		_presetModel.reset();
+	}
+
+	public void resetInternationalScore() {
+		_currentInternationalScore.set(0);
+	}
+
+	/**
+	 * Reset lives
+	 */
+	public void resetLives() {
+		_lives.set(MAXIMUM_LIVES);
 	}
 
 	/**
@@ -339,6 +411,20 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Display the leaderboard containing 'real' game scores
+	 */
+	public void showLeaderboard() {
+		setState(State.LEADERBOARD);
+	}
+
+	/**
+	 * Display the leaderboard containing 'real' game scores
+	 */
+	public void showThemeSelection() {
+		setState(State.THEME_SELECT);
+	}
+
+	/**
 	 * Check whether text for clue is disabled or enabled
 	 */
 	public boolean textVisible() {
@@ -357,43 +443,6 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
-	 * Reduce the number of lives for international section
-	 */
-	public void reduceLives() {
-		_lives.set((_lives.get()!=0)?(_lives.get()-1):(0));
-	}
-	/**
-
-	/**
-	 * get the max number of lives
-	 */
-	public int getMaxLives() {
-		return MAXIMUM_LIVES;
-	}
-
-	/**
-	 * reset lives
-	 */
-	public void resetLives() {
-		_lives.set(MAXIMUM_LIVES);
-	}
-	/**
-	 * Get lives property that is listenable
-	 * lives are applicable for the international section
-	 * can also be used to retrieve the current number of lives for the international section
-	 */
-	public IntegerProperty getLivesProperty() {
-		return _lives;
-	}
-
-	/**
-	 * Get international category
-	 */
-	public Category getInternationalCategory() {
-		return _internationalCategory;
-	}
-
-	/**
 	 * Main screen being shown
 	 */
 	public enum State {
@@ -404,63 +453,4 @@ public class QuinzicalModel implements GsonPostProcessable {
 		LEADERBOARD,
 		THEME_SELECT,
 	}
-
-	/**
-	 * change current gamemode to international game
-	 */
-	public void beginInternationalGame() {
-		if (checkInternationalSectionCanStart()) {
-			resetLives();
-			resetInternationalScore();
-			setState(State.INTERNATIONAL);
-			getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
-		} else {
-			AlertFactory.getCustomWarning(this, "This section is locked!",
-					"You gotta complete at least two categories in Play mode.");
-		}
-	}
-
-	public IntegerProperty getScoreProperty() {
-		return _currentInternationalScore;
-	}
-	public void increaseInternationalScore() {
-		_currentInternationalScore.set(_currentInternationalScore.get() + 1);
-	}
-
-	public int getInternationalScore() {
-		return _currentInternationalScore.get();
-	}
-
-	public void resetInternationalScore() {
-		_currentInternationalScore.set(0);
-	}
-
-	public void setInternationalHighScore(int value) {
-		_internationalHighScore.set(value);
-	}
-
-	public int getInternationalHighScore() {
-		return _internationalHighScore.get();
-	}
-
-	/**
-	 * Check if international section can start prerequisites - toBeInitialised
-	 * state should not be true - presetmodel's categories size must be 5 - number
-	 * of finished categories (in preset model) should be 2 or more
-	 *
-	 * @return true Means international section can start
-	 */
-	public boolean checkInternationalSectionCanStart() {
-		if(getPresetModel().getCategories().size() != 5 || getPresetModel().checkNeedToBeInitialised()) {
-			return false;
-		}
-		int count = 0;
-		for (Category c : getPresetModel().getCategories()) {
-			if (c.getNumRemaining() == 0) {
-				count++;
-			}
-		}
-		return count >= 2;
-	}
-
 }
