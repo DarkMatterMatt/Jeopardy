@@ -58,7 +58,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	private static final Integer MAXIMUM_LIVES = 3;
 	private final IntegerProperty _lives = new SimpleIntegerProperty(MAXIMUM_LIVES);
 	private final IntegerProperty _currentInternationalScore = new SimpleIntegerProperty(0);
-	private final IntegerProperty _InternationalHighScore = new SimpleIntegerProperty(0);
+	private final IntegerProperty _internationalHighScore = new SimpleIntegerProperty(0);
 	private final LeaderboardModel _leaderboardModel = new LeaderboardModel();
 
 	public QuinzicalModel() {
@@ -411,7 +411,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	public void beginInternationalGame() {
 		if (checkInternationalSectionCanStart()) {
 			resetLives();
-			resetCurrentInternationalScore();
+			resetInternationalScore();
 			setState(State.INTERNATIONAL);
 			getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
 		} else {
@@ -427,20 +427,20 @@ public class QuinzicalModel implements GsonPostProcessable {
 		_currentInternationalScore.set(_currentInternationalScore.get() + 1);
 	}
 
-	public int getCurrentInternationalScore() {
+	public int getInternationalScore() {
 		return _currentInternationalScore.get();
 	}
 
-	public void resetCurrentInternationalScore() {
+	public void resetInternationalScore() {
 		_currentInternationalScore.set(0);
 	}
 
 	public void setInternationalHighScore(int value) {
-		_InternationalHighScore.set(value);
+		_internationalHighScore.set(value);
 	}
 
-	public int getInternationalHighscore() {
-		return _InternationalHighScore.get();
+	public int getInternationalHighScore() {
+		return _internationalHighScore.get();
 	}
 
 	/**

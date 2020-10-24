@@ -78,15 +78,15 @@ public class PracticeModel extends QuizModel {
 		boolean correct = q.checkAnswer(answer);
 
 		if (correct) {
-			if (_model.getCurrentInternationalScore() + 1 > _model.getInternationalHighscore()) {
-				_model.setInternationalHighScore(_model.getCurrentInternationalScore() + 1);
+			if (_model.getInternationalScore() + 1 > _model.getInternationalHighScore()) {
+				_model.setInternationalHighScore(_model.getInternationalScore() + 1);
 			}
 			_model.increaseInternationalScore();
 		} else {
 			_model.reduceLives();
 			if (_model.getLivesProperty().get() == 0) {
 				AlertFactory.getCustomWarning(_model, "Game over!", "Start over again");
-				_model.resetCurrentInternationalScore();
+				_model.resetInternationalScore();
 				_model.resetLives();
 			}
 		}
