@@ -451,7 +451,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 * @return true Means international section can start
 	 */
 	public boolean checkInternationalSectionCanStart() {
-		if(_categories == null || getPresetModel().getCategories().size() != 5 || getPresetModel().checkNeedToBeInitialised()) {
+		if(getPresetModel().getCategories().size() != 5 || getPresetModel().checkNeedToBeInitialised()) {
 			return false;
 		}
 		int count = 0;
@@ -460,11 +460,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 				count++;
 			}
 		}
-		if (count >= 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return count >= 2;
 	}
 
 }
