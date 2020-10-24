@@ -49,7 +49,7 @@ public abstract class QuizModel implements GsonPostProcessable {
 	 * Return to category selection
 	 */
 	public void finishQuestion() {
-		if (this.currentStateIsInternationalSection()) {
+		if (currentStateIsInternationalSection()) {
 			setState(State.SELECT_CATEGORY);
 			return;
 		}

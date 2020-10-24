@@ -147,7 +147,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 */
 	public void beginPracticeGame() {
 		setState(State.PRACTICE);
-		this.getPracticeModel().setState(QuizModel.State.SELECT_CATEGORY);
+		getPracticeModel().setState(QuizModel.State.SELECT_CATEGORY);
 	}
 
 	/**
@@ -409,11 +409,11 @@ public class QuinzicalModel implements GsonPostProcessable {
 	 * change current gamemode to international game
 	 */
 	public void beginInternationalGame() {
-		if (this.checkInternationalSectionCanStart()) {
-			this.resetLives();
-			this.resetCurrentInternationalScore();
+		if (checkInternationalSectionCanStart()) {
+			resetLives();
+			resetCurrentInternationalScore();
 			setState(State.INTERNATIONAL);
-			this.getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
+			getPracticeModel().setState(QuizModel.State.ANSWER_QUESTION);
 		} else {
 			AlertFactory.getCustomWarning(this, "This section is locked!",
 					"You gotta complete at least two categories in Play mode.");
@@ -421,26 +421,26 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	public IntegerProperty getScoreProperty() {
-		return this._currentInternationalScore;
+		return _currentInternationalScore;
 	}
 	public void increaseInternationalScore() {
-		this._currentInternationalScore.set(this._currentInternationalScore.get() + 1);
+		_currentInternationalScore.set(_currentInternationalScore.get() + 1);
 	}
 
 	public int getCurrentInternationalScore() {
-		return this._currentInternationalScore.get();
+		return _currentInternationalScore.get();
 	}
 
 	public void resetCurrentInternationalScore() {
-		this._currentInternationalScore.set(0);
+		_currentInternationalScore.set(0);
 	}
 
 	public void setInternationalHighScore(int value) {
-		this._InternationalHighScore.set(value);
+		_InternationalHighScore.set(value);
 	}
 
 	public int getInternationalHighscore() {
-		return this._InternationalHighScore.get();
+		return _InternationalHighScore.get();
 	}
 
 	/**

@@ -74,7 +74,7 @@ public class PracticeModel extends QuizModel {
 	}
 
 	private void handleInternationalQuestion(String answer) {
-		Question q = this.getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule();
+		Question q = getInternationalCategoryFromQuinzicalModel().getActiveQuestionInPracticeModule();
 		boolean correct = q.checkAnswer(answer);
 
 		if (correct) {

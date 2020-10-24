@@ -174,8 +174,8 @@ public class PresetQuinzicalModel extends QuizModel {
 	 * This is triggered when user resets the game.
 	 */
 	public void reset() {
-		this.setNeedToBeInitialised();
-		this.resetPregameSelectedCategories();
+		setNeedToBeInitialised();
+		resetPregameSelectedCategories();
 		setScore(0);
 
 		// randomly select another set of categories/questions
