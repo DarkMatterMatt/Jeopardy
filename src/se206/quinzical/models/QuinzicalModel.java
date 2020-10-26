@@ -153,7 +153,7 @@ public class QuinzicalModel implements GsonPostProcessable {
 		}
 		int count = 0;
 		for (Category c : getPresetModel().getCategories()) {
-			if (c.getNumRemaining() == 0) {
+			if (c.getActiveQuestion() == null) {
 				count++;
 			}
 		}
