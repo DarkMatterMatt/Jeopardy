@@ -126,7 +126,8 @@ public class TextToSpeech {
 			bw.write(String.format("(Parameter.set 'Duration_Stretch %.2f)", 1 / getSpeedMultiplier()));
 			bw.newLine();
 
-			// speak!
+			// speak! strip accents because festival can't handle them (and just ignores accented letters completely)
+			words = StringUtils.stripAccents(words);
 			bw.write("(SayText \"" + words.replace("\"", "") + "\")");
 			bw.newLine();
 		}
