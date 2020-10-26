@@ -31,11 +31,22 @@ public class PracticeModel extends QuizModel {
 	}
 
 	/**
+	 * Return the current question of this model
+	 */
+	@Override
+	public Question getCurrentQuestion() {
+		if (_model != null && internationalSectionActive()) {
+			return getInternationalCategory().getActiveQuestionInPracticeModule();
+		}
+		return super.getCurrentQuestion();
+	}
+
+	/**
 	 * Check if the given answer by the user is correct & make appropriate state changes.
 	 */
 	@Override
 	public void answerQuestion(String answer) {
-		if (_model.getPracticeModel().internationalSectionActive()) {
+		if (internationalSectionActive()) {
 			handleInternationalQuestion(answer);
 			return;
 		}
