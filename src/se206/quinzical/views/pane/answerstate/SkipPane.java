@@ -1,6 +1,7 @@
 package se206.quinzical.views.pane.answerstate;
 
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 import se206.quinzical.models.Question;
@@ -50,7 +51,7 @@ public class SkipPane extends ViewBase {
 		_container.visibleProperty().addListener((observable, oldVal, newVal) -> onVisibilityChanged());
 
 		// click to exit
-		_container.setOnMouseClicked(e -> exitView());
+		_container.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> exitView());
 
 		// press any key to exit
 		KeyEventManager.getInstance().addPressListener(ev -> {
