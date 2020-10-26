@@ -203,6 +203,13 @@ public class QuinzicalModel implements GsonPostProcessable {
 	}
 
 	/**
+	 * Get number of lives remaining for international section
+	 */
+	public int getLives() {
+		return _lives.get();
+	}
+
+	/**
 	 * Get the max number of lives
 	 */
 	public int getMaxLives() {

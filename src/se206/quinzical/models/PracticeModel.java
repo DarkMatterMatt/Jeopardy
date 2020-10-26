@@ -78,27 +78,21 @@ public class PracticeModel extends QuizModel {
 		boolean correct = q.checkAnswer(answer);
 
 		if (correct) {
-			if (_model.getInternationalScore() + 1 > _model.getInternationalHighScore()) {
-				_model.setInternationalHighScore(_model.getInternationalScore() + 1);
-			}
+			setState(State.CORRECT_ANSWER);
 			_model.increaseInternationalScore();
-		} else {
+			if (_model.getInternationalScore() > _model.getInternationalHighScore()) {
+				_model.setInternationalHighScore(_model.getInternationalScore());
+			}
+		}
+		else {
+			setState(State.INCORRECT_ANSWER);
 			_model.reduceLives();
-			if (_model.getLivesProperty().get() == 0) {
+			if (_model.getLives() == 0) {
 				AlertFactory.getCustomWarning(_model, "Game over!", "Start over again");
 				_model.resetInternationalScore();
 				_model.resetLives();
 			}
 		}
-
-
-		// TODO:if the lives are depleted, switch scene to game over
-		// TODO:register highscore, reset score
-		// turn on the flag of having exceeded highscore?
-
-		// change to correct/incorrect answer screen
-		setState(correct ? State.CORRECT_ANSWER : State.INCORRECT_ANSWER);
-
 	}
 
 	/**
