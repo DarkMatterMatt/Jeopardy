@@ -72,13 +72,11 @@ public class Taskbar extends ViewBase {
 		// text speed slider
 		_speedSlider = createSpeedSlider();
 
-		Icon help = new Icon("/se206/quinzical/assets/help.png");
-		help.setSize(30, 30);
-		help.getView().setOnMouseClicked(e -> {
-			generateUserHelpAlert();
-		});
+		ImageView help = createButton("/se206/quinzical/assets/help.png");
+		help.setOnMouseClicked(e -> generateUserHelpAlert());
+		Tooltip.install(help, new Tooltip("Help"));
 
-		_container.getChildren().addAll(_speedSlider, _toggleText, home, _reset, help.getView(), exit);
+		_container.getChildren().addAll(_speedSlider, _toggleText, home, _reset, help, exit);
 		_container.setSpacing(10);
 		_container.getStyleClass().add("taskbar");
 		addStylesheet("taskbar.css");
