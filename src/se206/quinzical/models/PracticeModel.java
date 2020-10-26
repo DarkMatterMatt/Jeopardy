@@ -26,7 +26,8 @@ public class PracticeModel extends QuizModel {
 	 */
 	@Override
 	public boolean isActive() {
-		return _model.getState() == QuinzicalModel.State.PRACTICE;
+		return _model.getState() == QuinzicalModel.State.PRACTICE
+				|| _model.getState() == QuinzicalModel.State.INTERNATIONAL;
 	}
 
 	/**
