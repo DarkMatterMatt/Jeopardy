@@ -161,9 +161,9 @@ public class AnswerPane extends ViewBase {
 		setHintVisible(false);
 		clearInput();
 		focusInput();
-		_timer.stop();
 
 		if (q == null) {
+			_timer.stop();
 			_categoryLabel.setText("Welp");
 			_questionLabel.setText("There is no available question in this category");
 			_answerInputView.getView().setVisible(false);
