@@ -22,7 +22,7 @@ public class InternationalSwitch extends SwitcherBase {
     private final HBox _container = new HBox();
     private final QuinzicalModel _model;
     private final VBox _answerPane = new VBox();
-    private final Lives _livesPane;
+    private final VBox _livesPane = new VBox();
     private final IncorrectPane _incorrectPane;
     private final CorrectPane _correctPane;
 
@@ -35,11 +35,11 @@ public class InternationalSwitch extends SwitcherBase {
 
         // make a question box, make lives pane
         updateAnswerPane();
-        _livesPane = new Lives(_model);
+        updateLivesPane();
         HBox.setHgrow(_answerPane, Priority.ALWAYS);
         VBox.setVgrow(_answerPane, Priority.ALWAYS);
         // add them to the container
-        _container.getChildren().addAll(_answerPane, _livesPane.getView());
+        _container.getChildren().addAll(_answerPane, _livesPane);
         _container.setSpacing(48);
 
         getView().getChildren().addAll(_container, _incorrectPane.getView(), _correctPane.getView());
@@ -58,11 +58,17 @@ public class InternationalSwitch extends SwitcherBase {
         _answerPane.getChildren().add(answerPane);
     }
 
+    private void updateLivesPane(){
+        _livesPane.getChildren().clear();
+        _livesPane.getChildren().add(new Lives(_model).getView());
+    }
+
     private void onModelStateChange() {
         switch (_model.getPracticeModel().getState()) {
             case SELECT_CATEGORY:
             case ANSWER_QUESTION:
                 updateAnswerPane();
+                updateLivesPane();
                 switchToView(_container);
                 break;
             case INCORRECT_ANSWER:
